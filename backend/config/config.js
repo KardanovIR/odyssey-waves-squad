@@ -9,7 +9,7 @@ const dev = {
    port: parseInt(process.env.DEV_DB_PORT) || 5432,
    name: process.env.DEV_DB_NAME || 'cargo',
    user: process.env.DEV_DB_USER ||'postgres',
-   password : process.env.DEV_DB_PASSWORD || '{3kmc!yr!'
+   password : process.env.DEV_DB_PASSWORD || ''
  },
  waves: {
    host: process.env.DEV_WAVES_HOST|| 'https://testnodes.wavesnodes.com'
@@ -24,7 +24,7 @@ const test = {
     port: parseInt(process.env.TEST_DB_PORT) || 5432,
     name: process.env.TEST_DB_NAME || 'cargo',
     user: process.env.TEST_DB_USER ||'postgres',
-    password : process.env.TEST_DB_PASSWORD || '{3kmc!yr!'
+    password : process.env.TEST_DB_PASSWORD || ''
  }
 };
 
