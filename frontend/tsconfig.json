@@ -6,8 +6,8 @@
       "@components/*": ["src/components/*"],
       "@src": ["src"],
       "@src/*": ["src/*"],
-      "@store": ["src/stores"],
-      "@store/*": ["src/stores/*"],
+      "@store": ["src/store"],
+      "@store/*": ["src/store/*"],
       "@utils": ["src/utils"],
       "@utils/*": ["src/utils/*"]
     },
