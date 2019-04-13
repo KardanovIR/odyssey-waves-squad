@@ -9,9 +9,6 @@ class CreateGoodsRequest {
             this.value='';
             this.quantity='';
             this.wight='';
-            this.conditionMin='';
-            this.conditionMax='';
-            this.conditionType='';
     }
 }
     
