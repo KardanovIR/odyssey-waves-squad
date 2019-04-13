@@ -130,44 +130,46 @@ async function findGoodsById (goodsId) {
     })
   })
 }
-
-async function createClaim (goods) {
-  return new Promise((resolve, reject) => {
-    pool.query('INSERT INTO claims (description, type, value, quantity, wight, shipmentid) VALUES ($1, $2, $3, $4, $5, $6)', 
-      [goods.description, goods.type, goods.value, goods.quantity, goods.wight, goods.shipmentId], (error, result) => {
-      if (error) {
-        console.log(error);
-        reject(error);
-      }
-      resolve();
+async function createClaim (claim) {
+  console.log("createClaim")
+    return new Promise((resolve, reject) => {
+      pool.query('INSERT INTO claims (createrid, description, shipmentid, location, createdate) VALUES ($1, $2, $3, $4, $5)', 
+        [claim.createrId, claim.description, claim.shipmentId, claim.location, claim.createData], (error, result) => {
+        if (error) {
+          console.log(error);
+          reject(error);
+        }
+        resolve(result);
+      })
     })
-  })
-}
-
-async function getClaims() {
-  console.log("getClaims")
-  return new Promise((resolve, reject) => {
-    pool.query('SELECT * FROM claims ORDER BY id ASC', (error, results) => {
-      if (error) {
-        reject(error);
-      }
-      resolve(results.rows);
-    });
-  })
-}
-
-async function findClaimsById (claimId) {
-  console.log("findClaimsById")
-  return new Promise((resolve, reject) => {
-      pool.query('SELECT * FROM claims WHERE id = $1', [goodsId], (error, results) => {
-      if (error) {
-        reject(error);
-      }
-      console.log(results)
-      resolve(results.rows);
+  }
+  
+  async function getClaims() {
+    console.log("getClaims")
+    return new Promise((resolve, reject) => {
+      pool.query('SELECT * FROM claims ORDER BY id ASC', (error, results) => {
+        if (error) {
+          reject(error);
+        }
+        resolve(results.rows);
+      });
     })
-  })
-}
+  }
+  
+  async function findClaimByid (claimId) {
+    console.log("findClaimsById")
+    return new Promise((resolve, reject) => {
+        pool.query('SELECT * FROM claims WHERE id = $1', [claimId], (error, results) => {
+        if (error) {
+          reject(error);
+        }
+        console.log(results)
+        resolve(results.rows);
+      })
+    })
+  }
+
+
 
 module.exports = {
   getUsers: getUsers,
@@ -176,5 +178,8 @@ module.exports = {
   getMetrics:getMetrics,
   createGoods:createGoods,
   getGoods: getGoods,
-  findGoodsById: findGoodsById
+  findGoodsById: findGoodsById,
+  createClaim:createClaim,
+  findClaimByid:findClaimByid,
+  getClaims:getClaims
 };

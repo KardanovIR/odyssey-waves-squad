@@ -16,6 +16,7 @@ async function create (req, res) {
     // save the claim and check for errors
     try {
         var metricId = await db.createMetrics(metrics);
+        
         metrics.id = metricId;
         console.log(metrics);
         res.json({
