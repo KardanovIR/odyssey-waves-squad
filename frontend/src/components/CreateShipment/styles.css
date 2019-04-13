@@ -165,5 +165,36 @@
 
 }
 
+.createShipment__from_to_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.createShipment__fromTo_input {
+    height: 48px;
+    border-radius: 2px;
+    border: solid 1px #dbe1e9;
+    background-color: #ffffff;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0px;
+    color: #263241;
+    padding: 0 15px 0 15px;
+}
+.load__root {
+    margin-top: 30px;
+}
+
+.createShipment__cargotype_btn {
+    height: 48px;
+    border-radius: 2px;
+    border: solid 1px #dbe1e9;
+    background-color: #ffffff;
+}
 .createShipment__confirmation {}
 
