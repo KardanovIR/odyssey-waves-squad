@@ -9,6 +9,10 @@ let apiRoutes = require("./api-routes");
 
 let Config = require("./config/config");
 
+var swaggerUi = require('swagger-ui-express'),
+swaggerDocument = require('./doc/swagger.json');
+
+
 // Configure bodyparser to handle post requests
 app.use(bodyParser.urlencoded({
     extended: true
@@ -21,6 +25,7 @@ app.get('/', (req, res) => res.send('Hello World with Express'));
 // Use Api routes in the App
 app.use('/api', apiRoutes)
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // Launch app to listen to specified port
 app.listen(Config.app.port, function () {
     console.log("Running RestHub on port " + Config.app.port);
