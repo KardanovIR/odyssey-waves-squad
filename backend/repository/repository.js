@@ -130,6 +130,7 @@ async function findGoodsById (goodsId) {
     })
   })
 }
+
 async function createClaim (claim) {
   console.log("createClaim")
     return new Promise((resolve, reject) => {
@@ -156,7 +157,7 @@ async function createClaim (claim) {
     })
   }
   
-  async function findClaimByid (claimId) {
+  async function findClaimById (claimId) {
     console.log("findClaimsById")
     return new Promise((resolve, reject) => {
         pool.query('SELECT * FROM claims WHERE id = $1', [claimId], (error, results) => {
@@ -169,7 +170,44 @@ async function createClaim (claim) {
     })
   }
 
-
+  async function createShipment (shipment) {
+    console.log("createClaim")
+      return new Promise((resolve, reject) => {
+        pool.query('INSERT INTO shipment () VALUES ()', 
+          [], (error, result) => {
+          if (error) {
+            console.log(error);
+            reject(error);
+          }
+          resolve(result);
+        })
+      })
+    }
+    
+    async function getShipments() {
+      console.log("getClaims")
+      return new Promise((resolve, reject) => {
+        pool.query('SELECT * FROM shipments ORDER BY id ASC', (error, results) => {
+          if (error) {
+            reject(error);
+          }
+          resolve(results.rows);
+        });
+      })
+    }
+    
+    async function findShipmentById (shipmentId) {
+      console.log("findShipmentByid")
+      return new Promise((resolve, reject) => {
+          pool.query('SELECT * FROM shipments WHERE id = $1', [shipmentId], (error, results) => {
+          if (error) {
+            reject(error);
+          }
+          console.log(results)
+          resolve(results.rows);
+        })
+      })
+    }
 
 module.exports = {
   getUsers: getUsers,
@@ -180,6 +218,9 @@ module.exports = {
   getGoods: getGoods,
   findGoodsById: findGoodsById,
   createClaim:createClaim,
-  findClaimByid:findClaimByid,
-  getClaims:getClaims
+  findClaimById:findClaimById,
+  getClaims:getClaims,
+  createShipment:createShipment,
+  getShipments:getShipments,
+  findShipmentById:findShipmentById,
 };

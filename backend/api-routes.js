@@ -20,6 +20,7 @@ var claimController = require('./controllers/claimController');
 var goodsController = require('./controllers/goodsController');
 var extraInfoController = require('./controllers/extraInfoController');
 var metricsController = require('./controllers/metricsController');
+var shipmentsController = require('./controllers/shipmentsController');
 // Contact routes
 router.route('/contacts')
     .get(contactController.index)
@@ -48,7 +49,13 @@ router.route('/metrics')
     .post(metricsController.create);
 router.route('/metrics/:metrics_id')
     .get(metricsController.view);
-// router.route('/contacts/:contact_id')
+router.route('/shipments')
+    .get(shipmentsController.index)
+    .post(shipmentsController.create);
+router.route('/shipments/:shipment_id')
+    .get(shipmentsController.view);
+
+    // router.route('/contacts/:contact_id')
 //     .get(contactController.view)
 //     .patch(contactController.update)
 //     .put(contactController.update)

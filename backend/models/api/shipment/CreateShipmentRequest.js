@@ -12,14 +12,14 @@ class CreateShipmentRequest {
         this.policeId='';
         this.carrier='';
         this.goods= new Array({
-            id='',
-            type='',
-            description='',
-            value='',
-            quantity='',
-            wight='',
+            id:'',
+            type:'',
+            description:'',
+            value:'',
+            quantity:'',
+            wight:'',
         });
     }
 }
     
-module.exports = User;
+module.exports = CreateShipmentRequest;
