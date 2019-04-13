@@ -32,7 +32,6 @@ export interface Account {
   address: string
   networkCode: string
   network: string
-  type: string
   balance: Balance
 }
 
@@ -55,6 +54,10 @@ export interface Network {
 
 type Binary = Uint8Array | Buffer
 export type ArgTypes = string | Binary | boolean | number
+export interface IKeyValuePair {
+  key: string,
+  value: ArgTypes,
+}
 
 export default class KeeperStore extends SubStore {
 
@@ -68,7 +71,7 @@ export default class KeeperStore extends SubStore {
     if (typeof arg === 'boolean')
       return { type: 'boolean', value: arg }
 
-    return { type: 'binary', value: base58encode(Uint8Array.from(arg)) }
+    return { type: 'binary', value: 'base64:' + Buffer.from(arg).toString('base64') }
   }
 
   async publicState(): Promise<IKeeperPublicState> {
@@ -108,6 +111,19 @@ export default class KeeperStore extends SubStore {
 
   async invokeWithPayment(dappAddress: string, functionName: string, payment: number, ...args: ArgTypes[]) {
     await window.WavesKeeper.signAndPublishTransaction(this._prepareInvokeWithPayment(dappAddress, functionName, payment, ...args))
+  }
+
+  async setData(...keyValuePairs: IKeyValuePair[]) {
+    await window.WavesKeeper.signAndPublishTransaction({
+      type: 12,
+      data: {
+        data: keyValuePairs.map(x => ({ ...this.convertArg(x.value), key: x.key })),
+        fee: {
+          'tokens': '0.01',
+          'assetId': 'WAVES',
+        },
+      },
+    })
   }
 
   async sendWaves(tokens: number, recipient: string): Promise<any> {
