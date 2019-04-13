@@ -13,9 +13,9 @@ async function create (req, res) {
     metrics.deviceId=req.body.deviceId ? req.body.deviceId : "0";
     // save the claim and check for errors
     try {
-        //var claimId = await db.createUser(contact);
-        //claimId.createrId = userId;
-
+        var metricId = await db.createMetrics(metrics);
+        metrics.id = metricId;
+        console.log(metrics);
         res.json({
                 message: 'New metric created!',
                 data: metrics
