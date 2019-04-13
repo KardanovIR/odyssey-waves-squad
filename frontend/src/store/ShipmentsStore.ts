@@ -1,5 +1,5 @@
 import SubStore from './SubStore'
-import {action, computed, observable, reaction, toJS} from 'mobx'
+import {action, computed, observable, reaction, runInAction, toJS} from 'mobx'
 import RootStore from '@store/RootStore'
 import axios from 'axios'
 import {setInterval} from 'timers'
@@ -162,7 +162,7 @@ export default class ShipmentsStore extends SubStore {
   constructor(rootStore: RootStore){
     super(rootStore)
 
-    this.syncInterval = setInterval(() => this.syncShipments(), 10000)
+    this.syncInterval = setInterval(() => this.syncShipments(), 5000)
   }
 
   @computed get visibleShipments() {
@@ -182,12 +182,14 @@ export default class ShipmentsStore extends SubStore {
     const user = this.currentUser
     if (!user) return
     const resp = await axios.get(BASE_URL + `/shipments/${userTypeMap[user.type]}/${user.publicKey}`)
-    console.log(resp.data)
+    console.log(resp.data.data)
+    runInAction(() => this.shipments = resp.data.data.map(shipment => observable(shipment)))
   }
 
   async submitShipment(){
     console.log(toJS(this.shipmentCreation))
-    axios.post(BASE_URL +'/shipments', this.shipmentCreation)
+    await axios.post(BASE_URL +'/shipments', this.shipmentCreation)
+    await this.syncShipments()
   }
 }
 
