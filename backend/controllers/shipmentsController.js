@@ -9,14 +9,21 @@ metricRep = require('../repository/metricsRepository');
 CreateShipmentModel = require('../models/api/shipment/CreateShipmentRequest');
 GetShipmentModel = require('../models/api/shipment/GetShipmentResponce');
 
-async function create (req, res) {
+async function create(req, res) {
     console.log("api shipment create");
     try {
         var shipment = req.body;
-        await shipmentsRep.createShipment(shipment);
+        shipment.createDate = Date.Now;
+        var newShipment = await shipmentsRep.createShipment(shipment);
+        if(shipment.goods){
+            shipment.goods.forEach(async (entry) => {
+                entry.shipmentId = newShipment.id
+                await goodsRep.create(entry);
+            });
+        }
         res.json({
-                message: 'New shipment created!',
-                data: shipment
+            message: 'New shipment created!',
+            data: shipment
         });
     }
     catch (e) {
@@ -25,9 +32,9 @@ async function create (req, res) {
     }
 };
 
-async function index (req, res) {
-    try { 
-    console.log("api shipment index");
+async function index(req, res) {
+    try {
+        console.log("api shipment index");
         var shipments = await shipmentsRep.getShipments();
         res.json({
             status: "success",
@@ -41,10 +48,9 @@ async function index (req, res) {
     }
 };
 
-async function allRecived (req,res) {
+async function allRecived(req, res) {
     try {
-        
-    console.log("api shipment allRecived");
+        console.log("api shipment allRecived");
         var userId = req.params.user_id
         var shipments = await shipmentsRep.getShipmentsByReciverId(userId);
         res.json({
@@ -59,10 +65,9 @@ async function allRecived (req,res) {
     }
 }
 
-async function allSend (req,res) {
+async function allSend(req, res) {
     try {
-        
-    console.log("api shipment allSend");
+        console.log("api shipment allSend");
         var userId = req.params.user_id
         var shipments = await shipmentsRep.getShipmentsBySenderId(userId);
         res.json({
@@ -77,10 +82,10 @@ async function allSend (req,res) {
     }
 }
 
-async function allCarier (req,res) {
+async function allCarier(req, res) {
     try {
-       
-    console.log("api shipment allCarier");
+
+        console.log("api shipment allCarier");
         var userId = req.params.user_id
         var shipments = await shipmentsRep.getShipmentsByCarierId(userId);
         res.json({
@@ -95,12 +100,12 @@ async function allCarier (req,res) {
     }
 }
 
-async function view (req, res) {
+async function view(req, res) {
     try {
-        
+
         console.log("api shipment view");
         var shipmentId = req.params.shipment_id
-        var shipment = await shipmentsRep.findById(shipmentId);
+        let shipment = await shipmentsRep.findById(shipmentId);
         shipment.goods = await goodsRep.findByShipmentId(shipmentId);
         shipment.claims = await claimRep.findByShipmentId(shipmentId);
         shipment.extraInfo = await extraInfoRep.findByShipmentId(shipmentId);
@@ -108,7 +113,7 @@ async function view (req, res) {
         shipment.metricData = await metricRep.findByDeviceId(shipment.device);
         res.json({
             status: "success",
-            message: "Shipment details successfully",
+            message: "Shipment details successfully1",
             data: shipment
         });
     }
@@ -118,10 +123,10 @@ async function view (req, res) {
     }
 };
 
-async function transfer (req, res) {
+async function transfer(req, res) {
     try {
-        
-    console.log("api shipment transfer");
+
+        console.log("api shipment transfer");
         var transfer = req.body
         var shipment = await shipmentsRep.findById(transfer.shipmentId);
         shipment.countryFrom = transfer.from;
@@ -140,10 +145,10 @@ async function transfer (req, res) {
     }
 };
 
-async function changeStatus (req, res) {
+async function changeStatus(req, res) {
     try {
-        
-    console.log("api shipment changeStatus");
+
+        console.log("api shipment changeStatus");
         var transfer = req.body
         var shipment = await shipmentsRep.findById(transfer.shipmentId);
         shipment.status = transfer.status;
