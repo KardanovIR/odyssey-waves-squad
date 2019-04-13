@@ -41,7 +41,7 @@ async function createShipment (shipment) {
   }
 
 
-async function updateShipment (shipment) {
+async function update (shipment) {
 return new Promise((resolve, reject) => {
   pool.query('UPDATE shipment SET sender = $2, recipient = $3, countryfrom = $4, countryto = $5, departuredate = $6, policeid = $7, carrier = $8, title = $9, createdate = $10, status = $11, arrivaldate = $12, device = $13 WHERE id = $1',
       [
@@ -141,7 +141,7 @@ async function findById (shipmentId) {
   })
 }
 
-async function findShipmentByDeviceId (deviceId) {
+async function findByDeviceId (deviceId) {
   console.log("findShipmentByid");
   return new Promise((resolve, reject) => {
       pool.query('SELECT * FROM shipments WHERE device = $device', [deviceId], (error, results) => {
@@ -161,5 +161,6 @@ async function findShipmentByDeviceId (deviceId) {
   getShipmentsBySenderId:getShipmentsBySenderId,
   getShipmentsByRecipientId:getShipmentsByRecipientId,
   getShipmentsByCarrierId:getShipmentsByCarrierId,
-  findShipmentByDeviceId
+  findByDeviceId:findByDeviceId,
+  update: update
   };
