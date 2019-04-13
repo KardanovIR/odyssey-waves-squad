@@ -1,6 +1,6 @@
 .createShipment__root {
     display: flex;
-    /*height: -webkit-fill-available;*/
+    height: -webkit-fill-available;
     flex: 1;
     background-color: #f8f9fb;
     padding: 2px 0 0 0;
@@ -40,7 +40,7 @@
     display: flex;
     flex: 1;
     width: 70%;
-    padding: 4% 2% 0% 95px ;
+    padding: 4% 2% 0% 95px;
     background-color: #ffffff;
 }
 
@@ -75,6 +75,7 @@
 .sender__root {
     margin-top: 30px;
 }
+
 .sender__text {
 
     font-family: Montserrat;
@@ -161,9 +162,59 @@
     text-align: center;
     color: #ffffff;
 }
-.createShipment__cargoInformation {
 
+.createShipment__cargoInformation {
 }
 
-.createShipment__confirmation {}
+.createShipment__from_to_container {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.createShipment__fromTo_input {
+    margin-top: 5px;
+    height: 48px;
+    border-radius: 2px;
+    border: solid 1px #dbe1e9;
+    background-color: #ffffff;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0px;
+    color: #263241;
+    padding: 0 15px 0 15px;
+}
+
+.load__root {
+    margin-top: 30px;
+}
+
+
+.createShipment__cargotype_btn.dropdown-toggle.btn.btn-primary{
+    margin-top: 5px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 640px;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0px;
+    color: #263241;
+    height: 48px;
+    border-radius: 2px;
+    border: solid 1px #dbe1e9;
+    background-color: #ffffff;
+}
+.createShipment__confirmation {
+}
 

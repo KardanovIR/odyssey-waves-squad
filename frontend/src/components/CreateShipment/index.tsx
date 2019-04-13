@@ -2,6 +2,7 @@ import * as React from 'react'
 import './styles.css'
 import BasicInfo from '@components/CreateShipment/BasicInfo'
 import CargoInformation from '@components/CreateShipment/CargoInformation'
+import Steps from '@components/Steps'
 
 export default class CreateShipment extends React.Component<any, { step: number }> {
   state = {
@@ -14,13 +15,14 @@ export default class CreateShipment extends React.Component<any, { step: number 
     return (
       <div className='createShipment__root'>
         <div className='createShipment__steps'>
-          <div className='createShipment__steps_text'>Create Shipment</div>
-          <div className='createShipment__steps_textDescription'>Create shipment text description</div>
+          <div className='createShipment__steps_text' style={{ marginBottom: 20 }}>Create Shipment</div>
+          {/* <div className='createShipment__steps_textDescription'>Create shipment text description</div> */}
+          <Steps activeStep={step} />
         </div>
         <div className='createShipment__rightContainer'>
           {{
-            0: <BasicInfo onContinue={()=>this.setState({step: 1}) }/>,
-            1: <CargoInformation onContinue={()=>this.setState({step: 2})}/>,
+            0: <BasicInfo onContinue={() => this.setState({ step: 1 })} />,
+            1: <CargoInformation onContinue={() => this.setState({ step: 2 })} />,
             2: <div className='createShipment__confirmation'>
 
             </div>,

@@ -12,12 +12,31 @@ export const statusLabelMap = {
 
 export interface IGood {
   id: string
-  type: string
+  type: 'fragile' | 'temperature sensitive' | 'humidity sensitive' | 'basic'
   description: string
-  value: string
-  quantity: number
-  weight: number
 }
+
+export interface ITSensitiveGood extends IGood{
+  type: 'temperature sensitive'
+  tFrom: string
+  tTo: string
+}
+
+export interface IHSensitiveGood extends IGood{
+  type: 'humidity sensitive'
+  hFrom: string
+  hTo: string
+}
+
+export interface IFragileGood extends IGood{
+  type: 'fragile'
+}
+
+export interface IBasicGood extends IGood{
+  type: 'basic'
+}
+
+export type TGood = IHSensitiveGood | ITSensitiveGood | IFragileGood | IBasicGood
 
 export interface ILocation {
   longitude: string,
@@ -50,7 +69,7 @@ export interface IShipment {
   arrivalDate: string
   policyId?: string
   carrier: string
-  goods: IGood[]
+  goods: TGood[]
   claims: IClaim[]
   extraInfo: IExtraInfo[]
   status: string,
@@ -99,10 +118,14 @@ export default class ShipmentsStore extends SubStore {
     from: 'Canada',
     to: 'Russia',
     departureDate: '2019.01.08',
-    arrivalDate: undefined,
+    arrivalDate: '2019.01.08',
     policyId: undefined,
     carrier: 'Example carrier',
-    goods: [],
+    goods: [{
+      id: '',
+      description: 'basic description',
+      type: 'basic',
+    }],
     claims: [],
     extraInfo: [],
     status: 'approved',
