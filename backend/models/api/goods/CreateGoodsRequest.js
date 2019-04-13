@@ -2,7 +2,7 @@
 
 class CreateGoodsRequest {
     constructor(){
-        this.createrId = '';
+        this.creater = '';
             this.type='';
             this.description='';
             this.value='';
@@ -11,6 +11,7 @@ class CreateGoodsRequest {
             this.conditionMin='';
             this.conditionMax='';
             this.conditionType='';
+            this.shipmentId='';
     }
 }
     

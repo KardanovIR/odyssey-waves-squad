@@ -30,13 +30,26 @@ async function createTransportRoute(transportRoute) {
   })
 }
 
-async function findTransportRouteById(shipmentid) {
+async function findTransportRouteByShipmentId(shipmentid) {
   console.log("getTransportRoute");
   return new Promise((resolve, reject) => {
       pool.query('SELECT * FROM transport_routes ORDER BY id ASC WHERE shipmentid = $1', [shipmentid], (error, results) => {
           if (error) {
               reject(error);
           }
+          resolve(results.rows);
+      });
+  });
+}
+
+async function findTransportRouteById(routeid) {
+  console.log("getTransportRoute");
+  return new Promise((resolve, reject) => {
+      pool.query('SELECT * FROM transport_routes ORDER BY id ASC WHERE id = $1', [routeid], (error, results) => {
+          if (error) {
+              reject(error);
+          }
+          if(result!=null)
           resolve(results.rows);
       });
   });
@@ -55,7 +68,8 @@ async function getTransportRoute() {
 }
 
   module.exports = {
-    findTransportRouteById: findTransportRouteById,
+    findTransportRouteByShipmentId: findTransportRouteByShipmentId,
     createTransportRoute:createTransportRoute,
-    getTransportRoute: getTransportRoute
+    getTransportRoute: getTransportRoute,
+    findTransportRouteById: findTransportRouteById
   };

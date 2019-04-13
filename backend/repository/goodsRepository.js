@@ -60,8 +60,23 @@ async function findGoodsById (goodsId) {
   })
 }
 
+async function findGoodsByShipmentId(shipmentid) {
+  console.log("findGoodsByShipmentId");
+  return new Promise((resolve, reject) => {
+      pool.query('SELECT * FROM goods WHERE shipmentid = $1 ORDER BY id ASC', [shipmentid], (error, results) => {
+          if (error) {
+              reject(error);
+          }
+          if(results)
+            resolve(results.rows);
+          resolve();
+      });
+  });
+}
+
   module.exports = {
     createGoods:createGoods,
     getGoods: getGoods,
     findGoodsById: findGoodsById,
+    findGoodsByShipmentId: findGoodsByShipmentId
   };

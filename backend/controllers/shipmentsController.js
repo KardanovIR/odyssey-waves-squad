@@ -1,5 +1,6 @@
 // shipmentController.js
-shipmentsRep = require('../repository/shipmentRepository')
+shipmentsRep = require('../repository/shipmentRepository');
+goodsRep = require('../repository/goodsRepository');
 
 CreateShipmentModel = require('../models/api/shipment/CreateShipmentRequest');
 GetShipmentModel = require('../models/api/shipment/GetShipmentResponce');
@@ -7,8 +8,6 @@ GetShipmentModel = require('../models/api/shipment/GetShipmentResponce');
 // Handle create claim actions
 async function create (req, res) {
     try {
-        //var claimId = await db.createUser(contact);
-        //claimId.createrId = userId;
         var shipment = req.body;
         await shipmentsRep.createShipment(shipment);
         res.json({
@@ -93,6 +92,7 @@ async function view (req, res) {
         console.log("view");
         var shipmentId = req.params.shipment_id
         var shipment = await shipmentsRep.findShipmentById(shipmentId);
+        shipment.goods = await goodsRep.findGoodsByShipmentId(shipmentId);
         res.json({
             status: "success",
             message: "Shipment details successfully",
