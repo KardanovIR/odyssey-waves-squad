@@ -94,7 +94,7 @@ export default class ShipmentsStore extends SubStore {
     extraInfo: [],
     status: 'damaged',
   }, {
-    id: '2PxysbRPFLtrgwGqVVAhVnUesrydfuAUvJwZ3HXXuTTpSe',
+    id: '2PxysbRPFLtrgwGqVVAhVnUesrydfuAUvJwZ3HXXuTTpSa',
     title: 'First shipment',
     sender: 'romashka 2',
     recipient: 'Roga i Kopita 2',
@@ -112,7 +112,7 @@ export default class ShipmentsStore extends SubStore {
 
 
   @observable shipmentCreation: Partial<IShipment> = {
-    id: '2PxysbRPFLtrgwGqVVAhVnUesrydfuAUvJwZ3HXXuTTpSe',
+    id: '',
     title: 'First shipment',
     sender: 'romashka 2',
     recipient: 'Roga i Kopita 2',
