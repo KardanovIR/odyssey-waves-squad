@@ -14,12 +14,15 @@ router.get('/', function (req, res) {
 // Import contact controller
 var contactController = require('./controllers/contactController');
 var wavesController = require('./controllers/wavesController');
+var userController = require('./controllers/userController');
 // Contact routes
 router.route('/contacts')
     .get(contactController.index)
     .post(contactController.create);
 router.route('/waves')
     .get(wavesController.getLastBlock);
+router.route('/user/login')
+    .get(userController.login);
 // router.route('/contacts/:contact_id')
 //     .get(contactController.view)
 //     .patch(contactController.update)

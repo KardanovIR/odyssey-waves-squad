@@ -1,6 +1,6 @@
 // userModel.js
 
-class User {
+class LoginUserModel {
     constructor(){
         this.id = '';
         this.name = '';
@@ -9,4 +9,4 @@ class User {
     }
 }
     
-module.exports = User;
+module.exports = LoginUserModel;
