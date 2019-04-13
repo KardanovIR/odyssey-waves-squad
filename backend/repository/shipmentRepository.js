@@ -161,6 +161,6 @@ async function findByDeviceId (deviceId) {
   getShipmentsBySenderId:getShipmentsBySenderId,
   getShipmentsByRecipientId:getShipmentsByRecipientId,
   getShipmentsByCarrierId:getShipmentsByCarrierId,
-  findByDeviceId:findByDeviceId,
-  update: update
+  findShipmentByDeviceId:findShipmentByDeviceId,
+  updateShipment:updateShipment
   };
