@@ -81,7 +81,7 @@ async function getShipments() {
 async function getShipmentsBySenderId (userId) {
   console.log("getClaims")
   return new Promise((resolve, reject) => {
-    pool.query('SELECT * FROM shipments ORDER BY id ASC WHERE sender = $1', [userId],  (error, results) => {
+    pool.query('SELECT * FROM shipments WHERE sender = $1  ORDER BY id ASC', [userId],  (error, results) => {
       if (error) {
         reject(error);
       }
@@ -93,7 +93,7 @@ async function getShipmentsBySenderId (userId) {
 async function getShipmentsByRecipientId (userId) {
   console.log("getClaims")
   return new Promise((resolve, reject) => {
-    pool.query('SELECT * FROM shipments ORDER BY id ASC WHERE recipient = $1', [userId],  (error, results) => {
+    pool.query('SELECT * FROM shipments WHERE recipient = $1 ORDER BY id ASC', [userId],  (error, results) => {
       if (error) {
         reject(error);
       }
@@ -105,7 +105,7 @@ async function getShipmentsByRecipientId (userId) {
 async function getShipmentsByCarrierId (userId) {
   console.log("getClaims")
   return new Promise((resolve, reject) => {
-    pool.query('SELECT * FROM shipments ORDER BY id ASC WHERE carrier = $1', [userId],  (error, results) => {
+    pool.query('SELECT * FROM shipments WHERE carrier = $1 ORDER BY id ASC', [userId],  (error, results) => {
       if (error) {
         reject(error);
       }
