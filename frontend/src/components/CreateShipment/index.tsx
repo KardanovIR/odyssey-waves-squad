@@ -1,6 +1,7 @@
 import * as React from 'react'
 import './styles.css'
 import BasicInfo from '@components/CreateShipment/BasicInfo'
+import CargoInformation from '@components/CreateShipment/CargoInformation'
 
 export default class CreateShipment extends React.Component<any, { step: number }> {
   state = {
@@ -18,10 +19,8 @@ export default class CreateShipment extends React.Component<any, { step: number 
         </div>
         <div className='createShipment__rightContainer'>
           {{
-            0: <BasicInfo />,
-            1: <div className='createShipment__cargoInformation'>
-
-            </div>,
+            0: <BasicInfo onContinue={()=>this.setState({step: 1}) }/>,
+            1: <CargoInformation onContinue={()=>this.setState({step: 2})}/>,
             2: <div className='createShipment__confirmation'>
 
             </div>,

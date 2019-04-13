@@ -47,6 +47,7 @@ export interface IShipment {
   from: string
   to: string
   departureDate: string
+  arrivalDate: string
   policyId?: string
   carrier: string
   goods: IGood[]
@@ -65,6 +66,7 @@ export default class ShipmentsStore extends SubStore {
     from: 'Canada',
     to: 'Russia',
     departureDate: '2019.01.01',
+    arrivalDate: '2019.01.07',
     policyId: undefined,
     carrier: 'Example carrier',
     goods: [],
@@ -79,6 +81,7 @@ export default class ShipmentsStore extends SubStore {
     from: 'Canada',
     to: 'Russia',
     departureDate: '2019.01.08',
+    arrivalDate: '2019.01.07',
     policyId: undefined,
     carrier: 'Example carrier',
     goods: [],
@@ -96,6 +99,7 @@ export default class ShipmentsStore extends SubStore {
     from: 'Canada',
     to: 'Russia',
     departureDate: '2019.01.08',
+    arrivalDate: undefined,
     policyId: undefined,
     carrier: 'Example carrier',
     goods: [],
