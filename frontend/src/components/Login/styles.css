@@ -1,0 +1,82 @@
+.login_bg {
+  background-color: #f8f9fb;
+  padding: 0px;
+}
+
+.login__root {
+  background-color: #f8f9fb;
+  padding: 4% 0px 0px 0px;
+}
+
+.login__h1 {
+  margin: auto;
+  margin-top: 20px;
+  font-family: Montserrat;
+  font-size: 28px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #26412c;
+}
+
+.login__sub {
+  clear: both;
+  padding: 10px;
+
+  font-family: Montserrat;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.1px;
+  text-align: center;
+  color: #9ba6b2;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+.login__card {
+  width: 350px;
+  height: 337px;
+  border-radius: 2px;
+  box-shadow: 0 2px 6px 0 #ebeff7;
+  background-color: #ffffff;
+  margin: auto;
+}
+
+.login__button__sender {
+  margin: auto;
+  margin-left: 60px;
+  margin-top: 10px;
+  align-self: center;
+  width: 230px;
+  height: 42px;
+  border-radius: 4px;
+  box-shadow: 0 2px 7px 0 rgba(31, 90, 246, 0.2);
+  background-color: #1490f5;
+  font-family: Montserrat;
+  font-size: 13px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.38;
+  letter-spacing: -0.1px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.login__color__carrier {
+  background-color: #1f5af6;
+}
+
+.login__color__insuser {
+  background-color: #7614f5;
+}
+
+.login__color__receiver {
+  background-color: #f514c4;
+}

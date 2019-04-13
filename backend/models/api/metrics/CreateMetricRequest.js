@@ -2,6 +2,7 @@
 
 class CreateMetricRequest {
     constructor(){
+            this.id='';
             this.type='';
             this.value='';
             this.deviceId='';
