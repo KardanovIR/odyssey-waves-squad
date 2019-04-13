@@ -2,13 +2,13 @@ import * as React from 'react'
 import './styles.css'
 import BasicInfo from '@components/CreateShipment/BasicInfo'
 
-export default class CreateShipment extends React.Component<any, {step: number}> {
+export default class CreateShipment extends React.Component<any, { step: number }> {
   state = {
     step: 0,
   }
 
-  render(){
-    const {step} = this.state;
+  render() {
+    const { step } = this.state
 
     return (
       <div className='createShipment__root'>
@@ -18,7 +18,7 @@ export default class CreateShipment extends React.Component<any, {step: number}>
         </div>
         <div className='createShipment__rightContainer'>
           {{
-            0: <BasicInfo/>,
+            0: <BasicInfo />,
             1: <div className='createShipment__cargoInformation'>
 
             </div>,
