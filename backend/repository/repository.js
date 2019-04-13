@@ -173,8 +173,18 @@ async function createClaim (claim) {
   async function createShipment (shipment) {
     console.log("createClaim")
       return new Promise((resolve, reject) => {
-        pool.query('INSERT INTO shipment () VALUES ()', 
-          [], (error, result) => {
+        pool.query('INSERT INTO shipments (senderid, recipientid, countryfrom, countryto, departuredate, policeid, carrier, title, createdate) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)', 
+          [
+            shipment.sender, 
+            shipment.recipient, 
+            shipment.countyFrom, 
+            shipment.countryTo, 
+            shipment.departureDate, 
+            shipment.PoliciId,
+            shipment.carrier, 
+            shipment.title, 
+            shipment.createDate
+          ], (error, result) => {
           if (error) {
             console.log(error);
             reject(error);
