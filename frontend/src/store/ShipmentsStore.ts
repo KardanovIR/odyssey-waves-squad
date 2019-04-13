@@ -135,7 +135,7 @@ export default class ShipmentsStore extends SubStore {
     }],
     claims: [],
     extraInfo: [],
-    status: 'approved',
+    status: 'forming',
   }
 
 
