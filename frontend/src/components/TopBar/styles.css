@@ -1,0 +1,35 @@
+.topBar__root {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 4% 0 4%;
+    box-shadow: 0 2px 4px 0 rgba(127, 143, 164, 0.1);
+    background-color: #ffffff;
+    height: 68px;
+}
+
+
+.topBar__logo {
+    display: flex;
+    align-items: center;
+    font-family: Averta;
+    font-size: 28px;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #263241;
+}
+.topBar__user {
+    display: flex;
+    align-items: center;
+    font-family: Montserrat;
+    font-size: 15px;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.2;
+    letter-spacing: -0.1px;
+    text-align: right;
+    color: #263241;
+}

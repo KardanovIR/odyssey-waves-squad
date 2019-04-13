@@ -2,17 +2,17 @@
     display: flex;
     flex: 1;
     background-color: #f8f9fb;
-    padding: 4% 0px 0px 0px;
+    padding: 4% 4% 4% 4%;
 }
 
 .shipments__left{
-    flex: 1 1 40%;
-    border: 1px solid black;
+    flex: 1 1 30%;
+    /*border: 1px solid black;*/
 }
 
 .shipments__right{
-    flex: 1 1 60%;
-    border: 1px solid black;
+    flex: 1 1 70%;
+    /*border: 1px solid black;*/
 }
 
 .shipments__right_topBar{
