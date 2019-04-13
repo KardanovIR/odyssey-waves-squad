@@ -61,7 +61,7 @@ export default class ShipmentDetail extends React.Component<{
     const shipment: IShipment = shipmentsStore.shipments.find(sh => sh.id === id)!
 
     const getShipmentButton = () => {
-      if (shipment.status === 'onTheWay' || shipment.status === 'approved' || shipment.status === 'damaged')
+      if ((shipment.status === 'onTheWay' || shipment.status === 'approved' || shipment.status === 'damaged') && shipment.carrier === currentUser.publicKey)
         return <div style={{ marginLeft: 23 }} className='shipments__right_tobBar_addBtn' onClick={() => {
           this.openTransferPopup()
         }}>Transfer</div>

@@ -193,5 +193,22 @@ export default class ShipmentsStore extends SubStore {
     await axios.post(BASE_URL +'/shipments', this.shipmentCreation)
     await this.syncShipments()
   }
+
+  async transferShipment(shipment: IShipment){
+    if (shipment.carrier === shipment.recipient){
+      shipment.status = 'done';
+    }else if (shipment.claims.length > 0){
+      shipment.status = 'damaged'
+    }else {
+      shipment.status = 'onTheWay'
+    }
+
+    //await this.updateShipment(shipment)
+  }
+
+  async approveShipment(shipment: IShipment){
+    shipment.status = 'approved'
+    // await this.updateShipment(shipment)
+  }
 }
 
