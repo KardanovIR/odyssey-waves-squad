@@ -7,6 +7,7 @@ import './styles.css'
 import AuthStore from '@src/store/AuthStore'
 import Login from './Login'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import CreateShipment from '@components/CreateShipment'
 
 interface IInjectedProps {
   appStore?: AppStore
@@ -30,6 +31,7 @@ export default class App extends React.Component<IInjectedProps> {
             <TopBar user={user} />
 
             <Route exact path='/' component={Shipments} />
+            <Route exact path='/createShipment' component={CreateShipment} />
           </div>
         </Router>
         :
