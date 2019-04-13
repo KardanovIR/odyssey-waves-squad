@@ -20,12 +20,14 @@ async function createTransportRoute(transportRoute) {
               transportRoute.countryTo,
               transportRoute.carrier,
               transportRoute.createDate
-          ], (error, result) => {
+          ], (error, results) => {
               if (error) {
                   console.log(error);
                   reject(error);
               }
-              resolve(result);
+              if(results)
+            resolve(results.rows);
+          resolve();
           })
   })
 }
@@ -37,7 +39,9 @@ async function findTransportRouteByShipmentId(shipmentid) {
           if (error) {
               reject(error);
           }
-          resolve(results.rows);
+          if(results)
+            resolve(results.rows);
+          resolve();
       });
   });
 }
@@ -49,8 +53,9 @@ async function findTransportRouteById(routeid) {
           if (error) {
               reject(error);
           }
-          if(result!=null)
-          resolve(results.rows);
+          if(results)
+            resolve(results.rows);
+          resolve();
       });
   });
 }
@@ -62,14 +67,31 @@ async function getTransportRoute() {
           if (error) {
               reject(error);
           }
-          resolve(results.rows);
+          if(results)
+            resolve(results.rows);
+          resolve();
+      });
+  });
+}
+
+async function findByShipmentId(shipmentid) {
+  console.log("getTransportRoute");
+  return new Promise((resolve, reject) => {
+      pool.query('SELECT * FROM transport_routes WHERE shipmentid = $1 ORDER BY id ASC ', [shipmentid], (error, results) => {
+          if (error) {
+              reject(error);
+          }
+          if(results)
+            resolve(results.rows);
+          resolve([]);
       });
   });
 }
 
   module.exports = {
-    findTransportRouteByShipmentId: findTransportRouteByShipmentId,
+    findByShipmentId: findByShipmentId,
     createTransportRoute:createTransportRoute,
     getTransportRoute: getTransportRoute,
-    findTransportRouteById: findTransportRouteById
+    findTransportRouteById: findTransportRouteById,
+    findByShipmentId:findByShipmentId
   };

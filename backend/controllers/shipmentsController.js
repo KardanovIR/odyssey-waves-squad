@@ -1,6 +1,10 @@
 // shipmentController.js
 shipmentsRep = require('../repository/shipmentRepository');
 goodsRep = require('../repository/goodsRepository');
+claimRep = require('../repository/claimRepository');
+extraInfoRep = require('../repository/extraInfoRepository');
+routeRep = require('../repository/routeRepository');
+metricRep = require('../repository/metricsRepository');
 
 CreateShipmentModel = require('../models/api/shipment/CreateShipmentRequest');
 GetShipmentModel = require('../models/api/shipment/GetShipmentResponce');
@@ -91,8 +95,12 @@ async function view (req, res) {
     try {
         console.log("view");
         var shipmentId = req.params.shipment_id
-        var shipment = await shipmentsRep.findShipmentById(shipmentId);
-        shipment.goods = await goodsRep.findGoodsByShipmentId(shipmentId);
+        var shipment = await shipmentsRep.findById(shipmentId);
+        shipment.goods = await goodsRep.findByShipmentId(shipmentId);
+        shipment.claims = await claimRep.findByShipmentId(shipmentId);
+        shipment.extraInfo = await extraInfoRep.findByShipmentId(shipmentId);
+        shipment.transportRoute = await routeRep.findByShipmentId(shipmentId);
+        shipment.metricData = await metricRep.findByDeviceId(shipment.device);
         res.json({
             status: "success",
             message: "Shipment details successfully",
