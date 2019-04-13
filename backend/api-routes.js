@@ -60,6 +60,10 @@ router.route('/shipments/send/:user_id')
     .get(shipmentsController.allSend);
 router.route('/shipments/carier/:user_id')
     .get(shipmentsController.allCarier);
+router.route('/shipments/transfer')
+    .post(shipmentsController.transfer);
+router.route('/shipments/changeStatus')
+    .post(shipmentsController.changeStatus);
     // router.route('/contacts/:contact_id')
 //     .get(contactController.view)
 //     .patch(contactController.update)

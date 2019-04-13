@@ -39,11 +39,15 @@ export default class TransferPopup extends React.Component<{ open: boolean, onCl
           <div style={{ height: 20 }}></div>
           <div className='__h2'>Documents</div>
           <div className='__h3'>Upload documents</div>
-          <div style={{
+          <div className='__card_dotted' style={{
             height: 151,
             borderRadius: 2,
+            cursor: 'pointer',
             border: 'solid 1px #dbe1e9',
-          }}></div>
+          }}>
+            <img style={{ marginLeft: '43%', marginTop: 30 }} src='assets/icons/upload.svg' ></img>
+            <div style={{ textAlign: 'center', marginTop: 10 }} className='__h2'>Drag &amp; Drop your files or Browse</div>
+          </div>
         </div>
         <Button variant='primary' style={{
           width: 430,

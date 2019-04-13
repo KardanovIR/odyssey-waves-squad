@@ -1,17 +1,17 @@
 import * as React from 'react'
 import More from '@src/icons/More'
-import {withRouter, RouteComponentProps} from 'react-router-dom'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 
 
 interface IShipmentProps {
   shipment: any
-  history: any
+  history?: any
 }
 
 @withRouter
-export default class Shipment extends React.Component<IShipmentProps > {
+export default class Shipment extends React.Component<IShipmentProps> {
   render() {
-    const {shipment} = this.props
+    const { shipment } = this.props
     const statusEl = {
       'forming': <div className='Forming shipment__field'>Forming</div>,
       'formed': <div className='Formed shipment__field'>Formed</div>,
@@ -41,8 +41,8 @@ export default class Shipment extends React.Component<IShipmentProps > {
         <div className='shipment__fieldLabel'>Arrival date</div>
         <div className='shipment__field'>{shipment.arrivalDate}</div>
       </div>
-      <div onClick={() => this.props.history.push(`/shipment/${shipment.id}`)} style={{cursor:'pointer'}}>
-        <More/>
+      <div onClick={() => this.props.history.push(`/shipment/${shipment.id}`)} style={{ cursor: 'pointer' }}>
+        <More />
       </div>
     </div>
   }

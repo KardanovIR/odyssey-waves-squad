@@ -1,5 +1,5 @@
 import SubStore from './SubStore'
-import {action, computed, observable, reaction} from 'mobx'
+import { action, computed, observable, reaction } from 'mobx'
 import RootStore from '@store/RootStore'
 import axios from 'axios'
 
@@ -59,7 +59,6 @@ export interface IShipment {
   claims: IClaim[]
   extraInfo: IExtraInfo[]
   status: string,
-
 }
 
 export default class ShipmentsStore extends SubStore {
