@@ -8,13 +8,12 @@ ClaimResponceModel = require('../models/api/claim/CreateClaimRequest');
 
 // Handle create claim actions
 async function create (req, res) {
-    var claim = new CreateClaimRequsetModel();
-
+    // var claim = new CreateClaimRequsetModel();
+    var claim = req.body;
     // save the claim and check for errors
     try {
         //var claimId = await db.createUser(contact);
         //claimId.createrId = userId;
-
         res.json({
                 message: 'New claim created!',
                 data: claim

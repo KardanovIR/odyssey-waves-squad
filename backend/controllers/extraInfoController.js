@@ -8,16 +8,16 @@ ExtraInfoResponceModel = require('../models/api/extrainfo/GetExtrainfoResponce')
 
 // Handle create claim actions
 async function create (req, res) {
-    var claim = new CreateExtraInfoRequsetModel();
+    var extraInfo = req.body;
 
-    // save the claim and check for errors
+    // save the extraInfo and check for errors
     try {
         //var claimId = await db.createUser(contact);
         //claimId.createrId = userId;
 
         res.json({
                 message: 'New ExtraInfo created!',
-                data: claim
+                data: extraInfo
         });
     }
     catch (e) {

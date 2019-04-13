@@ -40,8 +40,9 @@ async function view (req, res) {
 };
 
 async function create (req, res) {
-    var claim = new CreateGoodsRequsetModel();
+    
 
+    var goods = req.body;
     // save the claim and check for errors
     try {
         //var claimId = await db.createUser(contact);
@@ -49,7 +50,7 @@ async function create (req, res) {
 
         res.json({
                 message: 'New goods created!',
-                data: claim
+                data: goods
         });
     }
     catch (e) {

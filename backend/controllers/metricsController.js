@@ -7,8 +7,10 @@ MetricResponceModel = require('../models/api/metrics/GetMetricResponce');
 
 // Handle create claim actions
 async function create (req, res) {
-    var claim = new CreateMetricRequsetModel();
-
+    var metrics = new CreateMetricRequsetModel();
+    metrics.type=req.body.type ? req.body.type : "default";
+    metrics.value=req.body.value ? req.body.value : "0";
+    metrics.deviceId=req.body.deviceId ? req.body.deviceId : "0";
     // save the claim and check for errors
     try {
         //var claimId = await db.createUser(contact);
@@ -16,7 +18,7 @@ async function create (req, res) {
 
         res.json({
                 message: 'New metric created!',
-                data: claim
+                data: metrics
         });
     }
     catch (e) {
