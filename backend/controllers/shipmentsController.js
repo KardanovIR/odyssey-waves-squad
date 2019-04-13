@@ -1,21 +1,19 @@
 // shipmentController.js
 db = require('../repository/repository')
 
-CreateClaimRequsetModel = require('../models/api/claim/CreateClaimRequest');
-ClaimResponceModel = require('../models/api/claim/CreateClaimRequest');
+CreateShipmentModel = require('../models/api/shipment/CreateShipmentRequest');
+GetShipmentModel = require('../models/api/shipment/GetShipmentResponce');
 
 // Handle create claim actions
 async function create (req, res) {
-    var claim = new CreateClaimRequsetModel();
-
-    // save the claim and check for errors
     try {
         //var claimId = await db.createUser(contact);
         //claimId.createrId = userId;
-
+        var shipment = req.body;
+        await db.createShipment(shipment);
         res.json({
-                message: 'New claim created!',
-                data: claim
+                message: 'New shipment created!',
+                data: shipment
         });
     }
     catch (e) {
@@ -26,11 +24,11 @@ async function create (req, res) {
 async function index (req, res) {
     try {
         console.log("index");
-        //var users = await db.getUsers();
+        var shipments = await db.getShipments();
         res.json({
             status: "success",
-            message: "Claims retrieved successfully",
-            data: [new ClaimResponceModel(), new ClaimResponceModel()]
+            message: "Shipments retrieved successfully",
+            data: shipments
         });
     }
     catch (e) {
@@ -41,12 +39,13 @@ async function index (req, res) {
 
 async function view (req, res) {
     try {
-        console.log("index");
-        //var users = await db.getUsers();
+        console.log("view");
+        var shipmentId = req.params.shipment_id
+        var shipment = await db.findShipmentById(shipmentId);
         res.json({
             status: "success",
-            message: "Claim details successfully",
-            data: new ClaimResponceModel()
+            message: "Shipment details successfully",
+            data: shipment
         });
     }
     catch (e) {

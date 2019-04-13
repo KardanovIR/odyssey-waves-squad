@@ -1,18 +1,18 @@
 // claimController.js
-// Import contact mode
-
 db = require('../repository/repository')
 
 CreateClaimRequsetModel = require('../models/api/claim/CreateClaimRequest');
-ClaimResponceModel = require('../models/api/claim/CreateClaimRequest');
+ClaimResponceModel = require('../models/api/claim/GetClaimResponce');
 
 // Handle create claim actions
 async function create (req, res) {
-    // var claim = new CreateClaimRequsetModel();
-    var claim = req.body;
+    console.log("api createClaim");
+    
     // save the claim and check for errors
     try {
-        //var claimId = await db.createUser(contact);
+        var claim = req.body;
+        console.log(claim);
+        await db.createClaim(claim);
         //claimId.createrId = userId;
         res.json({
                 message: 'New claim created!',
@@ -27,11 +27,11 @@ async function create (req, res) {
 async function index (req, res) {
     try {
         console.log("index");
-        //var users = await db.getUsers();
+        var claims = await db.getClaims();
         res.json({
             status: "success",
             message: "Claims retrieved successfully",
-            data: [new ClaimResponceModel(), new ClaimResponceModel()]
+            data: claims
         });
     }
     catch (e) {
@@ -42,12 +42,13 @@ async function index (req, res) {
 
 async function view (req, res) {
     try {
-        console.log("index");
-        //var users = await db.getUsers();
+        console.log("view");
+        var claimId = req.params.claim_id
+        var claim = await db.findClaimByid(claimId);
         res.json({
             status: "success",
             message: "Claim details successfully",
-            data: new ClaimResponceModel()
+            data: claim
         });
     }
     catch (e) {
