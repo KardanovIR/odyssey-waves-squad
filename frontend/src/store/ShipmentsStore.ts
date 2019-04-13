@@ -1,8 +1,9 @@
 import SubStore from './SubStore'
-import {action, computed, observable, reaction, runInAction, toJS} from 'mobx'
+import {computed, observable, toJS, runInAction} from 'mobx'
 import RootStore from '@store/RootStore'
 import axios from 'axios'
 import {setInterval} from 'timers'
+import { SipmentStatus } from '@src/common/shipmentStatus'
 
 
 const BASE_URL = 'http://backend.odyssey.wavesplatform.com:8080/api/'
@@ -43,6 +44,7 @@ export interface IExtraInfo {
   creater: string
 }
 
+
 export interface IShipment {
   id: string
   title: string
@@ -61,7 +63,7 @@ export interface IShipment {
   goods: IGood[]
   claims: IClaim[]
   extraInfo: IExtraInfo[]
-  status: string,
+  status: SipmentStatus,
 }
 
 export default class ShipmentsStore extends SubStore {
