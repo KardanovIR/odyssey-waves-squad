@@ -9,7 +9,7 @@ class CreateShipmentRequest {
         this.from='';
         this.to='';
         this.departureDate='';
-        this.policeId='';
+        this.policyId='';
         this.carrier='';
         this.createDate='';
         this.arrivalDate='';
