@@ -6,13 +6,12 @@ import { inject, observer } from 'mobx-react'
 import ShipmentsStore from '@store/ShipmentsStore'
 import Shipment from '@components/Shipments/Shipment'
 import TransferPopup from '@components/TransferPopup'
-import { Modal, Button } from 'react-bootstrap'
-import { withRouter, RouteComponentProps } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 @withRouter
 @inject('shipmentsStore')
 @observer
-export default class Shipments extends React.Component<{ shipmentsStore?: ShipmentsStore, history: any }> {
+export default class Shipments extends React.Component<{ shipmentsStore?: ShipmentsStore, history?: any }> {
 
   state = {
     show: false,

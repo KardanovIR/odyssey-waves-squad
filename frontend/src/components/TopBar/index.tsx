@@ -2,7 +2,7 @@ import * as React from 'react'
 import './styles.css'
 import { observer, inject } from 'mobx-react'
 import AuthStore, { User } from '@src/store/AuthStore'
-import {withRouter, RouteComponentProps} from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 const trim = (str: string, len: number) => {
   return str.substr(0, len) + '...'
@@ -11,7 +11,7 @@ const trim = (str: string, len: number) => {
 @withRouter
 @inject('authStore')
 @observer
-export default class TopBar extends React.Component<{ authStore?: AuthStore, user: User, history:any }> {
+export default class TopBar extends React.Component<{ authStore?: AuthStore, user: User, history?: any }> {
   render() {
     const user = this.props.user
     const authStore = this.props.authStore!
