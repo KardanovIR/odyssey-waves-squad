@@ -51,9 +51,12 @@ var extraInfo = {
 }
 
 var transportRoute = {
-    SequenceNr:0,
-    from:'',
-    to:''
+    shipmentId: 0,
+    sequenceNr: 0,
+    countryFrom:'',
+    countryTo:'',
+    carrier:'',
+    createDate:''
 }
 
 var metricaDate = {
