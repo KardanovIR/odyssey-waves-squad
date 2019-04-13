@@ -33,8 +33,13 @@ export default class CargoInformation extends React.Component<{ shipmentsStore?:
         />
         <div className='sender__textDescription'>Type</div>
         <Dropdown>
-          <Dropdown.Toggle className='createShipment__cargotype_btn' variant='success' id='dropdown-basic'>
-            {good.type}
+          <Dropdown.Toggle className='createShipment__cargotype_btn' id='dropdown-basic'>
+            {{
+              basic: 'Basic',
+              'fragile': 'Fragile',
+              'temperature sensitive': 'Temperature sensitive',
+              'humidity sensitive': 'Humidity sensitive',
+            }[good.type]}
           </Dropdown.Toggle>
           <Dropdown.Menu>
             <Dropdown.Item onClick={() => good.type = 'basic'}>Basic</Dropdown.Item>
