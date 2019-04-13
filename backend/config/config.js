@@ -12,7 +12,10 @@ const dev = {
    password : process.env.DEV_DB_PASSWORD || ''
  },
  waves: {
-   host: process.env.DEV_WAVES_HOST|| 'https://testnodes.wavesnodes.com'
+   host: process.env.DEV_WAVES_HOST || 'https://testnodes.wavesnodes.com'
+ },
+ tvm: {
+   host: process.env.DEV_TVM_HOST || 'https://tvmreserve2-test.mendixcloud.com/rest/billoflading/v1'
  }
 };
 const test = {
