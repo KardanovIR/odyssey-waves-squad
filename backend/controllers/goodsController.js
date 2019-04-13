@@ -9,11 +9,11 @@ GoodsResponceModel = require('../models/api/goods/GetGoodsResponce');
 async function index (req, res) {
     try {
         console.log("index");
-        //var users = await db.getUsers();
+        var goods = await db.getGoods();
         res.json({
             status: "success",
             message: "Goods retrieved successfully",
-            data: [new GoodsResponceModel(), new GoodsResponceModel()]
+            data: goods
         });
     }
     catch (e) {
@@ -25,12 +25,13 @@ async function index (req, res) {
 // Handle view goods info
 async function view (req, res) {
     try {
-        console.log("index");
-        //var users = await db.getUsers();
+        console.log("view goods");
+        var goodsId = req.params.goods_id
+        var goods = await db.findGoodsById(goodsId);
         res.json({
             status: "success",
             message: "Goods details successfully",
-            data: new GoodsResponceModel()
+            data: goods
         });
     }
     catch (e) {
@@ -40,12 +41,10 @@ async function view (req, res) {
 };
 
 async function create (req, res) {
-    
-
     var goods = req.body;
     // save the claim and check for errors
     try {
-        //var claimId = await db.createUser(contact);
+         await db.createGoods(goods);
         //claimId.createrId = userId;
 
         res.json({

@@ -8,7 +8,6 @@ class CreateGoodsRequest {
             this.value='';
             this.quantity='';
             this.wight='';
-            this.creater= '';
     }
 }
     
