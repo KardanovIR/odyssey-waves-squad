@@ -12,7 +12,7 @@ async function create (req, res) {
 
     // save the extraInfo and check for errors
     try {
-        //var claimId = await db.createUser(contact);
+        await db.createExtraInfo(extraInfo);
         //claimId.createrId = userId;
 
         res.json({
@@ -28,11 +28,11 @@ async function create (req, res) {
 async function index (req, res) {
     try {
         console.log("index");
-        //var users = await db.getUsers();
+        var extraInfo = await db.getExtraInfo();
         res.json({
             status: "success",
             message: "ExtraInfo retrieved successfully",
-            data: [new ExtraInfoResponceModel(), new ExtraInfoResponceModel()]
+            data: extraInfo
         });
     }
     catch (e) {
@@ -44,11 +44,12 @@ async function index (req, res) {
 async function view (req, res) {
     try {
         console.log("index");
-        //var users = await db.getUsers();
+        var extraInfoId = req.params.extraInfo_id
+        var extraInfo = await db.findExtraInfoById(extraInfoId);
         res.json({
             status: "success",
             message: "ExtraInfo details successfully",
-            data: new ExtraInfoResponceModel()
+            data: extraInfo
         });
     }
     catch (e) {

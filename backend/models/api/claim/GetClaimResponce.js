@@ -3,6 +3,7 @@
 class GetClaimResponce {
     constructor(){
         this.id = '';
+        this.creater = '';
         this.createDate = '';
         this.description = '';
         this.shipmentId = '';
@@ -10,7 +11,6 @@ class GetClaimResponce {
             longitude:'',
             latitude:''
         };
-        this.creater= ''
     }
 }
     

@@ -147,8 +147,8 @@ async function findGoodsById (goodsId) {
 async function createClaim (claim) {
   console.log("createClaim")
     return new Promise((resolve, reject) => {
-      pool.query('INSERT INTO claims (createrid, description, shipmentid, location, createdate) VALUES ($1, $2, $3, $4, $5)',
-        [claim.createrId, claim.description, claim.shipmentId, claim.location, claim.createData], (error, result) => {
+      pool.query('INSERT INTO claims (creater, description, shipmentid, location, createdate) VALUES ($1, $2, $3, $4, $5)',
+        [claim.creater, claim.description, claim.shipmentId, claim.location, claim.createData], (error, result) => {
         if (error) {
           console.log(error);
           reject(error);
@@ -186,7 +186,7 @@ async function createClaim (claim) {
   async function createShipment (shipment) {
     console.log("createClaim")
       return new Promise((resolve, reject) => {
-        pool.query('INSERT INTO shipments (senderid, recipientid, countryfrom, countryto, departuredate, policeid, carrier, title, createdate) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)', 
+        pool.query('INSERT INTO shipments (sender, recipient, countryfrom, countryto, departuredate, policeid, carrier, title, createdate, status, arrivaldate, device) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)', 
           [
             shipment.sender, 
             shipment.recipient, 
@@ -196,7 +196,10 @@ async function createClaim (claim) {
             shipment.PoliciId,
             shipment.carrier, 
             shipment.title, 
-            shipment.createDate
+            shipment.createDate,
+            shipment.status,
+            shipment.arrivalDate,
+            shipment.device
           ], (error, result) => {
           if (error) {
             console.log(error);
@@ -210,7 +213,7 @@ async function createClaim (claim) {
 
 async function updateShipment (shipment) {
   return new Promise((resolve, reject) => {
-    pool.query('UPDATE shipment SET senderid = $2, recipientid = $3, countryfrom = $4, countryto = $5, departuredate = $6, policeid = $7, carrier = $8, title = $9, createdate = $10 WHERE id = $1',
+    pool.query('UPDATE shipment SET sender = $2, recipient = $3, countryfrom = $4, countryto = $5, departuredate = $6, policeid = $7, carrier = $8, title = $9, createdate = $10, status = $11, arrivaldate = $12, device = $13 WHERE id = $1',
         [
           shipment.id,
           shipment.sender,
@@ -221,7 +224,10 @@ async function updateShipment (shipment) {
           shipment.PoliciId,
           shipment.carrier,
           shipment.title,
-          shipment.createDate
+          shipment.createDate,
+          shipment.status,
+          shipment.arrivalDate,
+          shipment.device
         ], (error, result) => {
           if (error) {
             console.log(error);
@@ -247,7 +253,7 @@ async function updateShipment (shipment) {
     async function getShipmentsBySenderId (userId) {
       console.log("getClaims")
       return new Promise((resolve, reject) => {
-        pool.query('SELECT * FROM shipments ORDER BY id ASC WHERE senderid = $1', [userId],  (error, results) => {
+        pool.query('SELECT * FROM shipments ORDER BY id ASC WHERE sender = $1', [userId],  (error, results) => {
           if (error) {
             reject(error);
           }
@@ -259,7 +265,7 @@ async function updateShipment (shipment) {
     async function getShipmentsByRecipientId (userId) {
       console.log("getClaims")
       return new Promise((resolve, reject) => {
-        pool.query('SELECT * FROM shipments ORDER BY id ASC WHERE recipientid = $1', [userId],  (error, results) => {
+        pool.query('SELECT * FROM shipments ORDER BY id ASC WHERE recipient = $1', [userId],  (error, results) => {
           if (error) {
             reject(error);
           }
@@ -293,6 +299,56 @@ async function updateShipment (shipment) {
       })
     }
 
+    async function createExtraInfo (extraInfo) {
+      console.log("createExtraInfo")
+        return new Promise((resolve, reject) => {
+          pool.query('INSERT INTO extrainfo (creater, description, shipmentid, location, createdate) VALUES ($1, $2, $3, $4, $5)',
+        [extraInfo.creater, extraInfo.description, extraInfo.shipmentId, extraInfo.location, extraInfo.createData], (error, result) => {
+            if (error) {
+              console.log(error);
+              reject(error);
+            }
+            resolve(result);
+          })
+        })
+      }
+      
+      async function getExtraInfo() {
+        console.log("getExtraInfo")
+        return new Promise((resolve, reject) => {
+          pool.query('SELECT * FROM extrainfo ORDER BY id ASC', (error, results) => {
+            if (error) {
+              reject(error);
+            }
+            resolve(results.rows);
+          });
+        })
+      }
+      
+      async function findExtraInfoById (extraInfoId) {
+        console.log("findExtraInfoById")
+        return new Promise((resolve, reject) => {
+            pool.query('SELECT * FROM extrainfo WHERE id = $1', [extraInfoId], (error, results) => {
+            if (error) {
+              reject(error);
+            }
+            console.log(results)
+            resolve(results.rows);
+          })
+        })
+      }
+    
+    async function getExtraInfo() {
+      console.log("getExtraInfo")
+      return new Promise((resolve, reject) => {
+        pool.query('SELECT * FROM extraInfo ORDER BY id ASC', (error, results) => {
+          if (error) {
+            reject(error);
+          }
+          resolve(results.rows);
+        });
+      })
+    }
 module.exports = {
   getUsers: getUsers,
   createUser: createUser,
@@ -309,5 +365,8 @@ module.exports = {
   findShipmentById:findShipmentById,
   getShipmentsBySenderId:getShipmentsBySenderId,
   getShipmentsByRecipientId:getShipmentsByRecipientId,
-  getShipmentsByCarrierId:getShipmentsByCarrierId
+  getShipmentsByCarrierId:getShipmentsByCarrierId,
+  createExtraInfo:createExtraInfo,
+  findExtraInfoById:findExtraInfoById,
+  getExtraInfo:getExtraInfo
 };
