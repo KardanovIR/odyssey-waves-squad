@@ -1,5 +1,5 @@
 // shipmentController.js
-db = require('../repository/repository')
+shipmentsRep = require('../repository/shipmentRepository')
 
 CreateShipmentModel = require('../models/api/shipment/CreateShipmentRequest');
 GetShipmentModel = require('../models/api/shipment/GetShipmentResponce');
@@ -10,7 +10,7 @@ async function create (req, res) {
         //var claimId = await db.createUser(contact);
         //claimId.createrId = userId;
         var shipment = req.body;
-        await db.createShipment(shipment);
+        await shipmentsRep.createShipment(shipment);
         res.json({
                 message: 'New shipment created!',
                 data: shipment
@@ -24,7 +24,7 @@ async function create (req, res) {
 async function index (req, res) {
     try {
         console.log("index");
-        var shipments = await db.getShipments();
+        var shipments = await shipmentsRep.getShipments();
         res.json({
             status: "success",
             message: "Shipments retrieved successfully",
@@ -41,7 +41,7 @@ async function allRecived (req,res) {
     try {
         console.log("index");
         var userId = req.params.user_id
-        var shipments = await db.getShipmentsByReciverId(userId);
+        var shipments = await shipmentsRep.getShipmentsByReciverId(userId);
         res.json({
             status: "success",
             message: "Recived Shipments retrieved successfully",
@@ -58,7 +58,7 @@ async function allSend (req,res) {
     try {
         console.log("index");
         var userId = req.params.user_id
-        var shipments = await db.getShipmentsBySenderId(userId);
+        var shipments = await shipmentsRep.getShipmentsBySenderId(userId);
         res.json({
             status: "success",
             message: "Send Shipments retrieved successfully",
@@ -75,7 +75,7 @@ async function allCarier (req,res) {
     try {
         console.log("index");
         var userId = req.params.user_id
-        var shipments = await db.getShipmentsByCarierId(userId);
+        var shipments = await shipmentsRep.getShipmentsByCarierId(userId);
         res.json({
             status: "success",
             message: "Carier Shipments retrieved successfully",
@@ -92,7 +92,7 @@ async function view (req, res) {
     try {
         console.log("view");
         var shipmentId = req.params.shipment_id
-        var shipment = await db.findShipmentById(shipmentId);
+        var shipment = await shipmentsRep.findShipmentById(shipmentId);
         res.json({
             status: "success",
             message: "Shipment details successfully",

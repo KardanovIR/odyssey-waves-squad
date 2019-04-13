@@ -12,6 +12,11 @@ let Config = require("./config/config");
 var swaggerUi = require('swagger-ui-express'),
 swaggerDocument = require('./doc/swagger.json');
 
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 
 // Configure bodyparser to handle post requests
 app.use(bodyParser.urlencoded({

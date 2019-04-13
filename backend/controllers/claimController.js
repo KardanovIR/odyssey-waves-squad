@@ -1,5 +1,5 @@
 // claimController.js
-db = require('../repository/repository')
+claimRep = require('../repository/claimRepository')
 
 CreateClaimRequsetModel = require('../models/api/claim/CreateClaimRequest');
 ClaimResponceModel = require('../models/api/claim/GetClaimResponce');
@@ -12,7 +12,7 @@ async function create (req, res) {
     try {
         var claim = req.body;
         console.log(claim);
-        await db.createClaim(claim);
+        await claimRep.createClaim(claim);
         //claimId.createrId = userId;
         res.json({
                 message: 'New claim created!',
@@ -27,7 +27,7 @@ async function create (req, res) {
 async function index (req, res) {
     try {
         console.log("index");
-        var claims = await db.getClaims();
+        var claims = await claimRep.getClaims();
         res.json({
             status: "success",
             message: "Claims retrieved successfully",
@@ -44,7 +44,7 @@ async function view (req, res) {
     try {
         console.log("view");
         var claimId = req.params.claim_id
-        var claim = await db.findClaimByid(claimId);
+        var claim = await claimRep.findClaimById(claimId);
         res.json({
             status: "success",
             message: "Claim details successfully",
