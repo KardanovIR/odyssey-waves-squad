@@ -1,7 +1,5 @@
 // userController.js
 // Import contact model
-Contact = require('../models/contactModel');
-
 db = require('../repository/repository')
 
 UserModel = require('../models/api/LoginUserModel');

@@ -7,8 +7,8 @@ class GetClaimResponce {
         this.description = '';
         this.shipmentId = '';
         this.location = {
-            longitude='',
-            latitude=''
+            longitude:'',
+            latitude:''
         };
         this.creater= ''
     }

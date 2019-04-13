@@ -23,8 +23,8 @@ class GetShipmentResponce {
             id='',
             description='',
             location={
-                longitude='',
-                latitude=''
+                longitude:'',
+                latitude:''
             },
             createDate='',
             creater=''
@@ -33,8 +33,8 @@ class GetShipmentResponce {
             id='',
             description='',
             location={
-                longitude='',
-                latitude=''
+                longitude:'',
+                latitude:''
             },
             createDate='',
             creater=''

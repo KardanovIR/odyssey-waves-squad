@@ -2,6 +2,7 @@
 
 class CreateGoodsRequest {
     constructor(){
+        this.createrId = '';
             this.type='';
             this.description='';
             this.value='';
