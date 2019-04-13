@@ -10,22 +10,102 @@ export const statusLabelMap = {
   done: 'Done',
 }
 
+export interface IGood {
+  id: string
+  type: string
+  description: string
+  value: string
+  quantity: number
+  weight: number
+}
+
+export interface ILocation {
+  longitude: string,
+  latitude: string,
+}
+export interface IClaim {
+  id: string,
+  description: string,
+  location: ILocation,
+  createDate: string,
+  creater: string
+}
+
+export interface IExtraInfo {
+  id: string
+  description: string
+  location: ILocation
+  createData: string
+  creater: string
+}
+
+export interface IShipment {
+  id: string
+  title: string
+  sender: string
+  recipient: string
+  from: string
+  to: string
+  departureDate: string
+  policyId?: string
+  carrier: string
+  goods: IGood[]
+  claims: IClaim[]
+  extraInfo: IExtraInfo[]
+  status: string,
+
+}
+
 export default class ShipmentsStore extends SubStore {
-  @observable shipments: any[] = [{
-    status: 'damaged',
+  @observable shipments: IShipment[] = [{
+    id: '2PxysbRPFLtrgwGqVVAhVnUesrydfuAUvJwZ3HXXuTTpSe',
+    title: 'First shipment',
+    sender: 'romashka',
     recipient: 'Roga i Kopita',
-    sender: 'romashka',
+    from: 'Canada',
+    to: 'Russia',
     departureDate: '2019.01.01',
-  },{
+    policyId: undefined,
+    carrier: 'Example carrier',
+    goods: [],
+    claims: [],
+    extraInfo: [],
+    status: 'damaged',
+  }, {
+    id: '2PxysbRPFLtrgwGqVVAhVnUesrydfuAUvJwZ3HXXuTTpSe',
+    title: 'First shipment',
+    sender: 'romashka 2',
+    recipient: 'Roga i Kopita 2',
+    from: 'Canada',
+    to: 'Russia',
+    departureDate: '2019.01.08',
+    policyId: undefined,
+    carrier: 'Example carrier',
+    goods: [],
+    claims: [],
+    extraInfo: [],
     status: 'approved',
-    recipient: 'Interstellar LLC',
-    sender: 'romashka',
-    departureDate: '2019.05.01',
   }]
 
 
-  @computed get visibleShipments(){
-    return this.shipments.filter(shipment =>  this.statusFilters.All || this.statusFilters[shipment.status])
+  @observable shipmentCreation: Partial<IShipment> = {
+    id: '2PxysbRPFLtrgwGqVVAhVnUesrydfuAUvJwZ3HXXuTTpSe',
+    title: 'First shipment',
+    sender: 'romashka 2',
+    recipient: 'Roga i Kopita 2',
+    from: 'Canada',
+    to: 'Russia',
+    departureDate: '2019.01.08',
+    policyId: undefined,
+    carrier: 'Example carrier',
+    goods: [],
+    claims: [],
+    extraInfo: [],
+    status: 'approved',
+  }
+
+  @computed get visibleShipments() {
+    return this.shipments.filter(shipment => this.statusFilters.All || this.statusFilters[shipment.status])
   }
 
   @observable statusFilters = {

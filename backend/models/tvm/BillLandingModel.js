@@ -27,7 +27,7 @@ var BillLandingModel = {
         SequenceNr: 0,
         FromCountry: 'string',
         FromPlace: 'string',
-        ToCountry: 'strin g',
+        ToCountry: 'string',
         ToPlace: 'string'
       }
     ]

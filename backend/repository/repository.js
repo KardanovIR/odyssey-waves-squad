@@ -31,6 +31,7 @@ async function createUser (contact) {
     })
   })
 }
+
 const getUserById = (request, response) => {
   const id = parseInt(request.params.id)
 
@@ -68,7 +69,33 @@ const deleteUser = (request, response) => {
   })
 }
 
+async function createMetrics (metrics) {
+  return new Promise((resolve, reject) => {
+    pool.query('INSERT INTO metrics (deviceid, type, value, createDate) VALUES ($1, $2, $3, $4)', [metrics.deviceId, metrics.type, metrics.value, metrics.createDate], (error, result) => {
+      if (error) {
+        console.log(error);
+        reject(error);
+      }
+      resolve();
+    })
+  })
+}
+
+async function getMetrics() {
+  console.log("getMetrics")
+  return new Promise((resolve, reject) => {
+    pool.query('SELECT * FROM metrics ORDER BY id ASC', (error, results) => {
+      if (error) {
+        reject(error);
+      }
+      resolve(results.rows);
+    });
+  })
+}
+
 module.exports = {
   getUsers: getUsers,
   createUser: createUser,
+  createMetrics: createMetrics,
+  getMetrics:getMetrics
 };

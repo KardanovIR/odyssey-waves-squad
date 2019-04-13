@@ -5,7 +5,7 @@ const dev = {
    port: parseInt(process.env.DEV_APP_PORT) || 8080
  },
  db: {
-   host: process.env.DEV_DB_HOST || 'localhost',
+   host: process.env.DEV_DB_HOST || 'backend.odyssey.wavesplatform.com',
    port: parseInt(process.env.DEV_DB_PORT) || 5432,
    name: process.env.DEV_DB_NAME || 'cargo',
    user: process.env.DEV_DB_USER ||'postgres',

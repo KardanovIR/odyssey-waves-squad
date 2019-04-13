@@ -11,11 +11,13 @@ async function create (req, res) {
     metrics.type=req.body.type ? req.body.type : "default";
     metrics.value=req.body.value ? req.body.value : "0";
     metrics.deviceId=req.body.deviceId ? req.body.deviceId : "0";
+    metrics.createDate=req.body.createDate ? req.body.createDate : "";
+
     // save the claim and check for errors
     try {
-        //var claimId = await db.createUser(contact);
-        //claimId.createrId = userId;
-
+        var metricId = await db.createMetrics(metrics);
+        metrics.id = metricId;
+        console.log(metrics);
         res.json({
                 message: 'New metric created!',
                 data: metrics
@@ -29,11 +31,11 @@ async function create (req, res) {
 async function index (req, res) {
     try {
         console.log("index");
-        //var users = await db.getUsers();
+        var metrics = await db.getMetrics();
         res.json({
             status: "success",
             message: "Metric retrieved successfully",
-            data: [new MetricResponceModel(), new MetricResponceModel()]
+            data: metrics
         });
     }
     catch (e) {
