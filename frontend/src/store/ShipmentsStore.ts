@@ -1,6 +1,7 @@
 import SubStore from './SubStore'
 import { action, computed, observable, reaction } from 'mobx'
 import RootStore from '@store/RootStore'
+import { SipmentStatus } from '@src/common/shipmentStatus'
 
 export const statusLabelMap = {
   forming: 'Forming',
@@ -59,6 +60,7 @@ export interface IExtraInfo {
   creater: string
 }
 
+
 export interface IShipment {
   id: string
   title: string
@@ -73,7 +75,7 @@ export interface IShipment {
   goods: TGood[]
   claims: IClaim[]
   extraInfo: IExtraInfo[]
-  status: string,
+  status: SipmentStatus,
 }
 
 export default class ShipmentsStore extends SubStore {
