@@ -48,7 +48,7 @@ export default class ShipmentDetail extends React.Component<{ shipmentsStore?: S
     if (shipment == null) return <div></div>
 
     const good = shipment.goods[0] || {}
-    console.log(shipment)
+
     return <div className='shipmentDetail__root'>
       {/*<div className='shipmentDetail__map'></div>*/}
       <div className='shipmentDetail__content'>

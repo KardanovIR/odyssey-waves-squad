@@ -1,8 +1,11 @@
 import SubStore from './SubStore'
-import { action, computed, observable, reaction } from 'mobx'
+import {action, computed, observable, reaction, toJS} from 'mobx'
 import RootStore from '@store/RootStore'
 import axios from 'axios'
+import {setInterval} from 'timers'
 
+
+const BASE_URL = 'http://backend.odyssey.wavesplatform.com:8080/api/'
 export const statusLabelMap = {
   forming: 'Forming',
   formed: 'Formed',
@@ -154,12 +157,37 @@ export default class ShipmentsStore extends SubStore {
     to: undefined,
   }
 
+  private syncInterval?: any
+
+  constructor(rootStore: RootStore){
+    super(rootStore)
+
+    this.syncInterval = setInterval(() => this.syncShipments(), 10000)
+  }
+
   @computed get visibleShipments() {
     return this.shipments.filter(shipment => this.statusFilters.All || this.statusFilters[shipment.status])
   }
 
+  @computed get currentUser(){
+    return this.rootStore.authStore.currentUser
+  }
+
+  async syncShipments(){
+    const userTypeMap = {
+      'Receiver': 'recived',
+      'Sender': 'send',
+      'Carrier': 'carier',
+    }
+    const user = this.currentUser
+    if (!user) return
+    const resp = await axios.get(BASE_URL + `/shipments/${userTypeMap[user.type]}/${user.publicKey}`)
+    console.log(resp.data)
+  }
 
   async submitShipment(){
-    axios.post('http://backend.odyssey.wavesplatform.com:8080/api/shipments', this.shipmentCreation)
+    console.log(toJS(this.shipmentCreation))
+    axios.post(BASE_URL +'/shipments', this.shipmentCreation)
   }
 }
+
