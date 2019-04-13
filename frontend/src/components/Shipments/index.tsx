@@ -27,7 +27,9 @@ export default class Shipments extends React.Component<{ shipmentsStore?: Shipme
           </div>
           <div className='shipments__right_tobBar_addBtn'>+ Add Shipment</div>
         </div>
-        {shipmentsStore.shipments.map((shipment, i) => <Shipment key={i} shipment={shipment}/>)}
+        <div className={'shipments__right_shipments'}>
+          {shipmentsStore.shipments.map((shipment, i) => <Shipment key={i} shipment={shipment}/>)}
+        </div>
       </div>
     </div>
   }
