@@ -56,7 +56,7 @@ export default class ShipmentDetail extends React.Component<{ shipmentsStore?: S
           <div className='shipmentDetail__left_recipient'>
             <div className='shipmentDetail__left_senderSubtitle root_subtitle'>Recipient</div>
             <div className='description_text' style={{marginTop: 15}}>Recipient key</div>
-            <div className='label_text' style={{marginTop: 15}}>Recipient key</div>
+            <div className='label_text' style={{marginTop: 15}}>{shipment.recipient}</div>
             <div className='description_text' style={{marginTop: 15}}>Where the carrier should deliver the goods</div>
             <div className='shipmentDetail__left_senderLocationContainer'>
               <Pin/>

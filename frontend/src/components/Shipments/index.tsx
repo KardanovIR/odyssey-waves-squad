@@ -41,8 +41,8 @@ export default class Shipments extends React.Component<{ shipmentsStore?: Shipme
           </div>
           <div className='shipments__right_tobBar_addBtn' onClick={
             () => {
-              // this.props.history.push('/createShipment')
-              this.open()
+              this.props.history.push('/createShipment')
+              //this.open()
             }
           }>+ Add Shipment</div>
         </div>
