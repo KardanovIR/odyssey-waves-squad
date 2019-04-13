@@ -37,6 +37,22 @@ async function index (req, res) {
     }
 };
 
+async function allRecived (req,res) {
+    try {
+        console.log("index");
+        var shipments = await db.getShipmentsByReciverId();
+        res.json({
+            status: "success",
+            message: "Shipments retrieved successfully",
+            data: shipments
+        });
+    }
+    catch (e) {
+        console.log(e);
+        res.json(e);
+    }
+}
+
 async function view (req, res) {
     try {
         console.log("view");

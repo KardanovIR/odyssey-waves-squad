@@ -49,12 +49,13 @@ router.route('/metrics')
     .post(metricsController.create);
 router.route('/metrics/:metrics_id')
     .get(metricsController.view);
-router.route('/shipments')
+router.route('/shipments/')
     .get(shipmentsController.index)
     .post(shipmentsController.create);
 router.route('/shipments/:shipment_id')
     .get(shipmentsController.view);
-
+    router.route('/shipments/reciver/:user_id')
+    .get(shipmentsController.allRecived);
     // router.route('/contacts/:contact_id')
 //     .get(contactController.view)
 //     .patch(contactController.update)
