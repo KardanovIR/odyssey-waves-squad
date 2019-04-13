@@ -6,6 +6,7 @@ import TopBar from './TopBar'
 import './styles.css'
 import AuthStore from '@src/store/AuthStore'
 import Login from './Login'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
 interface IInjectedProps {
   appStore?: AppStore
@@ -24,8 +25,13 @@ export default class App extends React.Component<IInjectedProps> {
     return <div className='app_root'>
 
       {user ?
-        <><TopBar user={user} />
-          <Shipments /></>
+        <Router>
+          <div>
+            <TopBar user={user} />
+
+            <Route exact path='/' component={Shipments} />
+          </div>
+        </Router>
         :
         <Login />
       }
