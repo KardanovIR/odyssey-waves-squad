@@ -39,7 +39,7 @@ export default class TransferPopup extends React.Component<{ open: boolean, onCl
           <div style={{ height: 20 }}></div>
           <div className='__h2'>Documents</div>
           <div className='__h3'>Upload documents</div>
-          <div style={{
+          <div className='__card_dotted' style={{
             height: 151,
             borderRadius: 2,
             border: 'solid 1px #dbe1e9',

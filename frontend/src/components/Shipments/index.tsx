@@ -6,8 +6,7 @@ import { inject, observer } from 'mobx-react'
 import ShipmentsStore from '@store/ShipmentsStore'
 import Shipment from '@components/Shipments/Shipment'
 import TransferPopup from '@components/TransferPopup'
-import { Modal, Button } from 'react-bootstrap'
-import { withRouter, RouteComponentProps } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 @withRouter
 @inject('shipmentsStore')
@@ -41,8 +40,7 @@ export default class Shipments extends React.Component<{ shipmentsStore?: Shipme
           </div>
           <div className='shipments__right_tobBar_addBtn' onClick={
             () => {
-              // this.props.history.push('/createShipment')
-              this.open()
+              this.props.history.push('/createShipment')
             }
           }>+ Add Shipment</div>
         </div>

@@ -1,5 +1,5 @@
 import SubStore from './SubStore'
-import {action, computed, observable, reaction} from 'mobx'
+import { action, computed, observable, reaction } from 'mobx'
 import RootStore from '@store/RootStore'
 
 export const statusLabelMap = {
@@ -17,23 +17,23 @@ export interface IGood {
   description: string
 }
 
-export interface ITSensitiveGood extends IGood{
+export interface ITSensitiveGood extends IGood {
   type: 'temperature sensitive'
   tFrom: string
   tTo: string
 }
 
-export interface IHSensitiveGood extends IGood{
+export interface IHSensitiveGood extends IGood {
   type: 'humidity sensitive'
   hFrom: string
   hTo: string
 }
 
-export interface IFragileGood extends IGood{
+export interface IFragileGood extends IGood {
   type: 'fragile'
 }
 
-export interface IBasicGood extends IGood{
+export interface IBasicGood extends IGood {
   type: 'basic'
 }
 
@@ -74,7 +74,6 @@ export interface IShipment {
   claims: IClaim[]
   extraInfo: IExtraInfo[]
   status: string,
-
 }
 
 export default class ShipmentsStore extends SubStore {
@@ -158,7 +157,7 @@ export default class ShipmentsStore extends SubStore {
   }
 
 
-  async submitShipment(){
+  async submitShipment() {
     console.log('shipment sumbmit method')
   }
 }
