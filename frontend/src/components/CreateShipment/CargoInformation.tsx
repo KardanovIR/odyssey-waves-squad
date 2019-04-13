@@ -15,7 +15,6 @@ export default class CargoInformation extends React.Component<{ shipmentsStore?:
       shipmentCreation.goods!.push(observable({
         id: '',
         description: '',
-        type: 'basic',
       }))
     }
 
@@ -39,19 +38,19 @@ export default class CargoInformation extends React.Component<{ shipmentsStore?:
               'fragile': 'Fragile',
               'temperature sensitive': 'Temperature sensitive',
               'humidity sensitive': 'Humidity sensitive',
-            }[good.type]}
+            }[shipmentCreation.conditionType!]}
           </Dropdown.Toggle>
           <Dropdown.Menu>
-            <Dropdown.Item onClick={() => good.type = 'basic'}>Basic</Dropdown.Item>
-            <Dropdown.Item onClick={() => good.type = 'fragile'}>Fragile</Dropdown.Item>
-            <Dropdown.Item onClick={() => good.type = 'temperature sensitive'}>Temperature sensitive</Dropdown.Item>
-            <Dropdown.Item onClick={() => good.type = 'humidity sensitive'}>Humidity sensitive</Dropdown.Item>
+            <Dropdown.Item onClick={() => shipmentCreation.conditionType = 'basic'}>Basic</Dropdown.Item>
+            <Dropdown.Item onClick={() => shipmentCreation.conditionType = 'fragile'}>Fragile</Dropdown.Item>
+            <Dropdown.Item onClick={() => shipmentCreation.conditionType = 'temperature sensitive'}>Temperature sensitive</Dropdown.Item>
+            <Dropdown.Item onClick={() => shipmentCreation.conditionType = 'humidity sensitive'}>Humidity sensitive</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-        {good.type === 'temperature sensitive' &&
-        <FromTo fromValue={good.tFrom} toValue={good.tTo}
-                onFromChange={(val) => good.tFrom = val}
-                onToChange={(val) => good.tTo = val}
+        {shipmentCreation.conditionType === 'temperature sensitive' &&
+        <FromTo fromValue={shipmentCreation.conditionMin} toValue={shipmentCreation.conditionMax}
+                onFromChange={(val) => shipmentCreation.conditionMin = val}
+                onToChange={(val) => shipmentCreation.conditionMax = val}
         />}
       </div>
       <div className='createShipment__basicInfo_continue' onClick={this.props.onContinue}>Continue</div>

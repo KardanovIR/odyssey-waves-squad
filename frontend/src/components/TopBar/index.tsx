@@ -11,7 +11,7 @@ const trim = (str: string, len: number) => {
 @withRouter
 @inject('authStore')
 @observer
-export default class TopBar extends React.Component<{ authStore?: AuthStore, user: User, history:any }> {
+export default class TopBar extends React.Component<{ authStore?: AuthStore, user: User, history?:any }> {
   render() {
     const user = this.props.user
     const authStore = this.props.authStore!

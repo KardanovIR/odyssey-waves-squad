@@ -2,7 +2,7 @@ import React from 'react'
 import './styles.css'
 import StatusFilter from '@components/Shipments/StatusFilter'
 import OtherFilter from '@components/Shipments/OtherFilter'
-import ShipmentsStore, {IShipment, TGood} from '@store/ShipmentsStore'
+import ShipmentsStore, {IShipment} from '@store/ShipmentsStore'
 import Shipment from '@components/Shipments/Shipment'
 import {withRouter, RouteComponentProps} from 'react-router-dom'
 import {inject} from 'mobx-react'
@@ -14,10 +14,10 @@ const capitalize = (s: string) => s && (s.charAt(0).toUpperCase() + s.slice(0))
 @inject('shipmentsStore')
 export default class ShipmentDetail extends React.Component<{ shipmentsStore?: ShipmentsStore, history: any, match: any }> {
 
-  goodDescription = (good: TGood) => {
-    if (good.type === 'temperature sensitive') return capitalize(good.type) + `: ${good.tFrom}°C - ${good.tTo}°C`
-    if (good.type === 'humidity sensitive') return capitalize(good.type) + `: ${good.hFrom}% - ${good.hTo}%`
-    return capitalize(good.type)
+  goodDescription = (shipment: IShipment) => {
+    if (shipment.conditionType === 'temperature sensitive' ) return capitalize(shipment.conditionType) + `: ${shipment.conditionMin}°C - ${shipment.conditionMax}°C`
+    if (shipment.conditionType === 'humidity sensitive') return capitalize(shipment.conditionType) + `: ${shipment.conditionMin}% - ${shipment.conditionMin}%`
+    return capitalize(shipment.conditionType)
   }
   render() {
 
@@ -77,7 +77,7 @@ export default class ShipmentDetail extends React.Component<{ shipmentsStore?: S
               <div className='description_text' style={{marginTop: 15}}>ID</div>
               <div className='label_text' style={{marginTop: 15}}>{good.id}</div>
               <div className='description_text' style={{marginTop: 15}}>Type</div>
-              <div className='label_text' style={{marginTop: 15}}>{this.goodDescription(good)}</div>
+              <div className='label_text' style={{marginTop: 15}}>{this.goodDescription(shipment)}</div>
             </div>
           </div>
 

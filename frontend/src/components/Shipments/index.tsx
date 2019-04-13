@@ -12,7 +12,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom'
 @withRouter
 @inject('shipmentsStore')
 @observer
-export default class Shipments extends React.Component<{ shipmentsStore?: ShipmentsStore, history: any }> {
+export default class Shipments extends React.Component<{ shipmentsStore?: ShipmentsStore, history?: any }> {
 
   state = {
     show: false,

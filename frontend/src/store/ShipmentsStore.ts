@@ -1,6 +1,7 @@
 import SubStore from './SubStore'
 import {action, computed, observable, reaction} from 'mobx'
 import RootStore from '@store/RootStore'
+import axios from 'axios'
 
 export const statusLabelMap = {
   forming: 'Forming',
@@ -13,31 +14,11 @@ export const statusLabelMap = {
 
 export interface IGood {
   id: string
-  type: 'fragile' | 'temperature sensitive' | 'humidity sensitive' | 'basic'
   description: string
 }
 
-export interface ITSensitiveGood extends IGood{
-  type: 'temperature sensitive'
-  tFrom: string
-  tTo: string
-}
 
-export interface IHSensitiveGood extends IGood{
-  type: 'humidity sensitive'
-  hFrom: string
-  hTo: string
-}
 
-export interface IFragileGood extends IGood{
-  type: 'fragile'
-}
-
-export interface IBasicGood extends IGood{
-  type: 'basic'
-}
-
-export type TGood = IHSensitiveGood | ITSensitiveGood | IFragileGood | IBasicGood
 
 export interface ILocation {
   longitude: string,
@@ -64,13 +45,17 @@ export interface IShipment {
   title: string
   sender: string
   recipient: string
+  device: string
   from: string
   to: string
+  conditionMin?: string
+  conditionMax?: string
+  conditionType: 'fragile' | 'temperature sensitive' | 'humidity sensitive' | 'basic'
   departureDate: string
   arrivalDate: string
   policyId?: string
   carrier: string
-  goods: TGood[]
+  goods: IGood[]
   claims: IClaim[]
   extraInfo: IExtraInfo[]
   status: string,
@@ -85,16 +70,17 @@ export default class ShipmentsStore extends SubStore {
     recipient: 'Roga i Kopita',
     from: 'Canada',
     to: 'Russia',
+    device: '9838866f-44b4-4b37-8b83-c1e09a456967',
     departureDate: '2019.01.01',
     arrivalDate: '2019.01.07',
     policyId: undefined,
+    conditionMin: '-15',
+    conditionMax: '-5',
+    conditionType: 'temperature sensitive',
     carrier: 'Example carrier',
     goods: [{
       id: 'IjnasdoUAHMSdqklwN<ASANDukq',
       description: 'basic description',
-      type: 'temperature sensitive',
-      tFrom: '-15',
-      tTo: '-5',
     }],
     claims: [],
     extraInfo: [],
@@ -103,9 +89,13 @@ export default class ShipmentsStore extends SubStore {
     id: '2PxysbRPFLtrgwGqVVAhVnUesrydfuAUvJwZ3HXXuTTpSa',
     title: 'First shipment',
     sender: 'romashka 2',
+    device: '9838866f-44b4-4b37-8b83-c1e09a456967',
     recipient: 'Roga i Kopita 2',
     from: 'Canada',
     to: 'Russia',
+    conditionType: 'temperature sensitive',
+    conditionMin: '-15',
+    conditionMax: '-5',
     departureDate: '2019.01.08',
     arrivalDate: '2019.01.07',
     policyId: undefined,
@@ -113,9 +103,6 @@ export default class ShipmentsStore extends SubStore {
     goods: [{
       id: 'test item',
       description: 'some item',
-      type: 'temperature sensitive',
-      tFrom: '-15',
-      tTo: '-5',
     }],
     claims: [],
     extraInfo: [],
@@ -126,18 +113,21 @@ export default class ShipmentsStore extends SubStore {
   @observable shipmentCreation: Partial<IShipment> = {
     id: '',
     title: 'First shipment',
-    sender: 'romashka 2',
+    sender: this.rootStore.authStore.currentUser!.publicKey,
+    device: '9838866f-44b4-4b37-8b83-c1e09a456967',
     recipient: 'Roga i Kopita 2',
     from: 'Canada',
     to: 'Russia',
     departureDate: '2019.01.08',
     arrivalDate: '2019.01.08',
+    conditionType: 'basic',
+    conditionMin: '',
+    conditionMax: '',
     policyId: undefined,
     carrier: 'Example carrier',
     goods: [{
       id: '',
       description: 'basic description',
-      type: 'basic',
     }],
     claims: [],
     extraInfo: [],
@@ -171,6 +161,6 @@ export default class ShipmentsStore extends SubStore {
 
 
   async submitShipment(){
-    console.log('shipment sumbmit method')
+    axios.post('http://backend.odyssey.wavesplatform.com:8080/api/shipments', this.shipmentCreation)
   }
 }
