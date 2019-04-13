@@ -10,7 +10,7 @@ const pool = new Pool({
 })
 
 async function createTransportRoute(transportRoute) {
-  console.log("createTransportRoute");
+  console.log("db createTransportRoute");
   return new Promise((resolve, reject) => {
       pool.query('INSERT INTO transport_routes (shipmentid, sequencenr, countryfrom, countryto, carrier, createDate) VALUES ($1,$2,$3,$4,$5,$6)',
           [
@@ -32,22 +32,8 @@ async function createTransportRoute(transportRoute) {
   })
 }
 
-async function findTransportRouteByShipmentId(shipmentid) {
-  console.log("getTransportRoute");
-  return new Promise((resolve, reject) => {
-      pool.query('SELECT * FROM transport_routes ORDER BY id ASC WHERE shipmentid = $1', [shipmentid], (error, results) => {
-          if (error) {
-              reject(error);
-          }
-          if(results)
-            resolve(results.rows);
-          resolve();
-      });
-  });
-}
-
 async function findTransportRouteById(routeid) {
-  console.log("getTransportRoute");
+  console.log("db getTransportRoute");
   return new Promise((resolve, reject) => {
       pool.query('SELECT * FROM transport_routes ORDER BY id ASC WHERE id = $1', [routeid], (error, results) => {
           if (error) {
@@ -61,7 +47,7 @@ async function findTransportRouteById(routeid) {
 }
 
 async function getTransportRoute() {
-  console.log("getTransportRoute");
+  console.log("db getTransportRoute");
   return new Promise((resolve, reject) => {
       pool.query('SELECT * FROM transport_routes ORDER BY id ASC ', [], (error, results) => {
           if (error) {
@@ -75,7 +61,7 @@ async function getTransportRoute() {
 }
 
 async function findByShipmentId(shipmentid) {
-  console.log("getTransportRoute");
+  console.log("db getTransportRoute by shipmentId");
   return new Promise((resolve, reject) => {
       pool.query('SELECT * FROM transport_routes WHERE shipmentid = $1 ORDER BY id ASC ', [shipmentid], (error, results) => {
           if (error) {

@@ -10,6 +10,7 @@ const pool = new Pool({
 })
 
 async function createMetrics (metrics) {
+  console.log("db create metrics");
   return new Promise((resolve, reject) => {
     pool.query('INSERT INTO metrics (deviceid, type, value, createDate) VALUES ($1, $2, $3, $4)', [metrics.deviceId, metrics.type, metrics.value, metrics.createDate], (error, results) => {
       if (error) {
@@ -24,7 +25,7 @@ async function createMetrics (metrics) {
 }
 
 async function getMetrics() {
-  console.log("getMetrics")
+  console.log("db getMetrics")
   return new Promise((resolve, reject) => {
     pool.query('SELECT * FROM metrics ORDER BY id ASC', (error, results) => {
       if (error) {
@@ -38,7 +39,7 @@ async function getMetrics() {
 }
 
 async function findByDeviceId(deviceId) {
-  console.log("getMetrics")
+  console.log("db findByDeviceId")
   return new Promise((resolve, reject) => {
     pool.query('SELECT * FROM metrics Where deviceid = $1 ORDER BY id ASC', [deviceId], (error, results) => {
       if (error) {
