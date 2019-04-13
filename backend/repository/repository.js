@@ -71,7 +71,7 @@ const deleteUser = (request, response) => {
 
 async function createMetrics (metrics) {
   return new Promise((resolve, reject) => {
-    pool.query('INSERT INTO metrics (deviceid, type, value) VALUES ($1, $2, $3)', [metrics.deviceId, metrics.type, metrics.value], (error, result) => {
+    pool.query('INSERT INTO metrics (deviceid, type, value, createDate) VALUES ($1, $2, $3, $4)', [metrics.deviceId, metrics.type, metrics.value, metrics.createDate], (error, result) => {
       if (error) {
         console.log(error);
         reject(error);

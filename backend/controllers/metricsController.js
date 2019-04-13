@@ -11,6 +11,8 @@ async function create (req, res) {
     metrics.type=req.body.type ? req.body.type : "default";
     metrics.value=req.body.value ? req.body.value : "0";
     metrics.deviceId=req.body.deviceId ? req.body.deviceId : "0";
+    metrics.createDate=req.body.createDate ? req.body.createDate : "";
+
     // save the claim and check for errors
     try {
         var metricId = await db.createMetrics(metrics);

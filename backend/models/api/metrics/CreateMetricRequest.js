@@ -6,6 +6,7 @@ class CreateMetricRequest {
             this.type='';
             this.value='';
             this.deviceId='';
+            this.createDate='';
     }
 }
     
