@@ -12,7 +12,7 @@ const pool = new Pool({
 
 
 async function createShipment (shipment) {
-  console.log("createClaim")
+  console.log("createClaim");
     return new Promise((resolve, reject) => {
       pool.query('INSERT INTO shipments (sender, recipient, countryfrom, countryto, departuredate, policeid, carrier, title, createdate, status, arrivaldate, device) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)', 
         [
@@ -71,7 +71,7 @@ return new Promise((resolve, reject) => {
 }
 
 async function getShipments() {
-  console.log("getClaims")
+  console.log("getClaims");
   return new Promise((resolve, reject) => {
     pool.query('SELECT * FROM shipments ORDER BY id ASC', (error, results) => {
       if (error) {
@@ -85,7 +85,7 @@ async function getShipments() {
 }
 
 async function getShipmentsBySenderId (userId) {
-  console.log("getClaims")
+  console.log("getClaims");
   return new Promise((resolve, reject) => {
     pool.query('SELECT * FROM shipments WHERE sender = $1  ORDER BY id ASC', [userId],  (error, results) => {
       if (error) {
@@ -99,7 +99,7 @@ async function getShipmentsBySenderId (userId) {
 }
 
 async function getShipmentsByRecipientId (userId) {
-  console.log("getClaims")
+  console.log("getClaims");
   return new Promise((resolve, reject) => {
     pool.query('SELECT * FROM shipments WHERE recipient = $1 ORDER BY id ASC', [userId],  (error, results) => {
       if (error) {
@@ -113,7 +113,7 @@ async function getShipmentsByRecipientId (userId) {
 }
 
 async function getShipmentsByCarrierId (userId) {
-  console.log("getClaims")
+  console.log("getClaims");
   return new Promise((resolve, reject) => {
     pool.query('SELECT * FROM shipments WHERE carrier = $1 ORDER BY id ASC', [userId],  (error, results) => {
       if (error) {
@@ -125,6 +125,7 @@ async function getShipmentsByCarrierId (userId) {
     });
   })
 }
+
 
 async function findById (shipmentId) {
   console.log("findShipmentByid")
@@ -140,6 +141,19 @@ async function findById (shipmentId) {
   })
 }
 
+async function findShipmentByDeviceId (deviceId) {
+  console.log("findShipmentByid");
+  return new Promise((resolve, reject) => {
+      pool.query('SELECT * FROM shipments WHERE device = $device', [deviceId], (error, results) => {
+      if (error) {
+        reject(error);
+      }
+      console.log(results)
+      resolve(results.rows);
+    })
+  })
+}
+
   module.exports = {
     createShipment:createShipment,
   getShipments:getShipments,
@@ -147,4 +161,5 @@ async function findById (shipmentId) {
   getShipmentsBySenderId:getShipmentsBySenderId,
   getShipmentsByRecipientId:getShipmentsByRecipientId,
   getShipmentsByCarrierId:getShipmentsByCarrierId,
+  findShipmentByDeviceId
   };

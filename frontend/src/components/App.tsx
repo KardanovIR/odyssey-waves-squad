@@ -42,13 +42,13 @@ export default class App extends React.Component<IInjectedProps> {
       <MuiThemeProvider theme={colors}>
         {user ?
           <Router>
-            <div>
+            <>
               <TopBar user={user} />
 
               <Route exact path='/' component={Shipments} />
               <Route exact path='/createShipment' component={CreateShipment} />
               <Route exact path='/shipment/:id' component={ShipmentDetail} />
-            </div>
+            </>
           </Router>
           :
           <Login />
