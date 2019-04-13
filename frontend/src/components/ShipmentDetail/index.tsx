@@ -2,7 +2,7 @@ import React from 'react'
 import './styles.css'
 import StatusFilter from '@components/Shipments/StatusFilter'
 import OtherFilter from '@components/Shipments/OtherFilter'
-import ShipmentsStore, { IShipment, TGood } from '@store/ShipmentsStore'
+import ShipmentsStore, {IShipment} from '@store/ShipmentsStore'
 import Shipment from '@components/Shipments/Shipment'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { inject } from 'mobx-react'
@@ -25,6 +25,12 @@ export default class ShipmentDetail extends React.Component<{
     showTransferPopup: false,
   }
 
+  goodDescription = (shipment: IShipment) => {
+    if (shipment.conditionType === 'temperature sensitive' ) return capitalize(shipment.conditionType) + `: ${shipment.conditionMin}°C - ${shipment.conditionMax}°C`
+    if (shipment.conditionType === 'humidity sensitive') return capitalize(shipment.conditionType) + `: ${shipment.conditionMin}% - ${shipment.conditionMin}%`
+    return capitalize(shipment.conditionType)
+  }
+
   onTransferPopupClose() {
     this.setState({ showTransferPopup: false })
   }
@@ -41,11 +47,6 @@ export default class ShipmentDetail extends React.Component<{
     this.setState({ showApprovePopup: true })
   }
 
-  goodDescription = (good: TGood) => {
-    if (good.type === 'temperature sensitive') return capitalize(good.type) + `: ${good.tFrom}°C - ${good.tTo}°C`
-    if (good.type === 'humidity sensitive') return capitalize(good.type) + `: ${good.hFrom}% - ${good.hTo}%`
-    return capitalize(good.type)
-  }
 
   render() {
 
@@ -76,7 +77,7 @@ export default class ShipmentDetail extends React.Component<{
     if (shipment == null) return <div></div>
 
     const good = shipment.goods[0] || {}
-    console.log(shipment)
+
     return <div className='shipmentDetail__root'>
       {/*<div className='shipmentDetail__map'></div>*/}
       <div className='shipmentDetail__content'>
@@ -121,10 +122,10 @@ export default class ShipmentDetail extends React.Component<{
             <div className='description_text' style={{ marginTop: 15 }}>Name or id of the cargo</div>
 
             <div className='shipmentDetail__left_goodsCard'>
-              <div className='description_text' style={{ marginTop: 15 }}>ID</div>
-              <div className='label_text' style={{ marginTop: 15 }}>{good.id}</div>
-              <div className='description_text' style={{ marginTop: 15 }}>Type</div>
-              <div className='label_text' style={{ marginTop: 15 }}>{this.goodDescription(good)}</div>
+              <div className='description_text' style={{marginTop: 15}}>ID</div>
+              <div className='label_text' style={{marginTop: 15}}>{good.id}</div>
+              <div className='description_text' style={{marginTop: 15}}>Type</div>
+              <div className='label_text' style={{marginTop: 15}}>{this.goodDescription(shipment)}</div>
             </div>
           </div>
 

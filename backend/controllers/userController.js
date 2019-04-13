@@ -8,7 +8,8 @@ UserModel = require('../models/api/LoginUserModel');
 async function login (req, res) {
     try {
         var userId=req.params.user_id;
-        console.log("login");
+        
+    console.log("api user login");
         //var user = new UserModel();
         var user= await db.getUser(userId);
         res.json({

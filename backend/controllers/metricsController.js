@@ -3,25 +3,25 @@
 metricsRep = require('../repository/metricsRepository');
 shipmentRep = require('../repository/shipmentRepository');
 claimRep = require('../repository/claimRepository');
+wavesClient = require('../services/wavesClient');
 
 CreateMetricRequsetModel = require('../models/api/metrics/CreateMetricRequest');
 MetricResponceModel = require('../models/api/metrics/GetMetricResponce');
 CreateClaimRequest = require('../models/api/claim/CreateClaimRequest');
 
-// Handle create claim actions
+
 async function create (req, res) {
+    console.log("api metric create");
     var metrics = new CreateMetricRequsetModel();
     metrics.type=req.body.type ? req.body.type : "default";
     metrics.value=req.body.value ? req.body.value : "0";
     metrics.deviceId=req.body.deviceId ? req.body.deviceId : "0";
     metrics.createDate=req.body.createDate ? req.body.createDate : "";
 
-    // save the claim and check for errors
     try {
         var metricId = await metricsRep.createMetrics(metrics);
 
         metrics.id = metricId;
-        console.log(metrics);
         res.json({
             message: 'New metric created!',
             data: metrics
@@ -41,9 +41,14 @@ async function create (req, res) {
                 // todo get the last location
                 claim.location = "right here";
                 claim.createdate = metrics.createDate;
-                var claimId = await claimRep.createClaim(claim);
                 claim.id = claimId;
+                // to create a tx
+                claim.sender = shipment.sender;
+                var claimId = await claimRep.createClaim(claim);
+                console.log("new claim");
+                var txData = await wavesClient.writeDataToWaves("claim_" + claimId, claim);
                 console.log(claim);
+                console.log(txData);
             } catch (e) {
                 console.error(e);
             }
@@ -53,7 +58,7 @@ async function create (req, res) {
 
 async function index (req, res) {
     try {
-        console.log("index");
+        console.log("api metric index");
         var metrics = await metricsRep.getMetrics();
         res.json({
             status: "success",
@@ -69,10 +74,9 @@ async function index (req, res) {
 
 async function view (req, res) {
     try {
-        console.log("index");
-        //metricsRep
+        console.log("api metric view");
         var metricsId = req.params.metrics_id;
-        var metrics = await goodsRep.findMetricsById(metricsId);
+        var metrics = await metricsRep.findMetricsById(metricsId);
         res.json({
             status: "success",
             message: "Metric details successfully",

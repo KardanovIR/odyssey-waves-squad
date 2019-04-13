@@ -6,7 +6,8 @@ BillLanding = require('../models/tvm/BillLandingModel');
 // Handle index actions
 async function calculatePremium (req, res) {
     try {
-        console.log("calculate");
+        
+    console.log("api tvm calculatePremium");
         var responce = await tvmClient.calculatePremium(req.body);
         res.json({
             status: "success",

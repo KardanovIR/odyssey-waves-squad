@@ -3,18 +3,21 @@ const https = require('https');
 
 //BillLanding model as request model
 async function calculatePremium(data){
+  console.log("client tvm calculatePremium");
     // CalculatePremiumResponce as responce
     return await sendPostRequest('/BillOfLading/CalculatePremium', data);
 }
 
 //BillLanding model as request model
 async function insureCargo(data){
+  console.log("client tvm insureCargo");
     //InsureCargoResponce as responce
    return await sendPostRequest('/BillOfLading/InsureCargo', data);
 }
 
 //ClaimReport model as request model
 async function handleClaim(data){
+  console.log("client tvm handleClaim");
     //HandleClaimResponce as responce
     return await sendPostRequest('/BillOfLading/HandleClaim', data);
  }

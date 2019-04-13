@@ -1,13 +1,11 @@
 // goodsController.js
-// Import contact mode
-
 routeRep = require('../repository/routeRepository');
 
 CreateRouteRequestModel = require('../models/api/route/CreateRouteRequest');
 
 async function index (req, res) {
     try {
-        console.log("index");
+        console.log("api route index");
         var routes = await routeRep.getTransportRoute();
         res.json({
             status: "success",
@@ -21,10 +19,9 @@ async function index (req, res) {
     }
 };
 
-// Handle view goods info
 async function view (req, res) {
     try {
-        console.log("view goods");
+        console.log("api reoute view");
         var routeId = req.params.route_id
         var goods = await routeRep.findTransportRouteById(routeId);
         res.json({
@@ -40,12 +37,10 @@ async function view (req, res) {
 };
 
 async function create (req, res) {
+    console.log("api reoute create");
     var goods = req.body;
-    // save the claim and check for errors
     try {
          await routeRep.createTransportRoute(goods);
-        //claimId.createrId = userId;
-
         res.json({
                 message: 'New goods created!',
                 data: goods
