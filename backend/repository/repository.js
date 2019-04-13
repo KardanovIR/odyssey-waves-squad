@@ -237,7 +237,40 @@ async function updateShipment (shipment) {
         })
   })
 }
-    
+
+async function createTransportRoute(transportRoute) {
+    console.log("createTransportRoute");
+    return new Promise((resolve, reject) => {
+        pool.query('INSERT INTO transport_routes (shipmentid, sequencenr, countryfrom, countryto, carrier, createDate) VALUES ($1,$2,$3,$4,$5,$6)',
+            [
+                transportRoute.shipmentId,
+                transportRoute.sequenceNr,
+                transportRoute.countryFrom,
+                transportRoute.countryTo,
+                transportRoute.carrier,
+                transportRoute.createDate
+            ], (error, result) => {
+                if (error) {
+                    console.log(error);
+                    reject(error);
+                }
+                resolve(result);
+            })
+    })
+}
+
+async function getTransportRoute(shipmentid) {
+    console.log("getTransportRoute");
+    return new Promise((resolve, reject) => {
+        pool.query('SELECT * FROM transport_routes ORDER BY id ASC WHERE shipmentid = $1', [shipmentid], (error, results) => {
+            if (error) {
+                reject(error);
+            }
+            resolve(results.rows);
+        });
+    });
+}
+
     async function getShipments() {
       console.log("getClaims")
       return new Promise((resolve, reject) => {
