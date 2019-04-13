@@ -16,6 +16,10 @@ router.get('/', function (req, res) {
 var contactController = require('./controllers/contactController');
 var wavesController = require('./controllers/wavesController');
 var userController = require('./controllers/userController');
+var claimController = require('./controllers/claimController');
+var goodsController = require('./controllers/goodsController');
+var extraInfoController = require('./controllers/extraInfoController');
+var metricsController = require('./controllers/metricsController');
 // Contact routes
 router.route('/contacts')
     .get(contactController.index)
@@ -24,6 +28,26 @@ router.route('/waves')
     .get(wavesController.getLastBlock);
 router.route('/user/login')
     .get(userController.login);
+router.route('/claims')
+    .get(claimController.index)
+    .post(claimController.create);
+router.route('/claims/:claim_id')
+    .get(claimController.view);
+router.route('/goods')
+    .get(goodsController.index)
+    .post(goodsController.create);
+router.route('/goods/:goods_id')
+    .get(goodsController.view);
+router.route('/extraInfo')
+    .get(extraInfoController.index)
+    .post(extraInfoController.create);
+router.route('/extraInfo/:extraInfo_id')
+    .get(extraInfoController.view);
+router.route('/metrics')
+    .get(metricsController.index)
+    .post(metricsController.create);
+router.route('/metrics/:metrics_id')
+    .get(metricsController.view);
 // router.route('/contacts/:contact_id')
 //     .get(contactController.view)
 //     .patch(contactController.update)

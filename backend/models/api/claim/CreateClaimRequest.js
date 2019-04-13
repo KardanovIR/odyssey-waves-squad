@@ -5,8 +5,8 @@ class CreateClaimRequest {
         this.description = '';
         this.shipmentId = '';
         this.location = {
-            longitude='',
-            latitude=''
+            longitude:'',
+            latitude:''
         };
     }
 }
