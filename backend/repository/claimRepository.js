@@ -13,12 +13,14 @@ async function createClaim (claim) {
   console.log("createClaim")
     return new Promise((resolve, reject) => {
       pool.query('INSERT INTO claims (creater, description, shipmentid, location, createdate) VALUES ($1, $2, $3, $4, $5)',
-        [claim.creater, claim.description, claim.shipmentId, claim.location, claim.createData], (error, result) => {
+        [claim.creater, claim.description, claim.shipmentId, claim.location, claim.createData], (error, results) => {
         if (error) {
           console.log(error);
           reject(error);
         }
-        resolve(result);
+        if(results)
+            resolve(results.rows);
+          resolve();
       })
     })
   }
@@ -30,26 +32,44 @@ async function createClaim (claim) {
         if (error) {
           reject(error);
         }
-        resolve(results.rows);
+        if(results)
+            resolve(results.rows);
+          resolve();
       });
     })
   }
   
-  async function findClaimById (claimId) {
+  async function findById (claimId) {
     console.log("findClaimsById")
     return new Promise((resolve, reject) => {
         pool.query('SELECT * FROM claims WHERE id = $1', [claimId], (error, results) => {
         if (error) {
           reject(error);
         }
-        console.log(results)
-        resolve(results.rows);
+        if(results)
+            resolve(results.rows);
+          resolve();
+      })
+    })
+  }
+
+  async function findByShipmentId (shipmentId) {
+    console.log("findByShipmentId")
+    return new Promise((resolve, reject) => {
+        pool.query('SELECT * FROM claims WHERE shipmentid = $1', [shipmentId], (error, results) => {
+        if (error) {
+          reject(error);
+        }
+        if(results)
+            resolve(results.rows);
+          resolve([]);
       })
     })
   }
 
   module.exports = {
-    findClaimById:findClaimById,
+    findById:findById,
     getClaims:getClaims,
-    createClaim:createClaim
+    createClaim:createClaim,
+    findByShipmentId:findByShipmentId
   };

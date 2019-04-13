@@ -11,12 +11,14 @@ const pool = new Pool({
 
 async function createMetrics (metrics) {
   return new Promise((resolve, reject) => {
-    pool.query('INSERT INTO metrics (deviceid, type, value, createDate) VALUES ($1, $2, $3, $4)', [metrics.deviceId, metrics.type, metrics.value, metrics.createDate], (error, result) => {
+    pool.query('INSERT INTO metrics (deviceid, type, value, createDate) VALUES ($1, $2, $3, $4)', [metrics.deviceId, metrics.type, metrics.value, metrics.createDate], (error, results) => {
       if (error) {
         console.log(error);
         reject(error);
       }
-      resolve();
+      if(results)
+            resolve(results.rows);
+          resolve();
     })
   })
 }
@@ -28,11 +30,29 @@ async function getMetrics() {
       if (error) {
         reject(error);
       }
-      resolve(results.rows);
+      if(results)
+            resolve(results.rows);
+          resolve();
     });
   })
 }
+
+async function findByDeviceId(deviceId) {
+  console.log("getMetrics")
+  return new Promise((resolve, reject) => {
+    pool.query('SELECT * FROM metrics Where deviceid = $1 ORDER BY id ASC', [deviceId], (error, results) => {
+      if (error) {
+        reject(error);
+      }
+      if(results)
+            resolve(results.rows);
+          resolve([]);
+    });
+  })
+}
+
   module.exports = {
     createMetrics: createMetrics,
     getMetrics:getMetrics,
+    findByDeviceId:findByDeviceId
   };

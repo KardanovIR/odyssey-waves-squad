@@ -28,12 +28,14 @@ async function createShipment (shipment) {
           shipment.status,
           shipment.arrivalDate,
           shipment.device
-        ], (error, result) => {
+        ], (error, results) => {
         if (error) {
           console.log(error);
           reject(error);
         }
-        resolve(result);
+        if(results)
+            resolve(results.rows);
+          resolve();
       })
     })
   }
@@ -56,12 +58,14 @@ return new Promise((resolve, reject) => {
         shipment.status,
         shipment.arrivalDate,
         shipment.device
-      ], (error, result) => {
+      ], (error, results) => {
         if (error) {
           console.log(error);
           reject(error);
         }
-        resolve();
+        if(results)
+            resolve(results.rows);
+          resolve();
       })
 })
 }
@@ -73,7 +77,9 @@ async function getShipments() {
       if (error) {
         reject(error);
       }
-      resolve(results.rows);
+      if(results)
+            resolve(results.rows);
+          resolve();
     });
   })
 }
@@ -85,7 +91,9 @@ async function getShipmentsBySenderId (userId) {
       if (error) {
         reject(error);
       }
-      resolve(results.rows);
+      if(results)
+            resolve(results.rows);
+          resolve([]);
     });
   })
 }
@@ -97,7 +105,9 @@ async function getShipmentsByRecipientId (userId) {
       if (error) {
         reject(error);
       }
-      resolve(results.rows);
+      if(results)
+            resolve(results.rows);
+          resolve([]);
     });
   })
 }
@@ -109,20 +119,24 @@ async function getShipmentsByCarrierId (userId) {
       if (error) {
         reject(error);
       }
-      resolve(results.rows);
+      if(results)
+            resolve(results.rows);
+          resolve([]);
     });
   })
 }
 
-async function findShipmentById (shipmentId) {
-  console.log("findShipmentByid");
+
+async function findById (shipmentId) {
+  console.log("findShipmentByid")
   return new Promise((resolve, reject) => {
       pool.query('SELECT * FROM shipments WHERE id = $1', [shipmentId], (error, results) => {
       if (error) {
         reject(error);
       }
-      console.log(results)
-      resolve(results.rows);
+      if(results)
+            resolve(results.rows);
+          resolve();
     })
   })
 }
@@ -143,7 +157,7 @@ async function findShipmentByDeviceId (deviceId) {
   module.exports = {
     createShipment:createShipment,
   getShipments:getShipments,
-  findShipmentById:findShipmentById,
+  findById:findById,
   getShipmentsBySenderId:getShipmentsBySenderId,
   getShipmentsByRecipientId:getShipmentsByRecipientId,
   getShipmentsByCarrierId:getShipmentsByCarrierId,
