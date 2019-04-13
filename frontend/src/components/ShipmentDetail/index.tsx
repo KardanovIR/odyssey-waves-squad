@@ -9,14 +9,20 @@ import { inject } from 'mobx-react'
 import Calendar from '@src/icons/Calendar'
 import Pin from '@src/icons/Pin'
 import TransferPopup from '@components/TransferPopup'
+import AuthStore from '@src/store/AuthStore'
 
 const capitalize = (s: string) => s && (s.charAt(0).toUpperCase() + s.slice(0))
 @withRouter
-@inject('shipmentsStore')
-export default class ShipmentDetail extends React.Component<{ shipmentsStore?: ShipmentsStore, history: any, match: any }> {
+@inject('shipmentsStore', 'authStore')
+export default class ShipmentDetail extends React.Component<{
+  shipmentsStore?: ShipmentsStore,
+  authStore?: AuthStore,
+  history: any,
+  match: any
+}> {
 
   state = {
-    show: false,
+    showTransferPopup: false,
   }
 
   goodDescription = (shipment: IShipment) => {
@@ -26,29 +32,52 @@ export default class ShipmentDetail extends React.Component<{ shipmentsStore?: S
   }
 
   onTransferPopupClose() {
-    this.setState({ show: false })
+    this.setState({ showTransferPopup: false })
   }
 
   onTransferPopupTransfer() {
-    this.setState({ show: false })
+    this.setState({ showTransferPopup: false })
   }
 
   openTransferPopup() {
-    this.setState({ show: true })
+    this.setState({ showTransferPopup: true })
+  }
+
+  openApprovePopup() {
+    this.setState({ showApprovePopup: true })
   }
 
 
   render() {
 
+
+
     const shipmentsStore = this.props.shipmentsStore!
+    const authStore = this.props.authStore!
+    const currentUser = authStore.currentUser || { publicKey: '' }
+
     const id = this.props.match.params.id
 
-    const shipment = shipmentsStore.shipments.find(sh => sh.id === id)
+    const shipment: IShipment = shipmentsStore.shipments.find(sh => sh.id === id)!
+
+    const getShipmentButton = () => {
+      if (shipment.status === 'onTheWay' || shipment.status === 'approved' || shipment.status === 'damaged')
+        return <div style={{ marginLeft: 23 }} className='shipments__right_tobBar_addBtn' onClick={() => {
+          this.openTransferPopup()
+        }}>Transfer</div>
+
+      if (shipment.status === 'forming' && shipment.recipient === currentUser.publicKey)
+        return <div style={{ marginLeft: 23, backgroundColor: '#eb4d4b' }} className='shipments__right_tobBar_addBtn' onClick={() => {
+          this.openApprovePopup()
+        }}>Approve</div>
+
+      return []
+    }
 
     if (shipment == null) return <div></div>
 
     const good = shipment.goods[0] || {}
-    console.log(shipment)
+
     return <div className='shipmentDetail__root'>
       {/*<div className='shipmentDetail__map'></div>*/}
       <div className='shipmentDetail__content'>
@@ -102,7 +131,7 @@ export default class ShipmentDetail extends React.Component<{ shipmentsStore?: S
 
         </div>
         <div className='shipmentDetail__right'>
-          <div style={{ marginLeft: 23 }} className='shipments__right_tobBar_addBtn' onClick={() => this.openTransferPopup()}>Transfer</div>
+          {getShipmentButton()}
           <img style={{
             maxWidth: '85%',
             height: 'auto',
@@ -110,7 +139,7 @@ export default class ShipmentDetail extends React.Component<{ shipmentsStore?: S
         </div>
       </div>
 
-      <TransferPopup open={this.state.show}
+      <TransferPopup open={this.state.showTransferPopup}
         onClose={() => { this.onTransferPopupClose() }}
         onTransfer={() => { this.onTransferPopupTransfer() }}
       />

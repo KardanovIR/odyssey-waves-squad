@@ -9,7 +9,7 @@ class GetShipmentResponce {
         this.from='';
         this.to='';
         this.departureDate='';
-        this.policeId='';
+        this.policyId='';
         this.carrier='';
         this.goods= new Array();
         this.claims= new Array(),

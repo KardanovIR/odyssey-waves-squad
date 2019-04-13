@@ -1,0 +1,1 @@
+export type SipmentStatus = 'forming' | 'approved' | 'onTheWay' | 'damaged' | 'done'

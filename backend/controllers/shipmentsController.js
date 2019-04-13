@@ -5,6 +5,9 @@ claimRep = require('../repository/claimRepository');
 extraInfoRep = require('../repository/extraInfoRepository');
 routeRep = require('../repository/routeRepository');
 metricRep = require('../repository/metricsRepository');
+tvmClient = require('../services/tvmClient');
+InsureCargoResponce = require('../models/tvm/InsureCargoResponce');
+BillLanding = require('../models/tvm/BillLandingModel');
 
 CreateShipmentModel = require('../models/api/shipment/CreateShipmentRequest');
 GetShipmentModel = require('../models/api/shipment/GetShipmentResponce');
@@ -14,6 +17,8 @@ async function create(req, res) {
     try {
         var shipment = req.body;
         shipment.createDate = Date.Now;
+        var insureCargoResponse = await tvmClient.insureCargo(shipment);
+        shipment.policyId = insureCargoResponse.PolicyID;
         var newShipment = await shipmentsRep.createShipment(shipment);
         if(shipment.goods){
             shipment.goods.forEach(async (entry) => {
@@ -21,6 +26,7 @@ async function create(req, res) {
                 await goodsRep.create(entry);
             });
         }
+
         res.json({
             message: 'New shipment created!',
             data: shipment

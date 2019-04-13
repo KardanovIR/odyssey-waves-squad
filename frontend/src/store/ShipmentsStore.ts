@@ -1,8 +1,12 @@
 import SubStore from './SubStore'
-import { action, computed, observable, reaction } from 'mobx'
+import {computed, observable, toJS, runInAction} from 'mobx'
 import RootStore from '@store/RootStore'
 import axios from 'axios'
+import {setInterval} from 'timers'
+import { SipmentStatus } from '@src/common/shipmentStatus'
 
+
+const BASE_URL = 'http://backend.odyssey.wavesplatform.com:8080/api/'
 export const statusLabelMap = {
   forming: 'Forming',
   formed: 'Formed',
@@ -40,6 +44,7 @@ export interface IExtraInfo {
   creater: string
 }
 
+
 export interface IShipment {
   id: string
   title: string
@@ -58,7 +63,7 @@ export interface IShipment {
   goods: IGood[]
   claims: IClaim[]
   extraInfo: IExtraInfo[]
-  status: string,
+  status: SipmentStatus,
 }
 
 export default class ShipmentsStore extends SubStore {
@@ -130,7 +135,7 @@ export default class ShipmentsStore extends SubStore {
     }],
     claims: [],
     extraInfo: [],
-    status: 'approved',
+    status: 'forming',
   }
 
 
@@ -154,12 +159,39 @@ export default class ShipmentsStore extends SubStore {
     to: undefined,
   }
 
+  private syncInterval?: any
+
+  constructor(rootStore: RootStore){
+    super(rootStore)
+
+    this.syncInterval = setInterval(() => this.syncShipments(), 5000)
+  }
+
   @computed get visibleShipments() {
     return this.shipments.filter(shipment => this.statusFilters.All || this.statusFilters[shipment.status])
   }
 
+  @computed get currentUser(){
+    return this.rootStore.authStore.currentUser
+  }
+
+  async syncShipments(){
+    const userTypeMap = {
+      'Receiver': 'recived',
+      'Sender': 'send',
+      'Carrier': 'carier',
+    }
+    const user = this.currentUser
+    if (!user) return
+    const resp = await axios.get(BASE_URL + `/shipments/${userTypeMap[user.type]}/${user.publicKey}`)
+    console.log(resp.data.data)
+    runInAction(() => this.shipments = resp.data.data.map(shipment => observable(shipment)))
+  }
 
   async submitShipment(){
-    axios.post('http://backend.odyssey.wavesplatform.com:8080/api/shipments', this.shipmentCreation)
+    console.log(toJS(this.shipmentCreation))
+    await axios.post(BASE_URL +'/shipments', this.shipmentCreation)
+    await this.syncShipments()
   }
 }
+
