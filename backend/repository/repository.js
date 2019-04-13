@@ -106,6 +106,19 @@ async function createGoods (goods) {
   })
 }
 
+async function updateGoods (goods) {
+  return new Promise((resolve, reject) => {
+    pool.query('UPDATE goods SET description = $2, type = $3, value = $4, quantity = $5, wight = $6, shipmentid = $7 WHERE id = $1',
+        [goods.id, goods.description, goods.type, goods.value, goods.quantity, goods.wight, goods.shipmentId], (error, result) => {
+          if (error) {
+            console.log(error);
+            reject(error);
+          }
+          resolve();
+        })
+  })
+}
+
 async function getGoods() {
   console.log("getGoods")
   return new Promise((resolve, reject) => {
@@ -134,7 +147,7 @@ async function findGoodsById (goodsId) {
 async function createClaim (claim) {
   console.log("createClaim")
     return new Promise((resolve, reject) => {
-      pool.query('INSERT INTO claims (createrid, description, shipmentid, location, createdate) VALUES ($1, $2, $3, $4, $5)', 
+      pool.query('INSERT INTO claims (createrid, description, shipmentid, location, createdate) VALUES ($1, $2, $3, $4, $5)',
         [claim.createrId, claim.description, claim.shipmentId, claim.location, claim.createData], (error, result) => {
         if (error) {
           console.log(error);
@@ -193,6 +206,31 @@ async function createClaim (claim) {
         })
       })
     }
+
+
+async function updateShipment (shipment) {
+  return new Promise((resolve, reject) => {
+    pool.query('UPDATE shipment SET senderid = $2, recipientid = $3, countryfrom = $4, countryto = $5, departuredate = $6, policeid = $7, carrier = $8, title = $9, createdate = $10 WHERE id = $1',
+        [
+          shipment.id,
+          shipment.sender,
+          shipment.recipient,
+          shipment.countyFrom,
+          shipment.countryTo,
+          shipment.departureDate,
+          shipment.PoliciId,
+          shipment.carrier,
+          shipment.title,
+          shipment.createDate
+        ], (error, result) => {
+          if (error) {
+            console.log(error);
+            reject(error);
+          }
+          resolve();
+        })
+  })
+}
     
     async function getShipments() {
       console.log("getClaims")
