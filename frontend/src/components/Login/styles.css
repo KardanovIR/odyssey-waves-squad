@@ -25,6 +25,7 @@
 .login__sub {
   clear: both;
   padding: 10px;
+
   font-family: Montserrat;
   font-size: 14px;
   font-weight: normal;
@@ -34,6 +35,8 @@
   letter-spacing: -0.1px;
   text-align: center;
   color: #9ba6b2;
+  margin-left: 40px;
+  margin-right: 40px;
 }
 
 .login__card {
@@ -76,187 +79,4 @@
 
 .login__color__receiver {
   background-color: #f514c4;
-}
-
-.shipments__left {
-  flex: 1 1 40%;
-  border: 1px solid black;
-}
-
-.shipments__right {
-  flex: 1 1 60%;
-  border: 1px solid black;
-}
-
-.shipments__right_topBar {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.shipments__right_topBar_text {
-  display: flex;
-  flex-direction: column;
-}
-
-.shipments__right_topBar_label {
-  font-family: Montserrat;
-  font-size: 28px;
-  font-weight: 500;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  color: #263241;
-}
-
-.shipments__right_topBar_count {
-  font-family: Montserrat;
-  font-size: 14px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: -0.1px;
-  color: #9ba6b2;
-}
-
-.shipments__right_tobBar_addBtn {
-  width: 168px;
-  height: 42px;
-  border-radius: 4px;
-  font-family: Montserrat;
-  font-size: 13px;
-  font-weight: 600;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.38;
-  letter-spacing: -0.1px;
-  text-align: center;
-  color: #ffffff;
-  box-shadow: 0 2px 7px 0 rgba(31, 90, 246, 0.2);
-  background-color: #1f5af6;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.shipments__right_shipments {
-  display: flex;
-  flex-direction: column;
-  margin: 20px 0 0 0;
-}
-
-.statusFilter__checkboxes {
-  display: flex;
-  flex-direction: column;
-}
-
-.shipment__root {
-  display: flex;
-  justify-content: space-between;
-  margin: 5px 0 0 0;
-  border-radius: 2px;
-  box-shadow: 0 2px 6px 0 #ebeff7;
-  background-color: #ffffff;
-  padding: 30px 20px 30px 30px;
-  /*height: 99px;*/
-}
-
-.shipment__infoContainer {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  flex-direction: column;
-}
-
-.shipment__fieldLabel {
-  font-family: Montserrat;
-  font-size: 12px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: -0.1px;
-  color: #9ba6b2;
-}
-
-.shipment__field {
-  font-family: Montserrat;
-  margin: 5px 0 0 0;
-  font-size: 15px;
-  font-weight: 500;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: 0.1px;
-  color: #263241;
-}
-
-.Forming {
-  font-family: Montserrat;
-  font-size: 15px;
-  font-weight: 500;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: -0.2px;
-  color: #9ba6b2;
-}
-
-.Formed {
-  font-family: Montserrat;
-  font-size: 15px;
-  font-weight: 500;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: -0.2px;
-  color: #4e5c6e;
-}
-
-.Approved {
-  font-family: Montserrat;
-  font-size: 15px;
-  font-weight: 500;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: -0.2px;
-  color: #ffc443;
-}
-
-.On-the-Way {
-  font-family: Montserrat;
-  font-size: 15px;
-  font-weight: 500;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: -0.2px;
-  color: #1f5af6;
-}
-
-
-.Damaged {
-  font-family: Montserrat;
-  font-size: 15px;
-  font-weight: 500;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: -0.1px;
-  color: #eb4d4b;
-}
-
-.Done {
-  font-family: Montserrat;
-  font-size: 15px;
-  font-weight: 500;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: -0.1px;
-  color: #72c150;
 }
