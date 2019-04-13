@@ -1,19 +1,18 @@
 // goodsController.js
 // Import contact mode
 
-goodsRep = require('../repository/goodsRepository');
+routeRep = require('../repository/routeRepository');
 
-CreateGoodsRequsetModel = require('../models/api/goods/CreateGoodsRequest');
-GoodsResponceModel = require('../models/api/goods/GetGoodsResponce');
+CreateRouteRequestModel = require('../models/api/route/CreateRouteRequest');
 
 async function index (req, res) {
     try {
         console.log("index");
-        var goods = await goodsRep.getGoods();
+        var routes = await routeRep.getTransportRoute();
         res.json({
             status: "success",
-            message: "Goods retrieved successfully",
-            data: goods
+            message: "Routes retrieved successfully",
+            data: routes
         });
     }
     catch (e) {
@@ -26,8 +25,8 @@ async function index (req, res) {
 async function view (req, res) {
     try {
         console.log("view goods");
-        var goodsId = req.params.goods_id
-        var goods = await goodsRep.findGoodsById(goodsId);
+        var routeId = req.params.route_id
+        var goods = await routeRep.findTransportRouteById(routeId);
         res.json({
             status: "success",
             message: "Goods details successfully",
@@ -44,7 +43,7 @@ async function create (req, res) {
     var goods = req.body;
     // save the claim and check for errors
     try {
-         await goodsRep.createGoods(goods);
+         await routeRep.createTransportRoute(goods);
         //claimId.createrId = userId;
 
         res.json({

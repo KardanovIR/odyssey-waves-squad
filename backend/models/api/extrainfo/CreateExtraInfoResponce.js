@@ -2,7 +2,7 @@
 
 class CreateExtraInfoResponce {
     constructor(){
-        this.createrId = '';
+        this.creater = '';
         this.description = '';
         this.shipmentId = '';
         this.location = {

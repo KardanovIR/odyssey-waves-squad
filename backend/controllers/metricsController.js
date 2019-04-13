@@ -1,6 +1,6 @@
 // metricController.js
 
-db = require('../repository/repository')
+metricsRep = require('../repository/metricsRepository')
 
 CreateMetricRequsetModel = require('../models/api/metrics/CreateMetricRequest');
 MetricResponceModel = require('../models/api/metrics/GetMetricResponce');
@@ -15,7 +15,7 @@ async function create (req, res) {
 
     // save the claim and check for errors
     try {
-        var metricId = await db.createMetrics(metrics);
+        var metricId = await metricsRep.createMetrics(metrics);
         
         metrics.id = metricId;
         console.log(metrics);
@@ -32,7 +32,7 @@ async function create (req, res) {
 async function index (req, res) {
     try {
         console.log("index");
-        var metrics = await db.getMetrics();
+        var metrics = await metricsRep.getMetrics();
         res.json({
             status: "success",
             message: "Metric retrieved successfully",
@@ -48,11 +48,13 @@ async function index (req, res) {
 async function view (req, res) {
     try {
         console.log("index");
-        //var users = await db.getUsers();
+        //metricsRep
+        var metricsId = req.params.metrics_id
+        var metrics = await goodsRep.findMetricsById(metricsId);
         res.json({
             status: "success",
             message: "Metric details successfully",
-            data: new MetricResponceModel()
+            data: metrics
         });
     }
     catch (e) {
