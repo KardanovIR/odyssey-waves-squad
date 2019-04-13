@@ -1,11 +1,14 @@
 import * as React from 'react'
 import More from '@src/icons/More'
-import { IShipment } from '@src/store/ShipmentsStore'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
+
 
 interface IShipmentProps {
-  shipment: IShipment 
+  shipment: any
+  history?: any
 }
 
+@withRouter
 export default class Shipment extends React.Component<IShipmentProps> {
   render() {
     const { shipment } = this.props
@@ -38,7 +41,7 @@ export default class Shipment extends React.Component<IShipmentProps> {
         <div className='shipment__fieldLabel'>Arrival date</div>
         <div className='shipment__field'>{shipment.arrivalDate}</div>
       </div>
-      <div>
+      <div onClick={() => this.props.history.push(`/shipment/${shipment.id}`)} style={{ cursor: 'pointer' }}>
         <More />
       </div>
     </div>

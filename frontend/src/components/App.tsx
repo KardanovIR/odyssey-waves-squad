@@ -9,6 +9,7 @@ import Login from './Login'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import CreateShipment from '@components/CreateShipment'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core'
+import ShipmentDetail from './ShipmentDetail'
 
 interface IInjectedProps {
   appStore?: AppStore
@@ -42,12 +43,13 @@ export default class App extends React.Component<IInjectedProps> {
       <MuiThemeProvider theme={colors}>
         {user ?
           <Router>
-            <div>
+            <>
               <TopBar user={user} />
 
               <Route exact path='/' component={Shipments} />
               <Route exact path='/createShipment' component={CreateShipment} />
-            </div>
+              <Route exact path='/shipment/:id' component={ShipmentDetail} />
+            </>
           </Router>
           :
           <Login />

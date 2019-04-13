@@ -196,9 +196,9 @@ bool sendMetric(char* type, char* value, char* datetime) {
   HTTPClient http;
   http.begin(BACKEND_URL);
   http.addHeader(F("Content-Type"), F("application/x-www-form-urlencoded"));
-  char jsonBuf[100];
-  sprintf(jsonBuf, "type=%s&value=%s&deviceId=%s&createDate=%s", type, value, DEVICE_ID, datetime);
-  int httpCode = http.POST(jsonBuf);
+  char paramsBuf[200];
+  sprintf(paramsBuf, "type=%s&value=%s&deviceId=%s&createDate=%s", type, value, DEVICE_ID, datetime);
+  int httpCode = http.POST(paramsBuf);
   http.end();
   Serial.println(httpCode);
   return httpCode == HTTP_CODE_OK;

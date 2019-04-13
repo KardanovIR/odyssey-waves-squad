@@ -4,14 +4,14 @@ import StatusFilter from '@components/Shipments/StatusFilter'
 import OtherFilter from '@components/Shipments/OtherFilter'
 import { inject, observer } from 'mobx-react'
 import ShipmentsStore from '@store/ShipmentsStore'
-import Shipment from '@components/Shipments/Shipment'
+import Shipment from '@components/Shipments'
 import TransferPopup from '@components/TransferPopup'
 import { withRouter } from 'react-router-dom'
 
 @withRouter
 @inject('shipmentsStore')
 @observer
-export default class Shipments extends React.Component<{ shipmentsStore?: ShipmentsStore, history: any }> {
+export default class Shipments extends React.Component<{ shipmentsStore?: ShipmentsStore, history?: any }> {
 
   state = {
     show: false,
@@ -41,6 +41,7 @@ export default class Shipments extends React.Component<{ shipmentsStore?: Shipme
           <div className='shipments__right_tobBar_addBtn' onClick={
             () => {
               this.props.history.push('/createShipment')
+              //this.open()
             }
           }>+ Add Shipment</div>
         </div>
