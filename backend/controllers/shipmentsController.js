@@ -113,6 +113,46 @@ async function view (req, res) {
     }
 };
 
+async function transfer (req, res) {
+    try {
+        console.log("transfer");
+        var transfer = req.body
+        var shipment = await shipmentsRep.findById(transfer.shipmentId);
+        shipment.countryFrom = transfer.from;
+        shipment.countryTo = transfer.to;
+        shipment.carier = transfer.carier;
+        await shipmentsRep.update(shipment);
+        res.json({
+            status: "success",
+            message: "Shipment details successfully",
+            data: shipment
+        });
+    }
+    catch (e) {
+        console.log(e);
+        res.json(e);
+    }
+};
+
+async function changeStatus (req, res) {
+    try {
+        console.log("transfer");
+        var transfer = req.body
+        var shipment = await shipmentsRep.findById(transfer.shipmentId);
+        shipment.status = transfer.status;
+        await shipmentsRep.update(shipment);
+        res.json({
+            status: "success",
+            message: "Shipment details successfully",
+            data: shipment
+        });
+    }
+    catch (e) {
+        console.log(e);
+        res.json(e);
+    }
+};
+
 
 module.exports = {
     index: index,
@@ -120,5 +160,7 @@ module.exports = {
     view: view,
     allRecived: allRecived,
     allCarier: allCarier,
-    allSend: allSend
+    allSend: allSend,
+    transfer: transfer,
+    changeStatus: changeStatus
 };

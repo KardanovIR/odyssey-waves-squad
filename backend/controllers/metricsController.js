@@ -1,9 +1,12 @@
 // metricController.js
 
-metricsRep = require('../repository/metricsRepository')
+metricsRep = require('../repository/metricsRepository');
+shipmentRep = require('../repository/shipmentRepository');
+claimRep = require('../repository/claimRepository');
 
 CreateMetricRequsetModel = require('../models/api/metrics/CreateMetricRequest');
 MetricResponceModel = require('../models/api/metrics/GetMetricResponce');
+CreateClaimRequest = require('../models/api/claim/CreateClaimRequest');
 
 // Handle create claim actions
 async function create (req, res) {
@@ -16,18 +19,37 @@ async function create (req, res) {
     // save the claim and check for errors
     try {
         var metricId = await metricsRep.createMetrics(metrics);
-        
+
         metrics.id = metricId;
         console.log(metrics);
         res.json({
-                message: 'New metric created!',
-                data: metrics
+            message: 'New metric created!',
+            data: metrics
         });
-    }
-    catch (e) {
+    } catch (e) {
         res.json(e);
     }
-};
+
+    var shipment = shipmentRep.findShipmentByDeviceId(metrics.deviceId);
+    if (shipment && shipment.conditionType === metrics.type) {
+        if (metrics.value < shipment.conditionMin || metrics.value > shipment.conditionMax) {
+            try {
+                var claim = new CreateClaimRequest();
+                claim.creater = "contract";
+                claim.description = util.format('Value of %s = %s is out of limit [%s, %s]', metrics.type, metrics.value, shipment.conditionMin, shipment.conditionMax);
+                claim.shipmentid = shipment.id;
+                // todo get the last location
+                claim.location = "right here";
+                claim.createdate = metrics.createDate;
+                var claimId = await claimRep.createClaim(claim);
+                claim.id = claimId;
+                console.log(claim);
+            } catch (e) {
+                console.error(e);
+            }
+        }
+    }
+}
 
 async function index (req, res) {
     try {
@@ -49,7 +71,7 @@ async function view (req, res) {
     try {
         console.log("index");
         //metricsRep
-        var metricsId = req.params.metrics_id
+        var metricsId = req.params.metrics_id;
         var metrics = await goodsRep.findMetricsById(metricsId);
         res.json({
             status: "success",
