@@ -16,7 +16,7 @@ export default class Shipment extends React.Component<IShipmentProps> {
             'damaged': <div className='Damaged shipment__field'>Damaged</div>,
             'done': <div className='Done shipment__field'>Forming</div>,
         }[shipment.status]
-        console.log(shipment)
+
         return <div className='shipment__root'>
             <div className={'shipment__infoContainer'}>
                 <div className='shipment__fieldLabel'>Status</div>

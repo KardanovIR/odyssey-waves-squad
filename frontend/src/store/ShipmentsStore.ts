@@ -1,5 +1,6 @@
 import SubStore from './SubStore'
-import {action, computed, observable} from 'mobx'
+import {action, computed, observable, reaction} from 'mobx'
+import RootStore from '@store/RootStore'
 
 export const statusLabelMap = {
   forming: 'Forming',
@@ -131,12 +132,9 @@ export default class ShipmentsStore extends SubStore {
     status: 'approved',
   }
 
-  @computed get visibleShipments() {
-    return this.shipments.filter(shipment => this.statusFilters.All || this.statusFilters[shipment.status])
-  }
 
   @observable statusFilters = {
-    All: true,
+    All: false,
     forming: true,
     formed: true,
     approved: true,
@@ -155,4 +153,12 @@ export default class ShipmentsStore extends SubStore {
     to: undefined,
   }
 
+  @computed get visibleShipments() {
+    return this.shipments.filter(shipment => this.statusFilters.All || this.statusFilters[shipment.status])
+  }
+
+
+  async submitShipment(){
+    console.log('shipment sumbmit method')
+  }
 }
