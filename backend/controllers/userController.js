@@ -9,8 +9,8 @@ async function login (req, res) {
     try {
         var userId=req.params.user_id;
         console.log("login");
-        var user = new UserModel();
-        // await db.getUser(userId);
+        //var user = new UserModel();
+        var user= await db.getUser(userId);
         res.json({
             status: "success",
             message: "login",

@@ -31,11 +31,11 @@ async function create (req, res) {
 async function index (req, res) {
     try {
         console.log("index");
-        //var users = await db.getUsers();
+        var metrics = await db.getMetrics();
         res.json({
             status: "success",
             message: "Metric retrieved successfully",
-            data: [new MetricResponceModel(), new MetricResponceModel()]
+            data: metrics
         });
     }
     catch (e) {

@@ -81,9 +81,21 @@ async function createMetrics (metrics) {
   })
 }
 
+async function getMetrics() {
+  console.log("getMetrics")
+  return new Promise((resolve, reject) => {
+    pool.query('SELECT * FROM metrics ORDER BY id ASC', (error, results) => {
+      if (error) {
+        reject(error);
+      }
+      resolve(results.rows);
+    });
+  })
+}
 
 module.exports = {
   getUsers: getUsers,
   createUser: createUser,
-  createMetrics: createMetrics
+  createMetrics: createMetrics,
+  getMetrics:getMetrics
 };
