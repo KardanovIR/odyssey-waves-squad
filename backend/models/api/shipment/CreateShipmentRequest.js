@@ -12,6 +12,8 @@ class CreateShipmentRequest {
         this.policeId='';
         this.carrier='';
         this.createDate='';
+        this.arrivalDate='';
+        this.device=''
         this.goods= new Array({
             id:'',
             type:'',
@@ -19,7 +21,8 @@ class CreateShipmentRequest {
             value:'',
             quantity:'',
             wight:'',
-        });
+        })
+        this.status='';
     }
 }
     

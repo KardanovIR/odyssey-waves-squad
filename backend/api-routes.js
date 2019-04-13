@@ -54,8 +54,12 @@ router.route('/shipments/')
     .post(shipmentsController.create);
 router.route('/shipments/:shipment_id')
     .get(shipmentsController.view);
-    router.route('/shipments/reciver/:user_id')
+router.route('/shipments/recived/:user_id')
     .get(shipmentsController.allRecived);
+router.route('/shipments/send/:user_id')
+    .get(shipmentsController.allSend);
+router.route('/shipments/carier/:user_id')
+    .get(shipmentsController.allCarier);
     // router.route('/contacts/:contact_id')
 //     .get(contactController.view)
 //     .patch(contactController.update)

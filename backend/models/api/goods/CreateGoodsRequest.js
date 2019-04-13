@@ -4,6 +4,7 @@ class CreateGoodsRequest {
     constructor(){
         this.createrId = '';
             this.type='';
+            this.shipmentId='';
             this.description='';
             this.value='';
             this.quantity='';
