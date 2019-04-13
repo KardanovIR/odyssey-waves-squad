@@ -34,3 +34,4 @@ export default class Shipments extends React.Component<{ shipmentsStore?: Shipme
     </div>
   }
 }
+

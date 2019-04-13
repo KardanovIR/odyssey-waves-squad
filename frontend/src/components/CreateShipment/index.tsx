@@ -18,7 +18,7 @@ export default class CreateShipment extends React.Component<any, { step: number 
         </div>
         <div className='createShipment__rightContainer'>
           {{
-            0: <BasicInfo />,
+            0: <BasicInfo onContinue={()=>this.setState({step: 1}) }/>,
             1: <div className='createShipment__cargoInformation'>
 
             </div>,
