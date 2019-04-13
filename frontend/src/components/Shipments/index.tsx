@@ -1,16 +1,16 @@
 import React from 'react'
-import Button from 'react-bootstrap/Button'
-import Card from 'react-bootstrap/Card'
 import './styles.css'
 import StatusFilter from '@components/Shipments/StatusFilter'
 import OtherFilter from '@components/Shipments/OtherFilter'
 import {inject, observer} from 'mobx-react'
 import ShipmentsStore from '@store/ShipmentsStore'
 import Shipment from '@components/Shipments/Shipment'
+import {withRouter, RouteComponentProps} from 'react-router-dom'
 
+@withRouter
 @inject('shipmentsStore')
 @observer
-export default class Shipments extends React.Component<{ shipmentsStore?: ShipmentsStore }> {
+export default class Shipments extends React.Component<{ shipmentsStore?: ShipmentsStore, history:any }> {
 
   render() {
     const shipmentsStore = this.props.shipmentsStore!
@@ -25,7 +25,7 @@ export default class Shipments extends React.Component<{ shipmentsStore?: Shipme
             <div className='shipments__right_topBar_label'>Shipments</div>
             <div className='shipments__right_topBar_count'>Found {shipmentsStore.shipments.length} shipments</div>
           </div>
-          <div className='shipments__right_tobBar_addBtn'>+ Add Shipment</div>
+          <div className='shipments__right_tobBar_addBtn' onClick={()=> this.props.history.push('/createShipment')}>+ Add Shipment</div>
         </div>
         <div className={'shipments__right_shipments'}>
           {shipmentsStore.visibleShipments.map((shipment, i) => <Shipment key={i} shipment={shipment}/>)}

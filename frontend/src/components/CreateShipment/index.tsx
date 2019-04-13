@@ -3,10 +3,21 @@ import './styles.css'
 import BasicInfo from '@components/CreateShipment/BasicInfo'
 import CargoInformation from '@components/CreateShipment/CargoInformation'
 import Steps from '@components/Steps'
+import Confirmation from './Confirmation'
+import {inject} from 'mobx-react'
+import {withRouter, RouteComponentProps} from 'react-router-dom'
 
+
+@withRouter
+@inject('shipmentsStore')
 export default class CreateShipment extends React.Component<any, { step: number }> {
   state = {
     step: 0,
+  }
+
+  handleFinish = () => {
+    this.props.history.push('/')
+    this.props.shipmentsStore.submitShipment();
   }
 
   render() {
@@ -23,9 +34,7 @@ export default class CreateShipment extends React.Component<any, { step: number 
           {{
             0: <BasicInfo onContinue={() => this.setState({ step: 1 })} />,
             1: <CargoInformation onContinue={() => this.setState({ step: 2 })} />,
-            2: <div className='createShipment__confirmation'>
-
-            </div>,
+            2: <Confirmation onContinue={this.handleFinish} />,
           }[step]}
         </div>
       </div>
