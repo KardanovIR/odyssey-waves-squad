@@ -9,6 +9,7 @@ class CreateClaimRequest {
             longitude:'',
             latitude:''
         };
+        this.createDate='';
     }
 }
     
