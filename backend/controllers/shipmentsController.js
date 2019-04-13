@@ -9,8 +9,8 @@ metricRep = require('../repository/metricsRepository');
 CreateShipmentModel = require('../models/api/shipment/CreateShipmentRequest');
 GetShipmentModel = require('../models/api/shipment/GetShipmentResponce');
 
-// Handle create claim actions
 async function create (req, res) {
+    console.log("api shipment create");
     try {
         var shipment = req.body;
         await shipmentsRep.createShipment(shipment);
@@ -20,13 +20,14 @@ async function create (req, res) {
         });
     }
     catch (e) {
+        console.log(e);
         res.json(e);
     }
 };
 
 async function index (req, res) {
-    try {
-        console.log("index");
+    try { 
+    console.log("api shipment index");
         var shipments = await shipmentsRep.getShipments();
         res.json({
             status: "success",
@@ -42,7 +43,8 @@ async function index (req, res) {
 
 async function allRecived (req,res) {
     try {
-        console.log("index");
+        
+    console.log("api shipment allRecived");
         var userId = req.params.user_id
         var shipments = await shipmentsRep.getShipmentsByReciverId(userId);
         res.json({
@@ -59,7 +61,8 @@ async function allRecived (req,res) {
 
 async function allSend (req,res) {
     try {
-        console.log("index");
+        
+    console.log("api shipment allSend");
         var userId = req.params.user_id
         var shipments = await shipmentsRep.getShipmentsBySenderId(userId);
         res.json({
@@ -76,7 +79,8 @@ async function allSend (req,res) {
 
 async function allCarier (req,res) {
     try {
-        console.log("index");
+       
+    console.log("api shipment allCarier");
         var userId = req.params.user_id
         var shipments = await shipmentsRep.getShipmentsByCarierId(userId);
         res.json({
@@ -93,7 +97,8 @@ async function allCarier (req,res) {
 
 async function view (req, res) {
     try {
-        console.log("view");
+        
+        console.log("api shipment view");
         var shipmentId = req.params.shipment_id
         var shipment = await shipmentsRep.findById(shipmentId);
         shipment.goods = await goodsRep.findByShipmentId(shipmentId);
@@ -115,7 +120,8 @@ async function view (req, res) {
 
 async function transfer (req, res) {
     try {
-        console.log("transfer");
+        
+    console.log("api shipment transfer");
         var transfer = req.body
         var shipment = await shipmentsRep.findById(transfer.shipmentId);
         shipment.countryFrom = transfer.from;
@@ -136,7 +142,8 @@ async function transfer (req, res) {
 
 async function changeStatus (req, res) {
     try {
-        console.log("transfer");
+        
+    console.log("api shipment changeStatus");
         var transfer = req.body
         var shipment = await shipmentsRep.findById(transfer.shipmentId);
         shipment.status = transfer.status;

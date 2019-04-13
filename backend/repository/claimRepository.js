@@ -10,7 +10,7 @@ const pool = new Pool({
 })
 
 async function createClaim (claim) {
-  console.log("createClaim")
+  console.log("db create Claim")
     return new Promise((resolve, reject) => {
       pool.query('INSERT INTO claims (creater, description, shipmentid, location, createdate) VALUES ($1, $2, $3, $4, $5)',
         [claim.creater, claim.description, claim.shipmentId, claim.location, claim.createData], (error, results) => {
@@ -26,7 +26,7 @@ async function createClaim (claim) {
   }
   
   async function getClaims() {
-    console.log("getClaims")
+    console.log("db get Claims")
     return new Promise((resolve, reject) => {
       pool.query('SELECT * FROM claims ORDER BY id ASC', (error, results) => {
         if (error) {
@@ -40,7 +40,7 @@ async function createClaim (claim) {
   }
   
   async function findById (claimId) {
-    console.log("findClaimsById")
+    console.log("db find Claims ById")
     return new Promise((resolve, reject) => {
         pool.query('SELECT * FROM claims WHERE id = $1', [claimId], (error, results) => {
         if (error) {
@@ -54,7 +54,7 @@ async function createClaim (claim) {
   }
 
   async function findByShipmentId (shipmentId) {
-    console.log("findByShipmentId")
+    console.log("db find Claims ByShipmentId")
     return new Promise((resolve, reject) => {
         pool.query('SELECT * FROM claims WHERE shipmentid = $1', [shipmentId], (error, results) => {
         if (error) {

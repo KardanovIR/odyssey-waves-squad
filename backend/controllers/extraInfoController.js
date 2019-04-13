@@ -1,20 +1,15 @@
 // extraInfoController.js
-// Import contact mode
-
 extraInfoRep = require('../repository/extraInfoRepository')
 
 CreateExtraInfoRequsetModel = require('../models/api/extrainfo/CreateExtraInfoResponce');
 ExtraInfoResponceModel = require('../models/api/extrainfo/GetExtrainfoResponce');
 
-// Handle create claim actions
 async function create (req, res) {
     var extraInfo = req.body;
 
-    // save the extraInfo and check for errors
+    console.log("api extraInfo create");
     try {
         await extraInfoRep.createExtraInfo(extraInfo);
-        //claimId.createrId = userId;
-
         res.json({
                 message: 'New ExtraInfo created!',
                 data: extraInfo
@@ -27,7 +22,7 @@ async function create (req, res) {
 
 async function index (req, res) {
     try {
-        console.log("index");
+        console.log("api extraInfo index");
         var extraInfo = await extraInfoRep.getExtraInfo();
         res.json({
             status: "success",
@@ -43,7 +38,7 @@ async function index (req, res) {
 
 async function view (req, res) {
     try {
-        console.log("index");
+        console.log("api extraInfo view");
         var extraInfoId = req.params.extraInfo_id
         var extraInfo = await extraInfoRep.findExtraInfoById(extraInfoId);
         res.json({

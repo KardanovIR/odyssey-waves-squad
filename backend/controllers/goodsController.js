@@ -8,7 +8,7 @@ GoodsResponceModel = require('../models/api/goods/GetGoodsResponce');
 
 async function index (req, res) {
     try {
-        console.log("index");
+        console.log("api goods index");
         var goods = await goodsRep.getGoods();
         res.json({
             status: "success",
@@ -25,7 +25,7 @@ async function index (req, res) {
 // Handle view goods info
 async function view (req, res) {
     try {
-        console.log("view goods");
+        console.log("api goods view");
         var goodsId = req.params.goods_id
         var goods = await goodsRep.findGoodsById(goodsId);
         res.json({
@@ -41,11 +41,11 @@ async function view (req, res) {
 };
 
 async function create (req, res) {
+    console.log("api goods create");
     var goods = req.body;
     // save the claim and check for errors
     try {
          await goodsRep.createGoods(goods);
-        //claimId.createrId = userId;
 
         res.json({
                 message: 'New goods created!',

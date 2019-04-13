@@ -3,6 +3,8 @@ const Broadcast =  require('@waves/waves-transactions');
 const https = require('https');
 
 async function getLastBlock(){
+  
+  console.log("client waves getLastBlock");
   return new Promise((resolve, reject) => {
     https.get(Config.waves.host+'/blocks/last', (resp) => {
       let data = '';
@@ -24,6 +26,7 @@ async function getLastBlock(){
 }
 
 async function sendToWaves(req){
+  console.log("client waves sendToWaves");
     return new Promise((resolve, reject) => {
       broadcast(signedTx, nodeUrl).then(resp => {
         resolve(resp);
@@ -34,6 +37,7 @@ async function sendToWaves(req){
 }
 
 async function writeShipmentToWaves(shipment) {
+  console.log("client waves writeShipmentToWaves");
     return new Promise((resolve, reject) => {
         const params = {
             data: [

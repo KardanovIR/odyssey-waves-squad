@@ -7,13 +7,9 @@ ClaimResponceModel = require('../models/api/claim/GetClaimResponce');
 // Handle create claim actions
 async function create (req, res) {
     console.log("api createClaim");
-    
-    // save the claim and check for errors
     try {
         var claim = req.body;
-        console.log(claim);
         await claimRep.createClaim(claim);
-        //claimId.createrId = userId;
         res.json({
                 message: 'New claim created!',
                 data: claim
@@ -26,7 +22,7 @@ async function create (req, res) {
 
 async function index (req, res) {
     try {
-        console.log("index");
+        console.log("api claim index");
         var claims = await claimRep.getClaims();
         res.json({
             status: "success",
@@ -42,7 +38,7 @@ async function index (req, res) {
 
 async function view (req, res) {
     try {
-        console.log("view");
+        console.log("api claim view");
         var claimId = req.params.claim_id
         var claim = await claimRep.findClaimById(claimId);
         res.json({

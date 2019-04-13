@@ -6,7 +6,8 @@ Contact = require('../models/contactModel');
 // Handle index actions
 async function getLastBlock (req, res) {
     try {
-        console.log("index");
+        
+    console.log("api waves lastBlock");
         var lastBlock = await wavesClient.getLastBlock();
         res.json({
             status: "success",
