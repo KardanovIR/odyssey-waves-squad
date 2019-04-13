@@ -9,7 +9,7 @@ import {inject} from 'mobx-react'
 import Calendar from '@src/icons/Calendar'
 import Pin from '@src/icons/Pin'
 
-const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(0)
+const capitalize = (s: string) => s && (s.charAt(0).toUpperCase() + s.slice(0))
 @withRouter
 @inject('shipmentsStore')
 export default class ShipmentDetail extends React.Component<{ shipmentsStore?: ShipmentsStore, history: any, match: any }> {
