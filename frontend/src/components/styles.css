@@ -1,6 +1,8 @@
 .app_root {
-    display: flex;
-    flex: 1;
-    width: 100%;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  background-color: #f8f9fb;
 }

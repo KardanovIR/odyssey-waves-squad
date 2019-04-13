@@ -77,6 +77,8 @@ export default class KeeperStore extends SubStore {
   async publicState(): Promise<IKeeperPublicState> {
     if (!this.isKeeperAwailable) throw new Error('Keeper is not installed')
 
+    await window.WavesKeeper.auth({ data: '' })
+
     const api = await window.WavesKeeper.initialPromise
     return await api.publicState()
   }

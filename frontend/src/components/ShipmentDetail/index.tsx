@@ -1,16 +1,12 @@
 import React from 'react'
-import Button from 'react-bootstrap/Button'
-import Card from 'react-bootstrap/Card'
 import './styles.css'
 import StatusFilter from '@components/Shipments/StatusFilter'
 import OtherFilter from '@components/Shipments/OtherFilter'
-import {inject, observer} from 'mobx-react'
 import ShipmentsStore from '@store/ShipmentsStore'
 import Shipment from '@components/Shipments/Shipment'
 
-@inject('shipmentsStore')
-@observer
-export default class Shipments extends React.Component<{ shipmentsStore?: ShipmentsStore }> {
+
+export default class ShipmentDetail extends React.Component<{ shipmentsStore?: ShipmentsStore }> {
 
   render() {
     const shipmentsStore = this.props.shipmentsStore!
@@ -28,7 +24,7 @@ export default class Shipments extends React.Component<{ shipmentsStore?: Shipme
           <div className='shipments__right_tobBar_addBtn'>+ Add Shipment</div>
         </div>
         <div className={'shipments__right_shipments'}>
-          {shipmentsStore.visibleShipments.map((shipment, i) => <Shipment key={i} shipment={shipment}/>)}
+          {shipmentsStore.shipments.map((shipment, i) => <Shipment key={i} shipment={shipment}/>)}
         </div>
       </div>
     </div>

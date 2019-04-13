@@ -1,5 +1,5 @@
 import SubStore from './SubStore'
-import {action, observable} from 'mobx'
+import {action, computed, observable} from 'mobx'
 
 export const statusLabelMap = {
   forming: 'Forming',
@@ -23,6 +23,10 @@ export default class ShipmentsStore extends SubStore {
     departureDate: '2019.05.01',
   }]
 
+
+  @computed get visibleShipments(){
+    return this.shipments.filter(shipment =>  this.statusFilters.All || this.statusFilters[shipment.status])
+  }
 
   @observable statusFilters = {
     All: true,
