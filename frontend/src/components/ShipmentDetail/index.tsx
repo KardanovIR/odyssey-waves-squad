@@ -6,27 +6,12 @@ import ShipmentsStore from '@store/ShipmentsStore'
 import Shipment from '@components/Shipments/Shipment'
 
 
-export default class ShipmentDetail extends React.Component<{ shipmentsStore?: ShipmentsStore }> {
+export default class ShipmentDetail extends React.Component<{ shipmentsStore?: ShipmentsStore, edit: boolean }> {
 
   render() {
     const shipmentsStore = this.props.shipmentsStore!
-    return <div className='shipments__root'>
-      <div className='shipments__left'>
-        <StatusFilter/>
-        <OtherFilter/>
-      </div>
-      <div className='shipments__right'>
-        <div className='shipments__right_topBar'>
-          <div className='shipments__right_topBar_text'>
-            <div className='shipments__right_topBar_label'>Shipments</div>
-            <div className='shipments__right_topBar_count'>Found {shipmentsStore.shipments.length} shipments</div>
-          </div>
-          <div className='shipments__right_tobBar_addBtn'>+ Add Shipment</div>
-        </div>
-        <div className={'shipments__right_shipments'}>
-          {shipmentsStore.shipments.map((shipment, i) => <Shipment key={i} shipment={shipment}/>)}
-        </div>
-      </div>
+    return <div className='shipmentsDetail__root'>
+
     </div>
   }
 }
