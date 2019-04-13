@@ -4,7 +4,7 @@ import StatusFilter from '@components/Shipments/StatusFilter'
 import OtherFilter from '@components/Shipments/OtherFilter'
 import { inject, observer } from 'mobx-react'
 import ShipmentsStore from '@store/ShipmentsStore'
-import Shipment from '@components/Shipments'
+import Shipment from '@components/Shipments/Shipment'
 import TransferPopup from '@components/TransferPopup'
 import { withRouter } from 'react-router-dom'
 
