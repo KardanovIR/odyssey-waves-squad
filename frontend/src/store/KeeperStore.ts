@@ -32,7 +32,6 @@ export interface Account {
   address: string
   networkCode: string
   network: string
-  type: string
   balance: Balance
 }
 
