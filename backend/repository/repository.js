@@ -206,6 +206,42 @@ async function createClaim (claim) {
       })
     }
     
+    async function getShipmentsBySenderId (userId) {
+      console.log("getClaims")
+      return new Promise((resolve, reject) => {
+        pool.query('SELECT * FROM shipments ORDER BY id ASC WHERE senderid = $1', [userId],  (error, results) => {
+          if (error) {
+            reject(error);
+          }
+          resolve(results.rows);
+        });
+      })
+    }
+
+    async function getShipmentsByRecipientId (userId) {
+      console.log("getClaims")
+      return new Promise((resolve, reject) => {
+        pool.query('SELECT * FROM shipments ORDER BY id ASC WHERE recipientid = $1', [userId],  (error, results) => {
+          if (error) {
+            reject(error);
+          }
+          resolve(results.rows);
+        });
+      })
+    }
+
+    async function getShipmentsByCarrierId (userId) {
+      console.log("getClaims")
+      return new Promise((resolve, reject) => {
+        pool.query('SELECT * FROM shipments ORDER BY id ASC WHERE carrier = $1', [userId],  (error, results) => {
+          if (error) {
+            reject(error);
+          }
+          resolve(results.rows);
+        });
+      })
+    }
+
     async function findShipmentById (shipmentId) {
       console.log("findShipmentByid")
       return new Promise((resolve, reject) => {
@@ -233,4 +269,7 @@ module.exports = {
   createShipment:createShipment,
   getShipments:getShipments,
   findShipmentById:findShipmentById,
+  getShipmentsBySenderId:getShipmentsBySenderId,
+  getShipmentsByRecipientId:getShipmentsByRecipientId,
+  getShipmentsByCarrierId:getShipmentsByCarrierId
 };

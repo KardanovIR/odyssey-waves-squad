@@ -40,10 +40,45 @@ async function index (req, res) {
 async function allRecived (req,res) {
     try {
         console.log("index");
-        var shipments = await db.getShipmentsByReciverId();
+        var userId = req.params.user_id
+        var shipments = await db.getShipmentsByReciverId(userId);
         res.json({
             status: "success",
-            message: "Shipments retrieved successfully",
+            message: "Recived Shipments retrieved successfully",
+            data: shipments
+        });
+    }
+    catch (e) {
+        console.log(e);
+        res.json(e);
+    }
+}
+
+async function allSend (req,res) {
+    try {
+        console.log("index");
+        var userId = req.params.user_id
+        var shipments = await db.getShipmentsBySenderId(userId);
+        res.json({
+            status: "success",
+            message: "Send Shipments retrieved successfully",
+            data: shipments
+        });
+    }
+    catch (e) {
+        console.log(e);
+        res.json(e);
+    }
+}
+
+async function allCarier (req,res) {
+    try {
+        console.log("index");
+        var userId = req.params.user_id
+        var shipments = await db.getShipmentsByCarierId(userId);
+        res.json({
+            status: "success",
+            message: "Carier Shipments retrieved successfully",
             data: shipments
         });
     }
@@ -74,5 +109,8 @@ async function view (req, res) {
 module.exports = {
     index: index,
     create: create,
-    view: view
+    view: view,
+    allRecived: allRecived,
+    allCarier: allCarier,
+    allSend: allSend
 };
