@@ -1,6 +1,8 @@
 .shipments__root{
     display: flex;
     flex: 1;
+    background-color: #f8f9fb;
+    padding: 4% 0px 0px 0px;
 }
 
 .shipments__left{
@@ -13,6 +15,57 @@
     border: 1px solid black;
 }
 
+.shipments__right_topBar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.shipments__right_topBar_text {
+    display: flex;
+    flex-direction: column;
+}
+.shipments__right_topBar_label{
+    font-family: Montserrat;
+    font-size: 28px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #263241;
+}
+
+.shipments__right_topBar_count {
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: -0.1px;
+    color: #9ba6b2;
+}
+
+.shipments__right_tobBar_addBtn{
+    width: 168px;
+    height: 42px;
+    border-radius: 4px;
+    font-family: Montserrat;
+    font-size: 13px;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.38;
+    letter-spacing: -0.1px;
+    text-align: center;
+    color: #ffffff;
+    box-shadow: 0 2px 7px 0 rgba(31, 90, 246, 0.2);
+    background-color: #1f5af6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .statusFilter__checkboxes {
     display: flex;
     flex-direction: column;
@@ -20,7 +73,7 @@
 
 .shipment__root {
     display: flex;
-
+    justify-content: space-between;
 }
 .shipment__fieldLabel {
     font-family: Montserrat;

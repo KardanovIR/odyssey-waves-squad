@@ -16,7 +16,7 @@ export default class StatusFilter extends React.Component<IInjectedProps, { open
     }
 
     render() {
-        const shipmentsStore = this.props.shipmentsStore!;
+        const shipmentsStore = this.props.shipmentsStore!
 
         const filters = ['All',
             'Forming',

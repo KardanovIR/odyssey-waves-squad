@@ -2,7 +2,7 @@ import React from 'react'
 import {inject, observer} from 'mobx-react'
 import ShipmentsStore from '@src/store/ShipmentsStore'
 import InputGroup from 'react-bootstrap/InputGroup'
-import DatePicker from 'react-datepicker';
+import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
 
@@ -15,7 +15,7 @@ interface IInjectedProps {
 export default class OtherFilter extends React.Component<IInjectedProps, { open: boolean }> {
     state = {
         open: true,
-    };
+    }
 
 
     render(){

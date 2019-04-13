@@ -2,13 +2,14 @@ import SubStore from './SubStore'
 import {action, observable} from 'mobx'
 
 export default class ShipmentsStore extends SubStore {
-    @observable shipments: any[] = [ {
-        status: 'formed',
+    @observable shipments: any[] = [{
+        status: 'Formed',
         recipient: 'Roga i Kopita',
         sender: 'romashka',
         departureDate: '2019.01.01',
 
-    }];
+    }]
+
 
     @observable statusFilters = {
         'All': true,
