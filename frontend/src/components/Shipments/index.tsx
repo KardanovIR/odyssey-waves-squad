@@ -13,17 +13,7 @@ import { withRouter } from 'react-router-dom'
 @observer
 export default class Shipments extends React.Component<{ shipmentsStore?: ShipmentsStore, history?: any }> {
 
-  state = {
-    show: false,
-  }
 
-  handleClose() {
-    this.setState({ show: false })
-  }
-
-  open() {
-    this.setState({ show: true })
-  }
 
   render() {
     const shipmentsStore = this.props.shipmentsStore!
@@ -49,7 +39,6 @@ export default class Shipments extends React.Component<{ shipmentsStore?: Shipme
           {shipmentsStore.visibleShipments.map((shipment, i) => <Shipment key={i} shipment={shipment} />)}
         </div>
       </div>
-      <TransferPopup open={this.state.show} onClose={() => { this.handleClose() }} onTransfer={() => { }} />
     </div>
 
   }
