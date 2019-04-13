@@ -4,14 +4,11 @@ class CreateGoodsRequest {
     constructor(){
         this.creater = '';
             this.type='';
+            this.shipmentId='';
             this.description='';
             this.value='';
             this.quantity='';
             this.wight='';
-            this.conditionMin='';
-            this.conditionMax='';
-            this.conditionType='';
-            this.shipmentId='';
     }
 }
     

@@ -1,0 +1,53 @@
+.shipmentDetail__root {
+    background-color: #f8f9fb;
+    min-height: 100%;
+}
+
+.shipmentDetail__content {
+    margin: 2px 10% 0 10%;
+    height: 100%;
+    border-radius: 2px;
+    box-shadow: 0 2px 6px 0 #ebeff7;
+    background-color: #ffffff;
+    padding: 50px;
+}
+
+.shipmentDetail__left {
+
+}
+
+.shipmentDetail__left_title {
+
+}
+
+.shipmentDetail__left_senderSubtitle {
+    margin-top: 0px;
+}
+.shipmentDetail__left_dateContainer {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.shipmentDetail__left_dateText {
+    margin-left: 10px;
+}
+
+.shipmentDetail__left_sender {
+    margin-top: 30px;
+}
+.shipmentDetail__left_senderLocationContainer {
+    display: flex;
+    margin-top: 15px;
+    flex-direction: row;
+    align-items: center;
+}
+/*.shipmentDetail__map {*/
+/*!*min-height: 100%;*!*/
+/*!*width: auto;*!*/
+/*background-image:url("../../../assets/img/map-wide.jpeg");*/
+/*background-repeat: no-repeat;*/
+/*background-size: contain;*/
+/*!*background: url("../../../assets/img/map-wide.jpeg");*!*/
+/*}*/
