@@ -183,7 +183,7 @@ async function findById(shipmentId) {
 async function findByDeviceId(deviceId) {
   console.log("db findShipmentByDeviceid");
   return new Promise((resolve, reject) => {
-    pool.query('SELECT * FROM shipments WHERE device = $device', [deviceId], (error, results) => {
+    pool.query('SELECT * FROM shipments WHERE device = $1', [deviceId], (error, results) => {
       if (error) {
         reject(error);
       }
