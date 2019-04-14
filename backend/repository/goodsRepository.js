@@ -18,9 +18,15 @@ async function create(goods) {
           console.log(error);
           reject(error);
         }
-        if (results)
-          resolve(results.rows);
-        resolve();
+        if (results){
+          var goods = results.rows;
+          goods.forEach(element => {
+            element= fillApiFields(element);
+          });
+        
+          resolve(goods[0]);
+        }
+        resolve([]);
       })
   })
 }
@@ -34,9 +40,15 @@ async function update(goods) {
           console.log(error);
           reject(error);
         }
-        if (results)
-          resolve(results.rows);
-        resolve();
+        if (results){
+          var goods = results.rows;
+          goods.forEach(element => {
+            element= fillApiFields(element);
+          });
+        
+          resolve(goods);
+        }
+        resolve([]);
       })
   })
 }
@@ -48,9 +60,15 @@ async function getGoods() {
       if (error) {
         reject(error);
       }
-      if (results)
-        resolve(results.rows);
-      resolve();
+      if (results){
+        var goods = results.rows;
+        goods.forEach(element => {
+          element= fillApiFields(element);
+        });
+      
+        resolve(goods);
+      }
+      resolve([]);
     });
   })
 }
@@ -62,9 +80,15 @@ async function findGoodsById(goodsId) {
       if (error) {
         reject(error);
       }
-      if (results)
-        resolve(results.rows);
-      resolve();
+      if (results){
+        var goods = results.rows;
+        goods.forEach(element => {
+          element= fillApiFields(element);
+        });
+      
+        resolve(goods[0]);
+      }
+      resolve([]);
     })
   })
 }
@@ -76,11 +100,22 @@ async function findByShipmentId(shipmentid) {
       if (error) {
         reject(error);
       }
-      if (results)
-        resolve(results.rows);
+      if (results){
+        var goods = results.rows;
+        goods.forEach(element => {
+          element= fillApiFields(element);
+        });
+      
+        resolve(goods);
+      }
       resolve([]);
     });
   });
+}
+
+function fillApiFields(goods){
+  goods.shipmentId = goods.shipmentid;
+  return goods;
 }
 
 module.exports = {

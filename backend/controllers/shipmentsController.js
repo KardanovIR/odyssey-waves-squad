@@ -35,7 +35,6 @@ async function create(req, res) {
     try {
         var shipment = req.body;
         shipment.createDate = formatDate(new Date());
-        console.log(shipment.createDate);
         // .var insureCargoResponse = await tvmClient.insureCargo(shipment);
         // shipment.policyId = insureCargoResponse.PolicyID;
         var newShipment = await shipmentsRep.createShipment(shipment);
@@ -190,7 +189,79 @@ async function changeStatus(req, res) {
     }
 };
 
+async function update(req, res) {
+    console.log("api shipment create");
+    try {
+        var shipment = req.body;
+        // .var insureCargoResponse = await tvmClient.insureCargo(shipment);
+        // shipment.policyId = insureCargoResponse.PolicyID;
+        await shipmentsRep.updateShipment(shipment);
+        if(shipment.goods){
+            updateGoods(shipment.goods, shipment.id);
+        }
+        if(shipment.claims){
+            updateClaims(shipment.claims, shipment.id);
+        }
+        if(shipment.extraInfo){
+            updateExtraInfo(shipment.extraInfo, shipment.id);
+        }
+        if(shipment.transportRoute){
+            updateRoutes(shipment.transportRoute, shipment.id);
+        }
+        res.json({
+            message: 'Shipment updated!',
+            data: shipment
+        });
+    }
+    catch (e) {
+        console.log(e);
+        res.json(e);
+    }
+};
 
+async function updateGoods(goods, shipmentId){
+    goods.forEach(async (entry) => {
+        if(entry.id)
+            await goodsRep.update(entry);
+        else{
+            entry.shipmentId = shipmentId;
+            await goodsRep.insert(entry);
+        }
+    });
+}
+
+async function updateClaims(claims, shipmentId){
+    claims.forEach(async (entry) => {
+        if(entry.id)
+            await claimRep.update(entry);
+        else{
+            entry.shipmentId = shipmentId;
+            await claimRep.insert(entry);
+        }
+    });
+}
+
+async function updateExtraInfo(extraInfo, shipmentId){
+    claims.forEach(async (entry) => {
+        if(entry.id)
+            await extraInfoRep.update(entry);
+        else{
+            entry.shipmentId = shipmentId;
+            await extraInfoRep.insert(entry);
+        }
+    });
+}
+
+async function updateRoutes(routes, shipmentId){
+    routes.forEach(async (entry) => {
+        if(entry.id)
+            await routeRep.update(entry);
+        else{
+            entry.shipmentId = shipmentId;
+            await routeRep.insert(entry);
+        }
+    });
+}
 module.exports = {
     index: index,
     create: create,
@@ -199,5 +270,6 @@ module.exports = {
     allCarier: allCarier,
     allSend: allSend,
     transfer: transfer,
-    changeStatus: changeStatus
+    changeStatus: changeStatus,
+    update: update
 };

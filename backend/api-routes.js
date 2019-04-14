@@ -52,6 +52,8 @@ router.route('/metrics/:metrics_id')
 router.route('/shipments/')
     .get(shipmentsController.index)
     .post(shipmentsController.create);
+router.route('/shipments/update')
+    .post(shipmentsController.update);
 router.route('/shipments/:shipment_id')
     .get(shipmentsController.view);
 router.route('/shipments/recived/:user_id')
@@ -64,7 +66,7 @@ router.route('/shipments/transfer')
     .post(shipmentsController.transfer);
 router.route('/shipments/changeStatus')
     .post(shipmentsController.changeStatus);
-    // router.route('/contacts/:contact_id')
+// router.route('/contacts/:contact_id')
 //     .get(contactController.view)
 //     .patch(contactController.update)
 //     .put(contactController.update)
