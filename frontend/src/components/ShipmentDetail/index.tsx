@@ -8,6 +8,7 @@ import Pin from '@src/icons/Pin'
 import TransferPopup from '@components/TransferPopup'
 import AuthStore from '@src/store/AuthStore'
 import ApprovePopup from '@components/ApprovePopup'
+import RecievePopup from '@components/RecievePopup'
 
 const capitalize = (s: string) => s && (s.charAt(0).toUpperCase() + s.slice(0))
 @withRouter
@@ -173,6 +174,13 @@ export default class ShipmentDetail extends React.Component<{
         shipment={shipment}
         onClose={() => { this.onTransferPopupClose() }}
         onTransfer={(x) => { this.onTransferPopupTransfer(shipment, x) }}
+      />
+
+      <RecievePopup
+        open={this.state.showTransferPopup}
+        shipment={shipment}
+        onClose={() => { this.onRecievePopupClose() }}
+        onRecieve={(x) => { this.onRecievePopupRecieve(shipment, x) }}
       />
 
       <ApprovePopup
