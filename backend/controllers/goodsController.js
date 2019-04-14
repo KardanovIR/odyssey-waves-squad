@@ -1,6 +1,4 @@
 // goodsController.js
-// Import contact mode
-
 goodsRep = require('../repository/goodsRepository');
 
 CreateGoodsRequsetModel = require('../models/api/goods/CreateGoodsRequest');
@@ -43,7 +41,6 @@ async function view (req, res) {
 async function create (req, res) {
     console.log("api goods create");
     var goods = req.body;
-    // save the claim and check for errors
     try {
          await goodsRep.createGoods(goods);
 
