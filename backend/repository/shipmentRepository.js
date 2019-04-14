@@ -14,7 +14,7 @@ const pool = new Pool({
 async function createShipment(shipment) {
   console.log("db createShipment");
   return new Promise((resolve, reject) => {
-    pool.query('INSERT INTO shipments (sender, recipient, countryfrom, countryto, departuredate, policyid, carrier, title, createdate, status, arrivaldate, device) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING *',
+    pool.query('INSERT INTO shipments (sender, recipient, countryfrom, countryto, departuredate, policyid, carrier, title, createdate, status, arrivaldate, device, conditionmin, conditionmax, conditiontype) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) RETURNING *',
       [
         shipment.sender,
         shipment.recipient,
@@ -27,7 +27,10 @@ async function createShipment(shipment) {
         shipment.createDate,
         shipment.status,
         shipment.arrivalDate,
-        shipment.device
+        shipment.device,
+        shipment.conditionMin,
+        shipment.conditionMax,
+        shipment.conditionType
       ], (error, results) => {
         if (error) {
           console.log(error);
@@ -35,7 +38,6 @@ async function createShipment(shipment) {
         }
         if (results){
           var newShipment = fillApiFields(results.rows[0]);
-          console.log(newShipment);
           resolve(newShipment);
         }
         resolve();
@@ -47,7 +49,7 @@ async function createShipment(shipment) {
 async function update(shipment) {
   console.log("db update shipment");
   return new Promise((resolve, reject) => {
-    pool.query('UPDATE shipment SET sender = $2, recipient = $3, countryfrom = $4, countryto = $5, departuredate = $6, policyid = $7, carrier = $8, title = $9, createdate = $10, status = $11, arrivaldate = $12, device = $13 WHERE id = $1',
+    pool.query('UPDATE shipment SET sender = $2, recipient = $3, countryfrom = $4, countryto = $5, departuredate = $6, policyid = $7, carrier = $8, title = $9, createdate = $10, status = $11, arrivaldate = $12, device = $13, conditionmin = $14, conditionmax = $15, conditiontype = $16 WHERE id = $1',
       [
         shipment.id,
         shipment.sender,
@@ -61,7 +63,10 @@ async function update(shipment) {
         shipment.createDate,
         shipment.status,
         shipment.arrivalDate,
-        shipment.device
+        shipment.device,
+        shipment.conditionMin,
+        shipment.conditionMax,
+        shipment.conditionType
       ], (error, results) => {
         if (error) {
           console.log(error);
@@ -178,7 +183,7 @@ async function findById(shipmentId) {
 async function findByDeviceId(deviceId) {
   console.log("db findShipmentByDeviceid");
   return new Promise((resolve, reject) => {
-    pool.query('SELECT * FROM shipments WHERE device = $device', [deviceId], (error, results) => {
+    pool.query('SELECT * FROM shipments WHERE device = $1', [deviceId], (error, results) => {
       if (error) {
         reject(error);
       }
@@ -201,6 +206,10 @@ function fillApiFields(shipment){
   shipment.arrivalDate = shipment.arrivaldate;
   shipment.departureDate = shipment.departuredate;
   shipment.createDate = shipment.createdate;
+  shipment.conditionMin = shipment.conditionmin;
+  shipment.conditionMax = shipment.conditionmax;
+  shipment.conditionType = shipment.conditiontype;
+  shipment.policyId = shipment.policyid;
   return shipment;
 }
 

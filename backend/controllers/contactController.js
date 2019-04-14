@@ -4,7 +4,7 @@ db = require('../repository/repository')
 Contact = require('../models/contactModel');
 
 // Handle index actions
-async function index (req, res) {
+async function index(req, res) {
     try {
         console.log("api contact index");
         var users = await db.getUsers();
@@ -21,7 +21,7 @@ async function index (req, res) {
 };
 
 // Handle create contact actions
-async function create (req, res) {
+async function create(req, res) {
 
     console.log("api contact create");
     var contact = new Contact();
@@ -32,8 +32,8 @@ async function create (req, res) {
         contact._id = userId;
 
         res.json({
-                message: 'New contact created!',
-                data: contact
+            message: 'New contact created!',
+            data: contact
         });
     }
     catch (e) {
@@ -62,12 +62,12 @@ exports.update = function (req, res) {
         if (err)
             res.send(err);
 
-    contact.name = req.body.name ? req.body.name : contact.name;
+        contact.name = req.body.name ? req.body.name : contact.name;
         contact.gender = req.body.gender;
         contact.email = req.body.email;
         contact.phone = req.body.phone;
 
-    // save the contact and check for errors
+        // save the contact and check for errors
         contact.save(function (err) {
             if (err)
                 res.json(err);
@@ -88,7 +88,7 @@ exports.delete = function (req, res) {
         if (err)
             res.send(err);
 
-    res.json({
+        res.json({
             status: "success",
             message: 'Contact deleted'
         });

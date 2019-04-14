@@ -3,7 +3,6 @@
 metricsRep = require('../repository/metricsRepository');
 shipmentRep = require('../repository/shipmentRepository');
 claimRep = require('../repository/claimRepository');
-wavesClient = require('../services/wavesClient');
 
 CreateMetricRequsetModel = require('../models/api/metrics/CreateMetricRequest');
 MetricResponceModel = require('../models/api/metrics/GetMetricResponce');
@@ -30,7 +29,7 @@ async function create (req, res) {
         res.json(e);
     }
 
-    var shipment = shipmentRep.findShipmentByDeviceId(metrics.deviceId);
+    var shipment = shipmentRep.findByDeviceId(metrics.deviceId);
     if (shipment && shipment.conditionType === metrics.type) {
         if (metrics.value < shipment.conditionMin || metrics.value > shipment.conditionMax) {
             try {
@@ -41,14 +40,10 @@ async function create (req, res) {
                 // todo get the last location
                 claim.location = "right here";
                 claim.createdate = metrics.createDate;
-                claim.id = claimId;
-                // to create a tx
-                claim.sender = shipment.sender;
                 var claimId = await claimRep.createClaim(claim);
+                claim.id = claimId;
                 console.log("new claim");
-                var txData = await wavesClient.writeDataToWaves("claim_" + claimId, claim);
                 console.log(claim);
-                console.log(txData);
             } catch (e) {
                 console.error(e);
             }
