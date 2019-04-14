@@ -40,10 +40,14 @@ async function create (req, res) {
                 // todo get the last location
                 claim.location = "right here";
                 claim.createdate = metrics.createDate;
-                var claimId = await claimRep.createClaim(claim);
                 claim.id = claimId;
+                // to create a tx
+                claim.sender = shipment.sender;
+                var claimId = await claimRep.createClaim(claim);
                 console.log("new claim");
+                var txData = await wavesClient.writeDataToWaves("claim_" + claimId, claim);
                 console.log(claim);
+                console.log(txData);
             } catch (e) {
                 console.error(e);
             }

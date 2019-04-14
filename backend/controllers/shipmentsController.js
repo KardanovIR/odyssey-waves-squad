@@ -6,6 +6,7 @@ extraInfoRep = require('../repository/extraInfoRepository');
 routeRep = require('../repository/routeRepository');
 metricRep = require('../repository/metricsRepository');
 tvmClient = require('../services/tvmClient');
+wavesClient = require('../services/wavesClient');
 InsureCargoResponce = require('../models/tvm/InsureCargoResponce');
 BillLanding = require('../models/tvm/BillLandingModel');
 
@@ -38,6 +39,8 @@ async function create(req, res) {
         // .var insureCargoResponse = await tvmClient.insureCargo(shipment);
         // shipment.policyId = insureCargoResponse.PolicyID;
         var newShipment = await shipmentsRep.createShipment(shipment);
+        var blockchainTx = await wavesClient.writeDataToWaves('shipment_' + shipment.id, shipment);
+        console.log(blockchainTx);
         if (shipment.goods) {
             shipment.goods.forEach(async (entry) => {
                 entry.shipmentId = newShipment.id
