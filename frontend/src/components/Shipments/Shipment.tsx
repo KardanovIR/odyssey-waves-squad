@@ -15,6 +15,7 @@ export default class Shipment extends React.Component<IShipmentProps> {
     const statusEl = {
       'forming': <div className='Forming shipment__field'>Forming</div>,
       'formed': <div className='Formed shipment__field'>Formed</div>,
+      'transferring':<div className='Formed shipment__field'>Transferring</div>,
       'approved': <div className='Approved shipment__field'>Approved</div>,
       'onTheWay': <div className='On-the-Way shipment__field'>Forming</div>,
       'damaged': <div className='Damaged shipment__field'>Damaged</div>,
