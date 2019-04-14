@@ -33,7 +33,7 @@ module.exports = () => {
     plugins: [
       new copy([
         { from: 'assets' },
-        { from: 'assets', 'assets' },
+        { from: 'assets', to: 'assets' },
         { from: 'node_modules/react/umd/react.production.min.js' },
         { from: 'node_modules/react-dom/umd/react-dom.production.min.js' }
       ]),
