@@ -6,7 +6,7 @@ import { IShipment } from '@src/store/ShipmentsStore'
 type callback = () => void
 
 
-const capitalize = (s: string) => s && (s.charAt(0).toUpperCase() + s.slice(0))
+const capitalize = (s: string) => s && (s.charAt(0).toUpperCase() + s.slice(1))
 
 
 export default class TransferPopup extends React.Component<{
@@ -54,7 +54,7 @@ export default class TransferPopup extends React.Component<{
           {/* <div style={{ height: 10 }}></div>
           <div className='__h3'>Company name</div>
           <input readOnly value={'adfa'} className='__input_readonly' */}
-          />
+
           <div style={{ height: 20 }}></div>
           <div className='__h2'>Goods</div>
           <div className='__h3'>Specify the name or id of the cargo</div>

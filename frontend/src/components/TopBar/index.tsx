@@ -23,7 +23,10 @@ export default class TopBar extends React.Component<{ authStore?: AuthStore, use
           <div className='topBar__userType'>{user.type}</div>
           <div className='topBar__userKey'>{trim(user.publicKey, 30)}</div>
         </div>
-        <Logout className='topBar__icon__logout' onClick={() => { authStore.logout() }}/>
+        <div className='topBar__icon__logout'>
+          <Logout className='topBar__icon__logout' onClick={() => { authStore.logout() }}/>
+        </div>
+
       </div>
 
     </div>)
