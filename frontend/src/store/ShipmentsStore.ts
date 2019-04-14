@@ -1,5 +1,5 @@
 import SubStore from './SubStore'
-import {computed, observable, toJS, runInAction} from 'mobx'
+import {computed, observable, toJS, runInAction, autorun} from 'mobx'
 import RootStore from '@store/RootStore'
 import axios from 'axios'
 import {setInterval} from 'timers'
@@ -117,7 +117,7 @@ export default class ShipmentsStore extends SubStore {
   @observable shipmentCreation: Partial<IShipment> = {
     id: '',
     title: 'First shipment',
-    sender: this.rootStore.authStore.currentUser!.publicKey,
+    sender: this.rootStore.authStore.currentUser! && this.rootStore.authStore.currentUser!.publicKey,
     device: '9838866f-44b4-4b37-8b83-c1e09a456967',
     recipient: 'Roga i Kopita 2',
     from: 'Canada',
@@ -164,6 +164,7 @@ export default class ShipmentsStore extends SubStore {
   constructor(rootStore: RootStore){
     super(rootStore)
 
+    autorun(() => this.shipmentCreation.sender = this.currentUser && this.currentUser.publicKey)
     this.syncInterval = setInterval(() => this.syncShipments(), 5000)
   }
 
@@ -196,7 +197,7 @@ export default class ShipmentsStore extends SubStore {
 
   async transferShipment(shipment: IShipment){
     if (shipment.carrier === shipment.recipient){
-      shipment.status = 'done';
+      shipment.status = 'done'
     }else if (shipment.claims.length > 0){
       shipment.status = 'damaged'
     }else {

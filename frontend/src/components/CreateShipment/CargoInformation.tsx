@@ -53,7 +53,7 @@ export default class CargoInformation extends React.Component<{ shipmentsStore?:
                 onToChange={(val) => shipmentCreation.conditionMax = val}
         />}
       </div>
-      <div className='createShipment__basicInfo_continue' onClick={this.props.onContinue}>Continue</div>
+      <div className='createShipment__basicInfo_continue' onClick={this.props.onContinue}>Form shipment</div>
     </div>
   }
 }

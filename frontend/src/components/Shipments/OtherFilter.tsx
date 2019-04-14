@@ -4,7 +4,7 @@ import ShipmentsStore from '@src/store/ShipmentsStore'
 import InputGroup from 'react-bootstrap/InputGroup'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-
+import Up from '@src/icons/Up';
 
 interface IInjectedProps {
   shipmentsStore?: ShipmentsStore
@@ -25,7 +25,8 @@ export default class OtherFilter extends React.Component<IInjectedProps, { open:
     return <div style={{ marginTop: 10 }}>
       <div className='statusFilter__button'
         onClick={() => this.setState({ open: !this.state.open })}>Other
-        <img src='assets/icons/up.svg' className={'statusFilter__button_icon_' + (this.state.open ? 'up' : 'down')}></img>
+        <Up className={'statusFilter__button_icon_' + (this.state.open ? 'up' : 'down')}/>
+        {/*<img src='assets/icons/up.svg' className={'statusFilter__button_icon_' + (this.state.open ? 'up' : 'down')}></img>*/}
       </div>
       {this.state.open &&
         <div className='statusFilter__checkboxes' style={{ marginLeft: 0 }}>
