@@ -60,10 +60,21 @@ async function index(req, res) {
     try {
         console.log("api shipment index");
         var shipments = await shipmentsRep.getShipments();
-        res.json({
-            status: "success",
-            message: "Shipments retrieved successfully",
-            data: shipments
+        var fullShipments = [];
+        shipments.forEach(async (shipment, i) => {
+            shipment.goods = await goodsRep.findByShipmentId(shipment.id);
+            shipment.claims = await claimRep.findByShipmentId(shipment.id);
+            shipment.extraInfo = await extraInfoRep.findByShipmentId(shipment.id);
+            shipment.transportRoute = await routeRep.findByShipmentId(shipment.id);
+            //shipment.metricData = await metricRep.findByDeviceId(shipment.device);
+            fullShipments.push(shipment);
+            if (i === shipments.length - 1){
+                res.json({
+                    status: "success",
+                    message: "Shipments retrieved successfully",
+                    data: fullShipments
+                });        
+            }
         });
     }
     catch (e) {
