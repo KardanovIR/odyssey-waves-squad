@@ -42,7 +42,7 @@ async function writeDataToWaves(key, obj) {
             data: [
                 {key: key, value: JSON.stringify(obj)}
             ],
-            senderPublicKey: data.sender
+            senderPublicKey: obj.sender
         };
 
         const signedDataTx = Waves.data(params, null);
