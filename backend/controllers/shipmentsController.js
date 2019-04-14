@@ -144,7 +144,7 @@ async function allCarier(req, res) {
 
         console.log("api shipment allCarier");
         var userId = req.params.user_id
-        var shipments = await shipmentsRep.getShipmentsByCarierId(userId);
+        var shipments = await shipmentsRep.getShipmentsByCarrierId(userId);
         var fullShipments = await getFullShipments(shipments);
         res.json({
             status: "success",
