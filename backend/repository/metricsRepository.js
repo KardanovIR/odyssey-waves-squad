@@ -9,7 +9,7 @@ const pool = new Pool({
   port: Config.db.port,
 })
 
-async function createMetrics (metrics) {
+async function createMetrics(metrics) {
   console.log("db create metrics");
   return new Promise((resolve, reject) => {
     pool.query('INSERT INTO metrics (deviceid, type, value, createDate) VALUES ($1, $2, $3, $4)', [metrics.deviceId, metrics.type, metrics.value, metrics.createDate], (error, results) => {
@@ -17,9 +17,15 @@ async function createMetrics (metrics) {
         console.log(error);
         reject(error);
       }
-      if(results)
-            resolve(results.rows);
-          resolve();
+      if (results){
+        var metrics = results.rows;
+        metrics.forEach(element => {
+          element= fillApiFields(element);
+        });
+      
+        resolve(metrics[0]);
+      }
+      resolve([]);
     })
   })
 }
@@ -31,9 +37,15 @@ async function getMetrics() {
       if (error) {
         reject(error);
       }
-      if(results)
-            resolve(results.rows);
-          resolve();
+      if (results){
+        var metrics = results.rows;
+        metrics.forEach(element => {
+          element= fillApiFields(element);
+        });
+      
+        resolve(metrics);
+      }
+      resolve([]);
     });
   })
 }
@@ -45,15 +57,27 @@ async function findByDeviceId(deviceId) {
       if (error) {
         reject(error);
       }
-      if(results)
-            resolve(results.rows);
-          resolve([]);
+      if (results){
+        var metrics = results.rows;
+        metrics.forEach(element => {
+          element= fillApiFields(element);
+        });
+      
+        resolve(metrics);
+      }
+      resolve([]);
     });
   })
 }
 
-  module.exports = {
-    createMetrics: createMetrics,
-    getMetrics:getMetrics,
-    findByDeviceId:findByDeviceId
-  };
+function fillApiFields(metric){
+  metric.deviceId = metric.deviceid;
+  metric.createDate = metric.createdate;
+  return metric;
+}
+
+module.exports = {
+  createMetrics: createMetrics,
+  getMetrics: getMetrics,
+  findByDeviceId: findByDeviceId
+};

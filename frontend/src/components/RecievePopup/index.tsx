@@ -1,14 +1,15 @@
 import React from 'react'
 import './styles.css'
-import { Modal, Button } from 'react-bootstrap'
-import { IShipment, IClaim } from '@src/store/ShipmentsStore'
-import { inject } from 'mobx-react'
+import {Modal, Button} from 'react-bootstrap'
+import {IShipment, IClaim, statusLabelMap} from '@src/store/ShipmentsStore'
+import {inject} from 'mobx-react'
 import AuthStore from '@src/store/AuthStore'
+import InputGroup from 'react-bootstrap/InputGroup'
 
 type callback = () => void
 
 
-const capitalize = (s: string) => s && (s.charAt(0).toUpperCase() + s.slice(0))
+const capitalize = (s: string) => s && (s.charAt(0).toUpperCase() + s.slice(1))
 
 @inject('authStore')
 export default class RecievePopup extends React.Component<{
@@ -20,7 +21,7 @@ export default class RecievePopup extends React.Component<{
 }> {
 
   state = {
-    claims: [],
+    claims: [] as any[],
   }
 
 
@@ -32,35 +33,54 @@ export default class RecievePopup extends React.Component<{
 
 
   render() {
-    const { shipment } = this.props
+    const {shipment} = this.props
 
-    return <Modal show={this.props.open} onHide={() => { this.props.onClose() }}>
+    return <Modal show={this.props.open} onHide={() => {
+      this.props.onClose()
+    }}>
       <Modal.Header closeButton>
         <Modal.Title>
-          <div style={{ padding: 20 }}>
-            <div className='__h1'>Transfer shipment</div>
+          <div style={{padding: 20}}>
+            <div className='__h1'>Receive shipment</div>
             <div className='__h3'>Carefully fill in all the fields to create a transportation</div>
           </div>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div style={{ padding: 20 }}>
+        <div style={{padding: 20}}>
           <div className='__h2'>To</div>
-          <div style={{ height: 10 }}></div>
+          <div style={{height: 10}}></div>
           <div className='__h3'>Reciever company id</div>
           <input readOnly value={this.props.authStore!.currentUser!.publicKey} className='__input_readonly'
           />
-          <div style={{ height: 20 }}></div>
+          <div style={{height: 20}}></div>
           <div className='__h2'>Goods</div>
           <div className='__h3'>Specify the name or id of the cargo</div>
-          <div style={{ height: 2 }}></div>
-          <div className='__card_dark' style={{ padding: 20 }}>
+          <div style={{height: 2}}></div>
+          <div className='__card_dark' style={{padding: 20}}>
             <div className='__h3'>Name</div>
             <div className='__h4'>{shipment.goods[0].id}</div>
             <div className='__h3'>Type</div>
-            <div className='__h4'>{this.goodDescription(shipment)}</div>
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+              {shipment.conditionMin && <InputGroup.Prepend>
+                  <InputGroup.Checkbox
+                      checked={this.state.claims.length > 0}
+                      onChange={(e) => this.setState({...this.state, claims: this.state.claims.length > 0  ?
+                        [] :
+                        [{
+                          creater: this.props.authStore!.currentUser!.publicKey,
+                          description: `Condition range failed. ${shipment.conditionMin} - ${shipment.conditionMax}`,
+                        }]})}
+                      className='statusFilter__checkbox'
+                  />
+
+                  <div className='__h4'>{this.goodDescription(shipment)}</div>
+              </InputGroup.Prepend>}
+
+            </div>
+
           </div>
-          <div style={{ height: 20 }}></div>
+          <div style={{height: 20}}></div>
           <div className='__h2'>Documents</div>
           <div className='__h3'>Upload documents</div>
           <div className='__card_dotted' style={{
@@ -69,8 +89,9 @@ export default class RecievePopup extends React.Component<{
             cursor: 'pointer',
             border: 'solid 1px #dbe1e9',
           }}>
-            <img style={{ marginLeft: '43%', marginTop: 30 }} src='assets/icons/upload.svg' ></img>
-            <div style={{ textAlign: 'center', marginTop: 10 }} className='__h2'>Drag &amp; Drop your files or Browse</div>
+            <img style={{marginLeft: '43%', marginTop: 30}} src='assets/icons/upload.svg'></img>
+            <div style={{textAlign: 'center', marginTop: 10}} className='__h2'>Drag &amp; Drop your files or Browse
+            </div>
           </div>
         </div>
         <Button variant='primary' style={{
@@ -81,10 +102,12 @@ export default class RecievePopup extends React.Component<{
           borderRadius: 2,
           boxShadow: '0 2px 7px 0 rgba(31, 90, 246, 0.2)',
           backgroundColor: '#1f5af6',
-        }} onClick={() => { this.state.claims }}>
-          <div className='__button_text_white'>Transfer</div>
+        }} onClick={() => {
+          this.props.onRecieve(this.state.claims)
+        }}>
+          <div className='__button_text_white'>Receive</div>
         </Button>
       </Modal.Body>
-    </Modal >
+    </Modal>
   }
 }

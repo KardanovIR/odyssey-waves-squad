@@ -25,7 +25,7 @@
 }
 
 .topBar__user__card {
-  width: 204px;
+  /*width: 204px;*/
   height: 42px;
   display: flex;
   flex-direction: row;

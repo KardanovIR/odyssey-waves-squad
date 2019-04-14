@@ -94,7 +94,7 @@ async function findGoodsById(goodsId) {
 }
 
 async function findByShipmentId(shipmentid) {
-  console.log("db findGoodsByShipmentId");
+  console.log("db findGoodsByShipmentId ", shipmentid);
   return new Promise((resolve, reject) => {
     pool.query('SELECT * FROM goods WHERE shipmentid = $1 ORDER BY id ASC', [shipmentid], (error, results) => {
       if (error) {
@@ -102,6 +102,7 @@ async function findByShipmentId(shipmentid) {
       }
       if (results){
         var goods = results.rows;
+        console.log("db goods", goods.length)
         goods.forEach(element => {
           element= fillApiFields(element);
         });
