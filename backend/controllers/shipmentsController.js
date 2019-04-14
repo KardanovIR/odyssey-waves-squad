@@ -141,9 +141,8 @@ async function allSend(req, res) {
 
 async function allCarier(req, res) {
     try {
-
-        console.log("api shipment allCarier");
-        var userId = req.params.user_id
+        var userId = req.params.user_id;
+        console.log("api shipment allCarier", userId);
         var shipments = await shipmentsRep.getShipmentsByCarrierId(userId);
         var fullShipments = await getFullShipments(shipments);
         res.json({
