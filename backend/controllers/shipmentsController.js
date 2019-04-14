@@ -39,15 +39,16 @@ async function create(req, res) {
         // .var insureCargoResponse = await tvmClient.insureCargo(shipment);
         // shipment.policyId = insureCargoResponse.PolicyID;
         var newShipment = await shipmentsRep.createShipment(shipment);
-        var blockchainTx = await wavesClient.writeDataToWaves('shipment_' + shipment.id, shipment);
-        console.log(blockchainTx);
-        if (shipment.goods) {
+        
+       
+        if (typeof shipment.goods  !== 'undefined') {
             shipment.goods.forEach(async (entry) => {
                 entry.shipmentId = newShipment.id
                 await goodsRep.create(entry);
             });
         }
-
+        var blockchainTx = await wavesClient.writeDataToWaves('shipment_' + shipment.id, shipment);
+        console.log(blockchainTx);
         res.json({
             message: 'New shipment created!',
             data: newShipment
@@ -80,12 +81,14 @@ async function index(req, res) {
 async function getFullShipments(shipments) {
     return new Promise((resolve, reject) => {
         var fullShipments = [];
-        console.log(shipments.length);
+        console.log("count",shipments.length);
         if (shipments.length === 0)
             resolve([]);
         else
             shipments.forEach(async (shipment, i) => {
+                console.log("shipmentId",shipment.id);
                 shipment.goods = await goodsRep.findByShipmentId(shipment.id);
+                console.log("goods count",shipment.goods.length);
                 shipment.claims = await claimRep.findByShipmentId(shipment.id);
                 shipment.extraInfo = await extraInfoRep.findByShipmentId(shipment.id);
                 shipment.transportRoute = await routeRep.findByShipmentId(shipment.id);
