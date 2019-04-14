@@ -75,23 +75,27 @@ async function index(req, res) {
 };
 
 async function getFullShipments(shipments) {
-    if(shipments.lenght > 0)
+    console.log("getFullShipments");
         return new Promise((resolve, reject) => {
             var fullShipments = [];
-            shipments.forEach(async (shipment, i) => {
-                shipment.goods = await goodsRep.findByShipmentId(shipment.id);
-                shipment.claims = await claimRep.findByShipmentId(shipment.id);
-                shipment.extraInfo = await extraInfoRep.findByShipmentId(shipment.id);
-                shipment.transportRoute = await routeRep.findByShipmentId(shipment.id);
-                //shipment.metricData = await metricRep.findByDeviceId(shipment.device);
-                fullShipments.push(shipment);
-                if (shipments.length - 1 === i) {
-                    resolve(fullShipments);
-                }
-            });
+            console.log(shipments.length);
+            if (shipments.length === 0)
+                resolve([]);
+            else
+                shipments.forEach(async (shipment, i) => {
+                    shipment.goods = await goodsRep.findByShipmentId(shipment.id);
+                    shipment.claims = await claimRep.findByShipmentId(shipment.id);
+                    shipment.extraInfo = await extraInfoRep.findByShipmentId(shipment.id);
+                    shipment.transportRoute = await routeRep.findByShipmentId(shipment.id);
+                    //shipment.metricData = await metricRep.findByDeviceId(shipment.device);
+                    fullShipments.push(shipment);
+                    console.log(i, shipments.length);
+                    if (shipments.length - 1 === i) {
+                        console.log("fullshipment", fullShipments.length);
+                        resolve(fullShipments);
+                    }
+                });
         })
-    else
-        return([]);
 }
 
 async function allRecived(req, res) {
@@ -120,7 +124,6 @@ async function allSend(req, res) {
         var shipments = await shipmentsRep.getShipmentsBySenderId(userId);
         
         var fullShipments = await getFullShipments(shipments);
-        console.log(fullShipments.length);
         res.json({
             status: "success",
             message: "Send Shipments retrieved successfully",
