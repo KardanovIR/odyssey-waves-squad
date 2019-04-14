@@ -2,7 +2,7 @@ import React from 'react'
 import './styles.css'
 import StatusFilter from '@components/Shipments/StatusFilter'
 import OtherFilter from '@components/Shipments/OtherFilter'
-import ShipmentsStore, { IShipment } from '@store/ShipmentsStore'
+import ShipmentsStore, { IShipment, IClaim } from '@store/ShipmentsStore'
 import Shipment from '@components/Shipments/Shipment'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { inject } from 'mobx-react'
@@ -23,6 +23,8 @@ export default class ShipmentDetail extends React.Component<{
 
   state = {
     showTransferPopup: false,
+    showRecievePopup: false,
+    showApprovePopup: false,
   }
 
   goodDescription = (shipment: IShipment) => {
@@ -35,14 +37,33 @@ export default class ShipmentDetail extends React.Component<{
     this.setState({ showTransferPopup: false })
   }
 
+  onRecievePopupClose() {
+    this.setState({ showRecievePopup: false })
+  }
+
   onTransferPopupTransfer(shipment: IShipment, companyId: string) {
     this.props.shipmentsStore!.transferShipment(shipment, companyId)
     this.setState({ showTransferPopup: false })
     this.props.history.push('/')
   }
 
+  onRecievePopupRecieve(shipment: IShipment, claims: IClaim[]) {
+    this.props.shipmentsStore!.receiveShipment(shipment, claims)
+    this.setState({ showTransferPopup: false })
+    this.props.history.push('/')
+  }
+  onApprovePopupApprove(shipment: IShipment) {
+    this.props.shipmentsStore!.approveShipment(shipment)
+    this.setState({ showApprovePopup: false })
+    this.props.history.push('/')
+  }
+
   openTransferPopup() {
     this.setState({ showTransferPopup: true })
+  }
+
+  openRecievePopup() {
+    this.setState({ showRecievePopup: true })
   }
 
   openApprovePopup() {
@@ -64,6 +85,13 @@ export default class ShipmentDetail extends React.Component<{
         return <div style={{ marginLeft: 23 }} className='shipments__right_tobBar_addBtn' onClick={() => {
           this.openTransferPopup()
         }}>Transfer</div>
+
+
+      if (shipment.status === 'transferring' && shipment.carrier === currentUser.publicKey)
+        return <div style={{ marginLeft: 23 }} className='shipments__right_tobBar_addBtn' onClick={() => {
+          this.openRecievePopup()
+        }}>Transfer</div>
+
 
       if (shipment.status === 'forming' && shipment.recipient === currentUser.publicKey)
         return <div style={{ marginLeft: 23, backgroundColor: '#eb4d4b' }} className='shipments__right_tobBar_addBtn' onClick={() => {
