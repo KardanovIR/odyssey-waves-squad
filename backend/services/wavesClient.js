@@ -1,5 +1,5 @@
 var Config = require('../config/config');
-const Broadcast = require('@waves/waves-transactions');
+const Waves = require('@waves/waves-transactions');
 const https = require('https');
 
 async function getLastBlock() {
@@ -28,26 +28,25 @@ async function getLastBlock() {
 async function sendToWaves(req) {
   console.log("client waves sendToWaves");
   return new Promise((resolve, reject) => {
-    broadcast(signedTx, nodeUrl).then(resp => {
+    Waves.broadcast(signedTx, nodeUrl).then(resp => {
       resolve(resp);
-
     });
     reject();
   });
 }
 
 async function writeDataToWaves(key, obj) {
-  console.log("client waves writeShipmentToWaves");
-  return new Promise((resolve, reject) => {
+    console.log("client waves writeShipmentToWaves");
+    return new Promise((resolve, reject) => {
         const params = {
-          data: [
-              {key: key, value: JSON.stringify(obj)}
+            data: [
+                {key: key, value: JSON.stringify(obj)}
             ],
             senderPublicKey: data.sender
         };
 
-        const signedDataTx = data(params, null);
-        broadcast(signedDataTx, Config.waves.host).then(resp => {
+        const signedDataTx = Waves.data(params, null);
+        Waves.broadcast(signedDataTx, Config.waves.host).then(resp => {
             resolve(resp);
         });
         reject();
