@@ -20,6 +20,7 @@ async function create(req, res) {
         // .var insureCargoResponse = await tvmClient.insureCargo(shipment);
         // shipment.policyId = insureCargoResponse.PolicyID;
         var newShipment = await shipmentsRep.createShipment(shipment);
+        console.log(newShipment);
         if(shipment.goods){
             shipment.goods.forEach(async (entry) => {
                 entry.shipmentId = newShipment.id

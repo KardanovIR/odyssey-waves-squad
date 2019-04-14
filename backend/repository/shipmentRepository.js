@@ -33,8 +33,11 @@ async function createShipment(shipment) {
           console.log(error);
           reject(error);
         }
-        if (results)
-          resolve(results.rows[0]);
+        if (results){
+          var newShipment = fillApiFields(results.rows[0]);
+          console.log(newShipment);
+          resolve(newShipment);
+        }
         resolve();
       })
   })
@@ -65,7 +68,7 @@ async function update(shipment) {
           reject(error);
         }
         if (results)
-          resolve(results.rows);
+          resolve(fillApiFields(results.rows[0]));
         resolve();
       })
   })
@@ -78,8 +81,14 @@ async function getShipments() {
       if (error) {
         reject(error);
       }
-      if (results)
-        resolve(results.rows);
+      if (results){
+        var shipments = results.rows;
+        shipments.forEach(element => {
+          element= fillApiFields(element);
+        });
+      
+        resolve(shipments);
+      }
       resolve();
     });
   })
@@ -92,8 +101,14 @@ async function getShipmentsBySenderId(userId) {
       if (error) {
         reject(error);
       }
-      if (results)
-        resolve(results.rows);
+      if (results){
+        var shipments = results.rows;
+        shipments.forEach(element => {
+          element= fillApiFields(element);
+        });
+      
+        resolve(shipments);
+      }
       resolve([]);
     });
   })
@@ -106,8 +121,14 @@ async function getShipmentsByRecipientId(userId) {
       if (error) {
         reject(error);
       }
-      if (results)
-        resolve(results.rows);
+      if (results){
+        var shipments = results.rows;
+        shipments.forEach(element => {
+          element= fillApiFields(element);
+        });
+      
+        resolve(shipments);
+      }
       resolve([]);
     });
   })
@@ -120,8 +141,14 @@ async function getShipmentsByCarrierId(userId) {
       if (error) {
         reject(error);
       }
-      if (results)
-        resolve(results.rows);
+      if (results){
+        var shipments = results.rows;
+        shipments.forEach(element => {
+          element= fillApiFields(element);
+        });
+      
+        resolve(shipments);
+      }
       resolve([]);
     });
   })
@@ -135,8 +162,14 @@ async function findById(shipmentId) {
       if (error) {
         reject(error);
       }
-      if (results)
-        resolve(results.rows[0]);
+      if (results){
+        var shipments = results.rows;
+        shipments.forEach(element => {
+          element= fillApiFields(element);
+        });
+      
+        resolve(shipments);
+      }
       resolve();
     })
   })
@@ -149,10 +182,26 @@ async function findByDeviceId(deviceId) {
       if (error) {
         reject(error);
       }
-      console.log(results)
-      resolve(results.rows);
+      if (results){
+        var shipments = results.rows;
+        shipments.forEach(element => {
+          element= fillApiFields(element);
+        });
+      
+        resolve(shipments);
+      }
+      resolve();
     })
   })
+}
+
+function fillApiFields(shipment){
+  shipment.from= shipment.countryfrom;
+  shipment.to = shipment.countryto;
+  shipment.arrivalDate = shipment.arrivaldate;
+  shipment.departureDate = shipment.departuredate;
+  shipment.createDate = shipment.createdate;
+  return shipment;
 }
 
 module.exports = {
