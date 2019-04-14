@@ -4,6 +4,7 @@ import RootStore from '@store/RootStore'
 import axios from 'axios'
 import { setInterval } from 'timers'
 import { SipmentStatus } from '@src/common/shipmentStatus'
+import { TestAccounts } from '@src/common/config'
 
 
 const BASE_URL = 'http://backend.odyssey.wavesplatform.com:8080/api/'
@@ -68,8 +69,8 @@ export interface IShipment {
 
 export default class ShipmentsStore extends SubStore {
   @observable shipments: IShipment[] = []
-  
-  
+
+
 
 
   @observable shipmentCreation: Partial<IShipment> = {
@@ -77,19 +78,19 @@ export default class ShipmentsStore extends SubStore {
     title: 'First shipment',
     sender: this.rootStore.authStore.currentUser! && this.rootStore.authStore.currentUser!.publicKey,
     device: '9838866f-44b4-4b37-8b83-c1e09a456967',
-    recipient: 'Roga i Kopita 2',
-    from: 'Canada',
-    to: 'Russia',
+    recipient: TestAccounts.Recipient.pk,
+    from: 'CA',
+    to: 'RU',
     departureDate: '2019.01.08',
     arrivalDate: '2019.01.08',
     conditionType: 'basic',
     conditionMin: '',
     conditionMax: '',
     policyId: undefined,
-    carrier: 'Example carrier',
+    carrier: TestAccounts.Sender.pk,
     goods: [{
-      id: '',
-      description: 'basic description',
+      id: 'Heart for transplatnation',
+      description: 'Human heart, do not drop, keep chilled.',
     }],
     claims: [],
     extraInfo: [],
@@ -160,6 +161,13 @@ export default class ShipmentsStore extends SubStore {
 
   async transferShipment(shipment: IShipment, companyId: string) {
     shipment.carrier = companyId
+    shipment.status = 'transferring'
+    await this._updateShipment(shipment)
+  }
+
+  async receiveShipment(shipment: IShipment, claims: IClaim[]) {
+
+    shipment.claims = [...shipment.claims, ...claims]
 
     if (shipment.carrier === shipment.recipient) {
       shipment.status = 'done'

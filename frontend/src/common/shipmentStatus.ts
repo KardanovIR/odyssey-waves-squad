@@ -1,1 +1,1 @@
-export type SipmentStatus = 'forming' | 'approved' | 'onTheWay' | 'damaged' | 'done'
+export type SipmentStatus = 'forming' | 'transferring' | 'approved' | 'onTheWay' | 'damaged' | 'done'
