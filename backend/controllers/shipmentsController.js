@@ -118,8 +118,9 @@ async function allSend(req, res) {
         var userId = req.params.user_id;
         console.log("api shipment allSend " + userId);
         var shipments = await shipmentsRep.getShipmentsBySenderId(userId);
-        console.log(shipments.length);
+        
         var fullShipments = await getFullShipments(shipments);
+        console.log(fullShipments.length);
         res.json({
             status: "success",
             message: "Send Shipments retrieved successfully",
