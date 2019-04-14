@@ -5,32 +5,14 @@ import { IShipment } from '@src/store/ShipmentsStore'
 
 type callback = () => void
 
-
-const capitalize = (s: string) => s && (s.charAt(0).toUpperCase() + s.slice(0))
-
-
-export default class TransferPopup extends React.Component<{
+export default class ApprovePopup extends React.Component<{
   shipment: IShipment,
   open: boolean,
   onClose: callback,
-  onTransfer: (companyId: string) => void
+  onTransfer: callback
 }> {
-
-  state = {
-    companyId: '',
-  }
-
-
-  goodDescription = (shipment: IShipment) => {
-    if (shipment.conditionType === 'temperature sensitive') return capitalize(shipment.conditionType) + `: ${shipment.conditionMin}°C - ${shipment.conditionMax}°C`
-    if (shipment.conditionType === 'humidity sensitive') return capitalize(shipment.conditionType) + `: ${shipment.conditionMin}% - ${shipment.conditionMin}%`
-    return capitalize(shipment.conditionType)
-  }
-
-
   render() {
     const { shipment } = this.props
-
     return <Modal show={this.props.open} onHide={() => { this.props.onClose() }}>
       <Modal.Header closeButton>
         <Modal.Title>
@@ -46,10 +28,6 @@ export default class TransferPopup extends React.Component<{
           <div style={{ height: 10 }}></div>
           <div className='__h3'>Company id</div>
           <input className='__input'
-            value={this.state.companyId}
-            onChange={(e) => {
-              this.setState({ ...this.state, companyId: e.target.value })
-            }}
           />
           {/* <div style={{ height: 10 }}></div>
           <div className='__h3'>Company name</div>
@@ -61,9 +39,9 @@ export default class TransferPopup extends React.Component<{
           <div style={{ height: 2 }}></div>
           <div className='__card_dark' style={{ padding: 20 }}>
             <div className='__h3'>Name</div>
-            <div className='__h4'>{shipment.goods[0].id}</div>
+            <div className='__h4'>Coca-cola</div>
             <div className='__h3'>Type</div>
-            <div className='__h4'>{this.goodDescription(shipment)}</div>
+            <div className='__h4'>Temperature sensitive:  30°C - 60°C</div>
           </div>
           <div style={{ height: 20 }}></div>
           <div className='__h2'>Documents</div>
@@ -86,7 +64,7 @@ export default class TransferPopup extends React.Component<{
           borderRadius: 2,
           boxShadow: '0 2px 7px 0 rgba(31, 90, 246, 0.2)',
           backgroundColor: '#1f5af6',
-        }} onClick={() => { this.props.onTransfer(this.state.companyId) }}>
+        }} onClick={() => { this.props.onTransfer() }}>
           <div className='__button_text_white'>Transfer</div>
         </Button>
       </Modal.Body>
