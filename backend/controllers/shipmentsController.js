@@ -47,7 +47,7 @@ async function create(req, res) {
                 await goodsRep.create(entry);
             });
         }
-        var blockchainTx = await wavesClient.writeDataToWaves('shipment_' + shipment.id, shipment);
+        var blockchainTx = await wavesClient.writeDataToWaves('shipment_' + newShipment.id, newShipment);
         console.log(blockchainTx);
         res.json({
             message: 'New shipment created!',
