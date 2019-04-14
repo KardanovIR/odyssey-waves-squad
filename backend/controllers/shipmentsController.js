@@ -36,7 +36,7 @@ async function create(req, res) {
     try {
         var shipment = req.body;
         shipment.createDate = formatDate(new Date());
-        // .var insureCargoResponse = await tvmClient.insureCargo(shipment);
+        // var insureCargoResponse = await tvmClient.insureCargo(shipment);
         // shipment.policyId = insureCargoResponse.PolicyID;
         let newShipment = await shipmentsRep.createShipment(shipment);
         
@@ -259,7 +259,7 @@ async function updateGoods(goods, shipmentId) {
         else {
             entry.shipmentId = shipmentId;
             entry.createDate = formatDate(new Date());
-            await goodsRep.insert(entry);
+            await goodsRep.create(entry);
         }
     });
 }
@@ -271,7 +271,7 @@ async function updateClaims(claims, shipmentId) {
         else {
             entry.shipmentId = shipmentId;
             entry.createDate = formatDate(new Date());
-            await claimRep.insert(entry);
+            await claimRep.create(entry);
         }
     });
 }
@@ -283,7 +283,7 @@ async function updateExtraInfo(extraInfo, shipmentId) {
         else {
             entry.shipmentId = shipmentId;
             entry.createDate = formatDate(new Date());
-            await extraInfoRep.insert(entry);
+            await extraInfoRep.create(entry);
         }
     });
 }
@@ -295,7 +295,7 @@ async function updateRoutes(routes, shipmentId) {
         else {
             entry.shipmentId = shipmentId;
             entry.createDate = formatDate(new Date());
-            await routeRep.insert(entry);
+            await routeRep.create(entry);
         }
     });
 }

@@ -9,7 +9,7 @@ const pool = new Pool({
   port: Config.db.port,
 })
 
-async function createTransportRoute(transportRoute) {
+async function create(transportRoute) {
   console.log("db createTransportRoute");
   return new Promise((resolve, reject) => {
     pool.query('INSERT INTO transport_routes (shipmentid, sequencenr, countryfrom, countryto, carrier, createDate) VALUES ($1,$2,$3,$4,$5,$6)',
@@ -108,7 +108,7 @@ function fillApiFields(route){
 
 module.exports = {
   findByShipmentId: findByShipmentId,
-  createTransportRoute: createTransportRoute,
+  create: create,
   getTransportRoute: getTransportRoute,
   findTransportRouteById: findTransportRouteById,
   findByShipmentId: findByShipmentId

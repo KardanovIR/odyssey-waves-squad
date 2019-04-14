@@ -9,7 +9,7 @@ const pool = new Pool({
   port: Config.db.port,
 })
 
-async function createClaim(claim) {
+async function create(claim) {
   console.log("db create Claim")
   return new Promise((resolve, reject) => {
     pool.query('INSERT INTO claims (creater, description, shipmentid, location, createdate) VALUES ($1, $2, $3, $4, $5)',
@@ -100,6 +100,6 @@ function fillApiFields(claim){
 module.exports = {
   findById: findById,
   getClaims: getClaims,
-  createClaim: createClaim,
+  create: create,
   findByShipmentId: findByShipmentId
 };
