@@ -75,20 +75,24 @@ async function index(req, res) {
 };
 
 async function getFullShipments(shipments) {
-    return new Promise((resolve, reject) => {
-        var fullShipments = [];
-        shipments.forEach(async (shipment, i) => {
-            shipment.goods = await goodsRep.findByShipmentId(shipment.id);
-            shipment.claims = await claimRep.findByShipmentId(shipment.id);
-            shipment.extraInfo = await extraInfoRep.findByShipmentId(shipment.id);
-            shipment.transportRoute = await routeRep.findByShipmentId(shipment.id);
-            //shipment.metricData = await metricRep.findByDeviceId(shipment.device);
-            fullShipments.push(shipment);
-            if (shipments.length - 1 === i) {
-                resolve(fullShipments);
-            }
-        });
-    })
+    if(shipments.lenght > 0)
+        return new Promise((resolve, reject) => {
+            var fullShipments = [];
+            shipments.forEach(async (shipment, i) => {
+                shipment.goods = await goodsRep.findByShipmentId(shipment.id);
+                shipment.claims = await claimRep.findByShipmentId(shipment.id);
+                shipment.extraInfo = await extraInfoRep.findByShipmentId(shipment.id);
+                shipment.transportRoute = await routeRep.findByShipmentId(shipment.id);
+                //shipment.metricData = await metricRep.findByDeviceId(shipment.device);
+                console.log(i)
+                fullShipments.push(shipment);
+                if (shipments.length - 1 === i) {
+                    resolve(fullShipments);
+                }
+            });
+        })
+    else
+        return([]);
 }
 
 async function allRecived(req, res) {
@@ -114,6 +118,7 @@ async function allSend(req, res) {
         console.log("api shipment allSend");
         var userId = req.params.user_id
         var shipments = await shipmentsRep.getShipmentsBySenderId(userId);
+        console.log(shipments.length);
         var fullShipments = await getFullShipments(shipments);
         res.json({
             status: "success",
