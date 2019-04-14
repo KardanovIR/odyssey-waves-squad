@@ -4,15 +4,11 @@ const BillLandingModel = require('../models/tvm/BillLandingModel');
 const goodsRep = require('../repository/goodsRepository');
 const routeRep = require('../repository/routeRepository');
 
-//BillLanding model as request model
-async function calculatePremium(data) {
-  console.log("client tvm calculatePremium");
-  var billLanding = new BillLandingModel();
+async function expandShipment(shipment) {
+    var goods = await goodsRep.findByShipmentId(shipment.id);
+    var routes = await routeRep.findByShipmentId(shipment.id);
 
-  var goods = await goodsRep.findByShipmentId(data.id);
-  var routes = await routeRep.findByShipmentId(data.id);
-
-  convertedRoutes = routes.map(function(r) {
+    convertedRoutes = routes.map(function(r) {
         return {
             SequenceNr: r.sequencenr,
             FromCountry: r.countryfrom,
@@ -22,7 +18,7 @@ async function calculatePremium(data) {
         };
     });
 
-  convertedGoods = goods.map(function(r) {
+    convertedGoods = goods.map(function(r) {
         return {
             GoodsID: r.id.toString(10),
             //CONTAINER, LIQUID, DRY, BREAKBULK, RORO
@@ -37,13 +33,24 @@ async function calculatePremium(data) {
         };
     });
 
-  billLanding.TransportRoutes = convertedRoutes;
-  billLanding.Goods = convertedGoods;
 
-  billLanding.Sender = data.sender;
-  billLanding.fromCountry = data.from;
-  billLanding.toCountry = data.to;
-  billLanding.Receiver = data.recipient;
+    var billLanding = new BillLandingModel();
+
+    billLanding.TransportRoutes = convertedRoutes;
+    billLanding.Goods = convertedGoods;
+
+    billLanding.Sender = shipment.sender;
+    billLanding.fromCountry = shipment.from;
+    billLanding.toCountry = shipment.to;
+    billLanding.Receiver = shipment.recipient;
+
+    return billLanding;
+}
+
+//BillLanding model as request model
+async function calculatePremium(data) {
+  console.log("client tvm calculatePremium");
+  var billLanding = await expandShipment(data);
 
   // CalculatePremiumResponce as responce
   return await sendPostRequest('/BillOfLading/CalculatePremium', billLanding);
@@ -52,8 +59,9 @@ async function calculatePremium(data) {
 //BillLanding model as request model
 async function insureCargo(data) {
   console.log("client tvm insureCargo");
+    var billLanding = await expandShipment(data);
   //InsureCargoResponce as responce
-  return await sendPostRequest('/BillOfLading/InsureCargo', data);
+  return await sendPostRequest('/BillOfLading/InsureCargo', billLanding);
 }
 
 //ClaimReport model as request model

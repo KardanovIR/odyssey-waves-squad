@@ -11,7 +11,7 @@ const pool = new Pool({
 
 
 
-async function createExtraInfo(extraInfo) {
+async function create(extraInfo) {
   console.log("db createExtraInfo")
   return new Promise((resolve, reject) => {
     pool.query('INSERT INTO extrainfo (creater, description, shipmentid, location, createdate) VALUES ($1, $2, $3, $4, $5)',
@@ -121,7 +121,7 @@ function fillApiFields(extraInfo){
 }
 
 module.exports = {
-  createExtraInfo: createExtraInfo,
+  create: create,
   findExtraInfoById: findExtraInfoById,
   getExtraInfo: getExtraInfo,
   findByShipmentId: findByShipmentId
