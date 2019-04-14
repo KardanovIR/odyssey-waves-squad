@@ -28,7 +28,7 @@ export default class ApprovePopup extends React.Component<{
       <Modal.Header closeButton>
         <Modal.Title>
           <div style={{ padding: 20 }}>
-            <div className='__h1'>Transfer shipment</div>
+            <div className='__h1'>Approve shipment</div>
             <div className='__h3'>Carefully fill in all the fields to create a transportation</div>
           </div>
         </Modal.Title>

@@ -8,7 +8,7 @@ import AuthStore from '@src/store/AuthStore'
 type callback = () => void
 
 
-const capitalize = (s: string) => s && (s.charAt(0).toUpperCase() + s.slice(0))
+const capitalize = (s: string) => s && (s.charAt(0).toUpperCase() + s.slice(1))
 
 @inject('authStore')
 export default class RecievePopup extends React.Component<{
@@ -38,7 +38,7 @@ export default class RecievePopup extends React.Component<{
       <Modal.Header closeButton>
         <Modal.Title>
           <div style={{ padding: 20 }}>
-            <div className='__h1'>Transfer shipment</div>
+            <div className='__h1'>Receive shipment</div>
             <div className='__h3'>Carefully fill in all the fields to create a transportation</div>
           </div>
         </Modal.Title>
@@ -81,8 +81,8 @@ export default class RecievePopup extends React.Component<{
           borderRadius: 2,
           boxShadow: '0 2px 7px 0 rgba(31, 90, 246, 0.2)',
           backgroundColor: '#1f5af6',
-        }} onClick={() => { this.state.claims }}>
-          <div className='__button_text_white'>Transfer</div>
+        }} onClick={() => {this.props.onRecieve(this.state.claims) }}>
+          <div className='__button_text_white'>Receive</div>
         </Button>
       </Modal.Body>
     </Modal >

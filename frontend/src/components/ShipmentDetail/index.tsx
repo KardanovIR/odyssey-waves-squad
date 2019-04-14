@@ -93,7 +93,7 @@ export default class ShipmentDetail extends React.Component<{
       if (shipment.status === 'transferring' && shipment.carrier === currentUser.publicKey)
         return <div style={{ marginLeft: 23 }} className='shipments__right_tobBar_addBtn' onClick={() => {
           this.openRecievePopup()
-        }}>Transfer</div>
+        }}>Receive</div>
 
 
       if (shipment.status === 'forming' && shipment.recipient === currentUser.publicKey)
@@ -177,7 +177,7 @@ export default class ShipmentDetail extends React.Component<{
       />
 
       <RecievePopup
-        open={this.state.showTransferPopup}
+        open={this.state.showRecievePopup}
         shipment={shipment}
         onClose={() => { this.onRecievePopupClose() }}
         onRecieve={(x) => { this.onRecievePopupRecieve(shipment, x) }}
