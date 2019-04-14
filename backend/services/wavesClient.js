@@ -36,12 +36,12 @@ async function sendToWaves(req) {
   });
 }
 
-async function writeDataToWaves(key, data) {
+async function writeDataToWaves(key, obj) {
   console.log("client waves writeShipmentToWaves");
   return new Promise((resolve, reject) => {
         const params = {
           data: [
-              {key: key, value: JSON.stringify(data)}
+              {key: key, value: JSON.stringify(obj)}
             ],
             senderPublicKey: data.sender
         };
