@@ -36,14 +36,14 @@ async function sendToWaves(req) {
   });
 }
 
-async function writeShipmentToWaves(shipment) {
-  console.log("client waves writeShipmentToWaves"); 
+async function writeDataToWaves(key, data) {
+  console.log("client waves writeShipmentToWaves");
   return new Promise((resolve, reject) => {
         const params = {
           data: [
-              {key: 'shipment_' + shipment.id, value: JSON.stringify(shipment)}
+              {key: key, value: JSON.stringify(data)}
             ],
-            senderPublicKey: shipment.sender
+            senderPublicKey: data.sender
         };
 
         const signedDataTx = data(params, null);
@@ -57,6 +57,5 @@ async function writeShipmentToWaves(shipment) {
 module.exports = {
     sendToWaves,
     getLastBlock,
-    writeShipmentToWaves
-  }
-  
+    writeDataToWaves
+};
