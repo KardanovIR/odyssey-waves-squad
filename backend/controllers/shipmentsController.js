@@ -12,15 +12,33 @@ BillLanding = require('../models/tvm/BillLandingModel');
 CreateShipmentModel = require('../models/api/shipment/CreateShipmentRequest');
 GetShipmentModel = require('../models/api/shipment/GetShipmentResponce');
 
+function formatDate(date) {
+    let now = new Date();
+    let diff = now - date;
+    let secDiff = Math.floor(diff / 1000);
+  
+ 
+    // helper formatter
+    const zeroFormat = unit => (unit < 10) ? `0${unit}` : unit;
+  
+    let day = zeroFormat(date.getDate());
+    let month = zeroFormat(date.getMonth() + 1);
+    let hours = zeroFormat(date.getHours());
+    let minutes = zeroFormat(date.getMinutes());
+    let year = String(date.getFullYear());
+    
+    return `${year}.${month}.${day}`;
+  }
+
 async function create(req, res) {
     console.log("api shipment create");
     try {
         var shipment = req.body;
-        shipment.createDate = Date.Now;
+        shipment.createDate = formatDate(new Date());
+        console.log(shipment.createDate);
         // .var insureCargoResponse = await tvmClient.insureCargo(shipment);
         // shipment.policyId = insureCargoResponse.PolicyID;
         var newShipment = await shipmentsRep.createShipment(shipment);
-        console.log(newShipment);
         if(shipment.goods){
             shipment.goods.forEach(async (entry) => {
                 entry.shipmentId = newShipment.id
@@ -30,7 +48,7 @@ async function create(req, res) {
 
         res.json({
             message: 'New shipment created!',
-            data: shipment
+            data: newShipment
         });
     }
     catch (e) {
