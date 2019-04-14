@@ -1,23 +1,26 @@
 import React from 'react'
 import './styles.css'
 import { Modal, Button } from 'react-bootstrap'
-import { IShipment } from '@src/store/ShipmentsStore'
+import { IShipment, IClaim } from '@src/store/ShipmentsStore'
+import { inject } from 'mobx-react'
+import AuthStore from '@src/store/AuthStore'
 
 type callback = () => void
 
 
 const capitalize = (s: string) => s && (s.charAt(0).toUpperCase() + s.slice(0))
 
-
+@inject('authStore')
 export default class RecievePopup extends React.Component<{
   shipment: IShipment,
   open: boolean,
   onClose: callback,
-  onRecieve: callback,
+  authStore?: AuthStore,
+  onRecieve: (claims: IClaim[]) => void,
 }> {
 
   state = {
-    companyId: '',
+    claims: [],
   }
 
 
@@ -44,16 +47,8 @@ export default class RecievePopup extends React.Component<{
         <div style={{ padding: 20 }}>
           <div className='__h2'>To</div>
           <div style={{ height: 10 }}></div>
-          <div className='__h3'>Company id</div>
-          <input className='__input'
-            value={this.state.companyId}
-            onChange={(e) => {
-              this.setState({ ...this.state, companyId: e.target.value })
-            }}
-          />
-          {/* <div style={{ height: 10 }}></div>
-          <div className='__h3'>Company name</div>
-          <input readOnly value={'adfa'} className='__input_readonly' */}
+          <div className='__h3'>Reciever company id</div>
+          <input readOnly value={this.props.authStore!.currentUser!.publicKey} className='__input_readonly'
           />
           <div style={{ height: 20 }}></div>
           <div className='__h2'>Goods</div>
@@ -86,7 +81,7 @@ export default class RecievePopup extends React.Component<{
           borderRadius: 2,
           boxShadow: '0 2px 7px 0 rgba(31, 90, 246, 0.2)',
           backgroundColor: '#1f5af6',
-        }} onClick={() => { this.props.onRecieve() }}>
+        }} onClick={() => { this.state.claims }}>
           <div className='__button_text_white'>Transfer</div>
         </Button>
       </Modal.Body>
