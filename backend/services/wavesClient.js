@@ -42,6 +42,7 @@ async function writeDataToWaves(key, obj) {
             data: [
                 {key: key, value: JSON.stringify(obj)}
             ],
+            fee: 1000000,
             senderPublicKey: obj.sender
         };
 
