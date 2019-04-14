@@ -18,9 +18,15 @@ async function createClaim(claim) {
           console.log(error);
           reject(error);
         }
-        if (results)
-          resolve(results.rows);
-        resolve();
+        if (results){
+          var claims = results.rows;
+          claims.forEach(element => {
+            element= fillApiFields(element);
+          });
+        
+          resolve(claims[0]);
+        }
+        resolve([]);
       })
   })
 }
@@ -32,9 +38,15 @@ async function getClaims() {
       if (error) {
         reject(error);
       }
-      if (results)
-        resolve(results.rows);
-      resolve();
+      if (results){
+        var claims = results.rows;
+        claims.forEach(element => {
+          element= fillApiFields(element);
+        });
+      
+        resolve(claims);
+      }
+      resolve([]);
     });
   })
 }
@@ -46,9 +58,15 @@ async function findById(claimId) {
       if (error) {
         reject(error);
       }
-      if (results)
-        resolve(results.rows);
-      resolve();
+      if (results){
+        var claims = results.rows;
+        claims.forEach(element => {
+          element= fillApiFields(element);
+        });
+      
+        resolve(claims[0]);
+      }
+      resolve([]);
     })
   })
 }
