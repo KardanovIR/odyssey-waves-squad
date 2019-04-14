@@ -1,17 +1,17 @@
 // GetClaimResponce.js
 
 class GetClaimResponce {
-    constructor(){
+    constructor() {
         this.id = '';
+        this.creater = '';
         this.createDate = '';
         this.description = '';
         this.shipmentId = '';
         this.location = {
-            longitude:'',
-            latitude:''
+            longitude: '',
+            latitude: ''
         };
-        this.creater= ''
     }
 }
-    
+
 module.exports = GetClaimResponce;

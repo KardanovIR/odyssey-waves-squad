@@ -9,17 +9,24 @@ class CreateShipmentRequest {
         this.from='';
         this.to='';
         this.departureDate='';
-        this.policeId='';
+        this.policyId='';
         this.carrier='';
+        this.createDate='';
+        this.arrivalDate='';
+        this.device='';
         this.goods= new Array({
-            id='',
-            type='',
-            description='',
-            value='',
-            quantity='',
-            wight='',
+            id:'',
+            type:'',
+            description:'',
+            value:'',
+            quantity:'',
+            wight:'',
         });
+        this.conditionMin='';
+        this.conditionMax='';
+        this.conditionType='';
+        this.status='';
     }
 }
     
-module.exports = User;
+module.exports = CreateShipmentRequest;

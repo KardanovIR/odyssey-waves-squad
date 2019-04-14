@@ -4,9 +4,9 @@ db = require('../repository/repository')
 Contact = require('../models/contactModel');
 
 // Handle index actions
-async function index (req, res) {
+async function index(req, res) {
     try {
-        console.log("index");
+        console.log("api contact index");
         var users = await db.getUsers();
         res.json({
             status: "success",
@@ -21,19 +21,19 @@ async function index (req, res) {
 };
 
 // Handle create contact actions
-async function create (req, res) {
+async function create(req, res) {
+
+    console.log("api contact create");
     var contact = new Contact();
     contact.name = req.body.name ? req.body.name : contact.name;
     contact.email = req.body.email;
-
-    // save the contact and check for errors
     try {
         var userId = await db.createUser(contact);
         contact._id = userId;
 
         res.json({
-                message: 'New contact created!',
-                data: contact
+            message: 'New contact created!',
+            data: contact
         });
     }
     catch (e) {
@@ -43,6 +43,8 @@ async function create (req, res) {
 
 // Handle view contact info
 exports.view = function (req, res) {
+
+    console.log("api contact view");
     Contact.findById(req.params.contact_id, function (err, contact) {
         if (err)
             res.send(err);
@@ -55,17 +57,17 @@ exports.view = function (req, res) {
 
 // Handle update contact info
 exports.update = function (req, res) {
-
-Contact.findById(req.params.contact_id, function (err, contact) {
+    console.log("api contact update");
+    Contact.findById(req.params.contact_id, function (err, contact) {
         if (err)
             res.send(err);
 
-contact.name = req.body.name ? req.body.name : contact.name;
+        contact.name = req.body.name ? req.body.name : contact.name;
         contact.gender = req.body.gender;
         contact.email = req.body.email;
         contact.phone = req.body.phone;
 
-// save the contact and check for errors
+        // save the contact and check for errors
         contact.save(function (err) {
             if (err)
                 res.json(err);
@@ -79,13 +81,14 @@ contact.name = req.body.name ? req.body.name : contact.name;
 
 // Handle delete contact
 exports.delete = function (req, res) {
+    console.log("api contact delete");
     Contact.remove({
         _id: req.params.contact_id
     }, function (err, contact) {
         if (err)
             res.send(err);
 
-res.json({
+        res.json({
             status: "success",
             message: 'Contact deleted'
         });

@@ -9,49 +9,62 @@ class GetShipmentResponce {
         this.from='';
         this.to='';
         this.departureDate='';
-        this.policeId='';
+        this.policyId='';
         this.carrier='';
-        this.goods= new Array({
-            id='',
-            type='',
-            description='',
-            value='',
-            quantity='',
-            wight='',
-        });
-        this.claims= new Array({
-            id='',
-            description='',
-            location={
-                longitude:'',
-                latitude:''
-            },
-            createDate='',
-            creater=''
-        }),
-        this.extraInfo = new Array({
-            id='',
-            description='',
-            location={
-                longitude:'',
-                latitude:''
-            },
-            createDate='',
-            creater=''
-        }),
-        this.TransportRoute = new Array({
-            SequenceNr=0,
-            from='',
-            to=''
-        }),
-        this.metricData = new Array({
-            id='',
-            type='',
-            value='',
-            deviceId='',
-            createDate=''
-        })
+        this.goods= new Array();
+        this.claims= new Array(),
+        this.extraInfo = new Array(),
+        this.transportRoute = new Array(),
+        this.metricData = new Array()
     }
 }
+
+var goods = {
+    id:'',
+    type:'',
+    description:'',
+    value:'',
+    quantity:'',
+    wight:'',
+}
+
+var claim = {
+    id:'',
+    description:'',
+    location:{
+        longitude:'',
+        latitude:''
+    },
+    createDate:'',
+    creater:''
+}
     
+var extraInfo = {
+    id:'',
+    description:'',
+    location:{
+        longitude:'',
+        latitude:''
+    },
+    createDate:'',
+    creater:''
+}
+
+var transportRoute = {
+    shipmentId: 0,
+    sequenceNr: 0,
+    countryFrom:'',
+    countryTo:'',
+    carrier:'',
+    createDate:''
+}
+
+var metricaDate = {
+    id:'',
+    type:'',
+    value:'',
+    deviceId:'',
+    createDate:''
+}
+
 module.exports = GetShipmentResponce;
