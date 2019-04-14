@@ -1,15 +1,13 @@
 import React from 'react'
 import './styles.css'
-import StatusFilter from '@components/Shipments/StatusFilter'
-import OtherFilter from '@components/Shipments/OtherFilter'
 import ShipmentsStore, { IShipment, IClaim } from '@store/ShipmentsStore'
-import Shipment from '@components/Shipments/Shipment'
-import { withRouter, RouteComponentProps } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { inject } from 'mobx-react'
 import Calendar from '@src/icons/Calendar'
 import Pin from '@src/icons/Pin'
 import TransferPopup from '@components/TransferPopup'
 import AuthStore from '@src/store/AuthStore'
+import ApprovePopup from '@components/ApprovePopup'
 
 const capitalize = (s: string) => s && (s.charAt(0).toUpperCase() + s.slice(0))
 @withRouter
@@ -39,6 +37,10 @@ export default class ShipmentDetail extends React.Component<{
 
   onRecievePopupClose() {
     this.setState({ showRecievePopup: false })
+  }
+
+  onApprovePopupClose() {
+    this.setState({ showApprovePopup: false })
   }
 
   onTransferPopupTransfer(shipment: IShipment, companyId: string) {
@@ -166,10 +168,18 @@ export default class ShipmentDetail extends React.Component<{
         </div>
       </div>
 
-      <TransferPopup open={this.state.showTransferPopup}
+      <TransferPopup
+        open={this.state.showTransferPopup}
         shipment={shipment}
         onClose={() => { this.onTransferPopupClose() }}
         onTransfer={(x) => { this.onTransferPopupTransfer(shipment, x) }}
+      />
+
+      <ApprovePopup
+        open={this.state.showApprovePopup}
+        shipment={shipment}
+        onClose={() => { this.onApprovePopupClose() }}
+        onApprove={() => { this.onApprovePopupApprove(shipment) }}
       />
 
     </div>

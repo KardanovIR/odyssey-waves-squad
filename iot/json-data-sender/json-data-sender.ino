@@ -44,10 +44,7 @@ const char* ssid     = STASSID;
 
 void setup() {
   Serial.begin(9600);
-  // waiting for the serial port to open
-  while (!Serial) {}
-  Serial.print(F("Serial init OK\r\n"));
-
+   
   checkOrCreateWifiConnection();
 
   dht.begin();
