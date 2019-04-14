@@ -6,6 +6,7 @@ extraInfoRep = require('../repository/extraInfoRepository');
 routeRep = require('../repository/routeRepository');
 metricRep = require('../repository/metricsRepository');
 tvmClient = require('../services/tvmClient');
+wavesClient = require('../services/wavesClient');
 InsureCargoResponce = require('../models/tvm/InsureCargoResponce');
 BillLanding = require('../models/tvm/BillLandingModel');
 
@@ -16,19 +17,19 @@ function formatDate(date) {
     let now = new Date();
     let diff = now - date;
     let secDiff = Math.floor(diff / 1000);
-  
- 
+
+
     // helper formatter
     const zeroFormat = unit => (unit < 10) ? `0${unit}` : unit;
-  
+
     let day = zeroFormat(date.getDate());
     let month = zeroFormat(date.getMonth() + 1);
     let hours = zeroFormat(date.getHours());
     let minutes = zeroFormat(date.getMinutes());
     let year = String(date.getFullYear());
-    
+
     return `${year}.${month}.${day}`;
-  }
+}
 
 async function create(req, res) {
     console.log("api shipment create");
@@ -38,13 +39,16 @@ async function create(req, res) {
         // .var insureCargoResponse = await tvmClient.insureCargo(shipment);
         // shipment.policyId = insureCargoResponse.PolicyID;
         var newShipment = await shipmentsRep.createShipment(shipment);
-        if(shipment.goods){
+        
+       
+        if (typeof shipment.goods  !== 'undefined') {
             shipment.goods.forEach(async (entry) => {
                 entry.shipmentId = newShipment.id
                 await goodsRep.create(entry);
             });
         }
-
+        var blockchainTx = await wavesClient.writeDataToWaves('shipment_' + newShipment.id, newShipment);
+        console.log(blockchainTx);
         res.json({
             message: 'New shipment created!',
             data: newShipment
@@ -60,22 +64,13 @@ async function index(req, res) {
     try {
         console.log("api shipment index");
         var shipments = await shipmentsRep.getShipments();
-        var fullShipments = [];
-        shipments.forEach(async (shipment, i) => {
-            shipment.goods = await goodsRep.findByShipmentId(shipment.id);
-            shipment.claims = await claimRep.findByShipmentId(shipment.id);
-            shipment.extraInfo = await extraInfoRep.findByShipmentId(shipment.id);
-            shipment.transportRoute = await routeRep.findByShipmentId(shipment.id);
-            //shipment.metricData = await metricRep.findByDeviceId(shipment.device);
-            fullShipments.push(shipment);
-            if (i === shipments.length - 1){
-                res.json({
-                    status: "success",
-                    message: "Shipments retrieved successfully",
-                    data: fullShipments
-                });        
-            }
+        var fullShipments = await getFullShipments(shipments);
+        res.json({
+            status: "success",
+            message: "Shipments retrieved successfully",
+            data: fullShipments
         });
+
     }
     catch (e) {
         console.log(e);
@@ -83,15 +78,39 @@ async function index(req, res) {
     }
 };
 
+async function getFullShipments(shipments) {
+    return new Promise((resolve, reject) => {
+        var fullShipments = [];
+        console.log("count",shipments.length);
+        if (shipments.length === 0)
+            resolve([]);
+        else
+            shipments.forEach(async (shipment, i) => {
+                console.log("shipmentId",shipment.id);
+                shipment.goods = await goodsRep.findByShipmentId(shipment.id);
+                console.log("goods count",shipment.goods.length);
+                shipment.claims = await claimRep.findByShipmentId(shipment.id);
+                shipment.extraInfo = await extraInfoRep.findByShipmentId(shipment.id);
+                shipment.transportRoute = await routeRep.findByShipmentId(shipment.id);
+                //shipment.metricData = await metricRep.findByDeviceId(shipment.device);
+                fullShipments.push(shipment);
+                if (shipments.length - 1 === i) {
+                    resolve(fullShipments);
+                }
+            });
+    })
+}
+
 async function allRecived(req, res) {
     try {
         console.log("api shipment allRecived");
         var userId = req.params.user_id
-        var shipments = await shipmentsRep.getShipmentsByReciverId(userId);
+        var shipments = await shipmentsRep.getShipmentsByRecipientId(userId);
+        var fullShipments = await getFullShipments(shipments);
         res.json({
             status: "success",
             message: "Recived Shipments retrieved successfully",
-            data: shipments
+            data: fullShipments
         });
     }
     catch (e) {
@@ -102,13 +121,16 @@ async function allRecived(req, res) {
 
 async function allSend(req, res) {
     try {
-        console.log("api shipment allSend");
-        var userId = req.params.user_id
+
+        var userId = req.params.user_id;
+        console.log("api shipment allSend " + userId);
         var shipments = await shipmentsRep.getShipmentsBySenderId(userId);
+
+        var fullShipments = await getFullShipments(shipments);
         res.json({
             status: "success",
             message: "Send Shipments retrieved successfully",
-            data: shipments
+            data: fullShipments
         });
     }
     catch (e) {
@@ -119,14 +141,14 @@ async function allSend(req, res) {
 
 async function allCarier(req, res) {
     try {
-
-        console.log("api shipment allCarier");
-        var userId = req.params.user_id
-        var shipments = await shipmentsRep.getShipmentsByCarierId(userId);
+        var userId = req.params.user_id;
+        console.log("api shipment allCarier", userId);
+        var shipments = await shipmentsRep.getShipmentsByCarrierId(userId);
+        var fullShipments = await getFullShipments(shipments);
         res.json({
             status: "success",
             message: "Carier Shipments retrieved successfully",
-            data: shipments
+            data: fullShipments
         });
     }
     catch (e) {
@@ -206,17 +228,17 @@ async function update(req, res) {
         var shipment = req.body;
         // .var insureCargoResponse = await tvmClient.insureCargo(shipment);
         // shipment.policyId = insureCargoResponse.PolicyID;
-        await shipmentsRep.updateShipment(shipment);
-        if(shipment.goods){
+        await shipmentsRep.update(shipment);
+        if (typeof shipment.goods !== 'undefined') {
             updateGoods(shipment.goods, shipment.id);
         }
-        if(shipment.claims){
+        if (typeof shipment.claims !== 'undefined') {
             updateClaims(shipment.claims, shipment.id);
         }
-        if(shipment.extraInfo){
+        if (typeof shipment.extraInfo !== 'undefined') {
             updateExtraInfo(shipment.extraInfo, shipment.id);
         }
-        if(shipment.transportRoute){
+        if (typeof shipment.transportRoute !== 'undefined') {
             updateRoutes(shipment.transportRoute, shipment.id);
         }
         res.json({
@@ -230,44 +252,44 @@ async function update(req, res) {
     }
 };
 
-async function updateGoods(goods, shipmentId){
+async function updateGoods(goods, shipmentId) {
     goods.forEach(async (entry) => {
-        if(entry.id)
+        if (entry.id)
             await goodsRep.update(entry);
-        else{
+        else {
             entry.shipmentId = shipmentId;
             await goodsRep.insert(entry);
         }
     });
 }
 
-async function updateClaims(claims, shipmentId){
+async function updateClaims(claims, shipmentId) {
     claims.forEach(async (entry) => {
-        if(entry.id)
+        if (entry.id)
             await claimRep.update(entry);
-        else{
+        else {
             entry.shipmentId = shipmentId;
             await claimRep.insert(entry);
         }
     });
 }
 
-async function updateExtraInfo(extraInfo, shipmentId){
-    claims.forEach(async (entry) => {
-        if(entry.id)
+async function updateExtraInfo(extraInfo, shipmentId) {
+    extraInfo.forEach(async (entry) => {
+        if (entry.id)
             await extraInfoRep.update(entry);
-        else{
+        else {
             entry.shipmentId = shipmentId;
             await extraInfoRep.insert(entry);
         }
     });
 }
 
-async function updateRoutes(routes, shipmentId){
+async function updateRoutes(routes, shipmentId) {
     routes.forEach(async (entry) => {
-        if(entry.id)
+        if (entry.id)
             await routeRep.update(entry);
-        else{
+        else {
             entry.shipmentId = shipmentId;
             await routeRep.insert(entry);
         }
