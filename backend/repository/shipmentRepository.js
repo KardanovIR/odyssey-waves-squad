@@ -173,7 +173,7 @@ async function findById(shipmentId) {
           element= fillApiFields(element);
         });
       
-        resolve(shipments);
+        resolve(shipments[0]);
       }
       resolve();
     })

@@ -10,7 +10,7 @@ import { TestAccounts } from '@src/common/config'
 const BASE_URL = 'http://backend.odyssey.wavesplatform.com:8080/api/'
 export const statusLabelMap = {
   forming: 'Forming',
-  formed: 'Formed',
+  transferring: 'Transferring',
   approved: 'Approved',
   onTheWay: 'On the way',
   damaged: 'Damage Claimed',
@@ -101,7 +101,8 @@ export default class ShipmentsStore extends SubStore {
   @observable statusFilters = {
     All: false,
     forming: true,
-    formed: true,
+    // formed: true,
+    transferring: true,
     approved: true,
     onTheWay: true,
     damaged: true,
