@@ -110,7 +110,7 @@ async function getShipmentsBySenderId(userId) {
         shipments.forEach(element => {
           element= fillApiFields(element);
         });
-      
+        console.log("promise shipments ",shipments.length);
         resolve(shipments);
       }
       resolve([]);
