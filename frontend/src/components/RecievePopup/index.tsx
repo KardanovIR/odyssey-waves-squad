@@ -5,15 +5,20 @@ import { IShipment } from '@src/store/ShipmentsStore'
 
 type callback = () => void
 
+
 const capitalize = (s: string) => s && (s.charAt(0).toUpperCase() + s.slice(0))
 
 
-export default class ApprovePopup extends React.Component<{
+export default class RecievePopup extends React.Component<{
   shipment: IShipment,
   open: boolean,
   onClose: callback,
-  onApprove: callback
+  onRecieve: callback,
 }> {
+
+  state = {
+    companyId: '',
+  }
 
 
   goodDescription = (shipment: IShipment) => {
@@ -22,8 +27,10 @@ export default class ApprovePopup extends React.Component<{
     return capitalize(shipment.conditionType)
   }
 
+
   render() {
     const { shipment } = this.props
+
     return <Modal show={this.props.open} onHide={() => { this.props.onClose() }}>
       <Modal.Header closeButton>
         <Modal.Title>
@@ -37,8 +44,16 @@ export default class ApprovePopup extends React.Component<{
         <div style={{ padding: 20 }}>
           <div className='__h2'>To</div>
           <div style={{ height: 10 }}></div>
-          <div className='__h3'>Reciever company id</div>
-          <input readOnly value={shipment.recipient} className='__input_readonly'
+          <div className='__h3'>Company id</div>
+          <input className='__input'
+            value={this.state.companyId}
+            onChange={(e) => {
+              this.setState({ ...this.state, companyId: e.target.value })
+            }}
+          />
+          {/* <div style={{ height: 10 }}></div>
+          <div className='__h3'>Company name</div>
+          <input readOnly value={'adfa'} className='__input_readonly' */}
           />
           <div style={{ height: 20 }}></div>
           <div className='__h2'>Goods</div>
@@ -71,8 +86,8 @@ export default class ApprovePopup extends React.Component<{
           borderRadius: 2,
           boxShadow: '0 2px 7px 0 rgba(31, 90, 246, 0.2)',
           backgroundColor: '#1f5af6',
-        }} onClick={() => { this.props.onApprove() }}>
-          <div className='__button_text_white'>Approve</div>
+        }} onClick={() => { this.props.onRecieve() }}>
+          <div className='__button_text_white'>Transfer</div>
         </Button>
       </Modal.Body>
     </Modal >
