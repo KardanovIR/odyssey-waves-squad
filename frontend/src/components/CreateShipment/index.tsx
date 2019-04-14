@@ -33,8 +33,8 @@ export default class CreateShipment extends React.Component<any, { step: number 
         <div className='createShipment__rightContainer'>
           {{
             0: <BasicInfo onContinue={() => this.setState({ step: 1 })} />,
-            1: <CargoInformation onContinue={() => this.setState({ step: 2 })} />,
-            2: <Confirmation onContinue={this.handleFinish} />,
+            1: <CargoInformation onContinue={this.handleFinish} />,
+            // 2: <Confirmation onContinue={this.handleFinish} />,
           }[step]}
         </div>
       </div>

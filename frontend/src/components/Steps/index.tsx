@@ -26,7 +26,7 @@ const styles = theme => ({
 })
 
 function getSteps() {
-  return ['Basic information', 'Cargo Information', 'Confirmations']
+  return ['Basic information', 'Cargo Information']
 }
 
 function getStepContent(step) {
@@ -34,7 +34,7 @@ function getStepContent(step) {
     case 0:
       return 'Create shipment description.'
     case 1:
-      return 'An ad group contains one or more ads which target a shared set of keywords.'
+      return 'Fill cargo information'
     case 2:
       return `Try out different ad text to see what brings in the most customers,
               they're running and how to resolve approval issues.`

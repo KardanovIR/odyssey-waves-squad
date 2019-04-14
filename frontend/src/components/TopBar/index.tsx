@@ -3,6 +3,7 @@ import './styles.css'
 import { observer, inject } from 'mobx-react'
 import AuthStore, { User } from '@src/store/AuthStore'
 import { withRouter } from 'react-router-dom'
+import Logout from '@src/icons/Logout'
 
 const trim = (str: string, len: number) => {
   return str.substr(0, len) + '...'
@@ -22,7 +23,7 @@ export default class TopBar extends React.Component<{ authStore?: AuthStore, use
           <div className='topBar__userType'>{user.type}</div>
           <div className='topBar__userKey'>{trim(user.publicKey, 30)}</div>
         </div>
-        <img src='assets/icons/logout.svg' className='topBar__icon__logout' onClick={() => { authStore.logout() }}></img>
+        <Logout className='topBar__icon__logout' onClick={() => { authStore.logout() }}/>
       </div>
 
     </div>)

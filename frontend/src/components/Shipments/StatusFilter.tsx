@@ -3,6 +3,7 @@ import { inject, observer } from 'mobx-react'
 import ShipmentsStore from '@src/store/ShipmentsStore'
 import InputGroup from 'react-bootstrap/InputGroup'
 import { statusLabelMap } from '@src/store/ShipmentsStore'
+import Up from '@src/icons/Up'
 
 interface IInjectedProps {
   shipmentsStore?: ShipmentsStore
@@ -21,7 +22,8 @@ export default class StatusFilter extends React.Component<IInjectedProps, { open
     return <div>
       <div className='statusFilter__button'
         onClick={() => this.setState({ ...this.state, open: !this.state.open })}>Status
-        <img src='assets/icons/up.svg' className={'statusFilter__button_icon_' + (this.state.open ? 'up' : 'down')}></img>
+        <Up className={'statusFilter__button_icon_' + (this.state.open ? 'up' : 'down')}/>
+        {/*<img src='assets/icons/up.svg' className={'statusFilter__button_icon_' + (this.state.open ? 'up' : 'down')}></img>*/}
         {/* <img src='assets/icons/up.svg' className='statusFilter__button_icon_down'></img> */}
       </div>
       {this.state.open &&
