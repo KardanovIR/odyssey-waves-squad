@@ -258,6 +258,7 @@ async function updateGoods(goods, shipmentId) {
             await goodsRep.update(entry);
         else {
             entry.shipmentId = shipmentId;
+            entry.createDate = formatDate(new Date());
             await goodsRep.insert(entry);
         }
     });
@@ -269,6 +270,7 @@ async function updateClaims(claims, shipmentId) {
             await claimRep.update(entry);
         else {
             entry.shipmentId = shipmentId;
+            entry.createDate = formatDate(new Date());
             await claimRep.insert(entry);
         }
     });
@@ -280,6 +282,7 @@ async function updateExtraInfo(extraInfo, shipmentId) {
             await extraInfoRep.update(entry);
         else {
             entry.shipmentId = shipmentId;
+            entry.createDate = formatDate(new Date());
             await extraInfoRep.insert(entry);
         }
     });
@@ -291,6 +294,7 @@ async function updateRoutes(routes, shipmentId) {
             await routeRep.update(entry);
         else {
             entry.shipmentId = shipmentId;
+            entry.createDate = formatDate(new Date());
             await routeRep.insert(entry);
         }
     });
