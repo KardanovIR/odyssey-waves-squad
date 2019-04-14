@@ -28,7 +28,7 @@ async function sendPostRequest(url, data) {
   var options = {
     hostname: Config.tvm.host,
     port: 8000,
-    path: '/BillOfLading/CalculatePremium',
+    path: url,
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
