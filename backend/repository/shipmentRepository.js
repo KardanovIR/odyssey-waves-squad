@@ -49,7 +49,7 @@ async function createShipment(shipment) {
 async function update(shipment) {
   console.log("db update shipment");
   return new Promise((resolve, reject) => {
-    pool.query('UPDATE shipment SET sender = $2, recipient = $3, countryfrom = $4, countryto = $5, departuredate = $6, policyid = $7, carrier = $8, title = $9, createdate = $10, status = $11, arrivaldate = $12, device = $13, conditionmin = $14, conditionmax = $15, conditiontype = $16 WHERE id = $1',
+    pool.query('UPDATE shipments SET sender = $2, recipient = $3, countryfrom = $4, countryto = $5, departuredate = $6, policyid = $7, carrier = $8, title = $9, createdate = $10, status = $11, arrivaldate = $12, device = $13, conditionmin = $14, conditionmax = $15, conditiontype = $16 WHERE id = $1',
       [
         shipment.id,
         shipment.sender,
@@ -72,8 +72,7 @@ async function update(shipment) {
           console.log(error);
           reject(error);
         }
-        if (results)
-          resolve(fillApiFields(results.rows[0]));
+       
         resolve();
       })
   })
