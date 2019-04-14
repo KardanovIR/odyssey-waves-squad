@@ -2,7 +2,7 @@ import React from 'react'
 import './styles.css'
 import StatusFilter from '@components/Shipments/StatusFilter'
 import OtherFilter from '@components/Shipments/OtherFilter'
-import ShipmentsStore, {IShipment} from '@store/ShipmentsStore'
+import ShipmentsStore, { IShipment } from '@store/ShipmentsStore'
 import Shipment from '@components/Shipments/Shipment'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { inject } from 'mobx-react'
@@ -26,7 +26,7 @@ export default class ShipmentDetail extends React.Component<{
   }
 
   goodDescription = (shipment: IShipment) => {
-    if (shipment.conditionType === 'temperature sensitive' ) return capitalize(shipment.conditionType) + `: ${shipment.conditionMin}°C - ${shipment.conditionMax}°C`
+    if (shipment.conditionType === 'temperature sensitive') return capitalize(shipment.conditionType) + `: ${shipment.conditionMin}°C - ${shipment.conditionMax}°C`
     if (shipment.conditionType === 'humidity sensitive') return capitalize(shipment.conditionType) + `: ${shipment.conditionMin}% - ${shipment.conditionMin}%`
     return capitalize(shipment.conditionType)
   }
@@ -35,8 +35,10 @@ export default class ShipmentDetail extends React.Component<{
     this.setState({ showTransferPopup: false })
   }
 
-  onTransferPopupTransfer() {
+  onTransferPopupTransfer(shipment: IShipment, companyId: string) {
+    this.props.shipmentsStore!.transferShipment(shipment, companyId)
     this.setState({ showTransferPopup: false })
+    this.props.history.push('/')
   }
 
   openTransferPopup() {
@@ -49,9 +51,6 @@ export default class ShipmentDetail extends React.Component<{
 
 
   render() {
-
-
-
     const shipmentsStore = this.props.shipmentsStore!
     const authStore = this.props.authStore!
     const currentUser = authStore.currentUser || { publicKey: '' }
@@ -122,10 +121,10 @@ export default class ShipmentDetail extends React.Component<{
             <div className='description_text' style={{ marginTop: 15 }}>Name or id of the cargo</div>
 
             <div className='shipmentDetail__left_goodsCard'>
-              <div className='description_text' style={{marginTop: 15}}>ID</div>
-              <div className='label_text' style={{marginTop: 15}}>{good.id}</div>
-              <div className='description_text' style={{marginTop: 15}}>Type</div>
-              <div className='label_text' style={{marginTop: 15}}>{this.goodDescription(shipment)}</div>
+              <div className='description_text' style={{ marginTop: 15 }}>ID</div>
+              <div className='label_text' style={{ marginTop: 15 }}>{good.id}</div>
+              <div className='description_text' style={{ marginTop: 15 }}>Type</div>
+              <div className='label_text' style={{ marginTop: 15 }}>{this.goodDescription(shipment)}</div>
             </div>
           </div>
 
@@ -140,8 +139,9 @@ export default class ShipmentDetail extends React.Component<{
       </div>
 
       <TransferPopup open={this.state.showTransferPopup}
+        shipment={shipment}
         onClose={() => { this.onTransferPopupClose() }}
-        onTransfer={() => { this.onTransferPopupTransfer() }}
+        onTransfer={(x) => { this.onTransferPopupTransfer(shipment, x) }}
       />
 
     </div>
