@@ -84,7 +84,6 @@ async function getFullShipments(shipments) {
                 shipment.extraInfo = await extraInfoRep.findByShipmentId(shipment.id);
                 shipment.transportRoute = await routeRep.findByShipmentId(shipment.id);
                 //shipment.metricData = await metricRep.findByDeviceId(shipment.device);
-                console.log(i)
                 fullShipments.push(shipment);
                 if (shipments.length - 1 === i) {
                     resolve(fullShipments);
@@ -115,8 +114,9 @@ async function allRecived(req, res) {
 
 async function allSend(req, res) {
     try {
-        console.log("api shipment allSend");
-        var userId = req.params.user_id
+        
+        var userId = req.params.user_id;
+        console.log("api shipment allSend " + userId);
         var shipments = await shipmentsRep.getShipmentsBySenderId(userId);
         console.log(shipments.length);
         var fullShipments = await getFullShipments(shipments);
